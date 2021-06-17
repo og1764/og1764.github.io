@@ -577,7 +577,8 @@ function pdf_init(venues, wavl, wavjl, date) {
             Promise.all(value).then(value_3 => {
                 mergePDFDocuments(value_3).then(value_2 => {
                     console.log(value_2);
-                    download(value_2, "help.pdf", "application/pdf");
+					let filename = "Scoresheets " + date.toString() + ".pdf"
+                    download(value_2, filename, "application/pdf");
                     window.clearInterval(dots);
                     document.getElementById("Button4").value = "Generate Scoresheets";
                     document.getElementById("Button4").style.backgroundColor = "#3370B7";
