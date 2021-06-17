@@ -616,13 +616,24 @@ async function get_single_fixture(venues, division, date){
     return await axios.get(url)
 }
 
+function sorting(a, b) {
+    if (a[15] === b[15]) {
+        return 0;
+    }
+    else {
+        return (a[15] < b[15]) ? -1 : 1;
+    }
+}
+
 // [zero_venue_split, _venue_0, _venue_1, _venue_2, _venue_full, _court, _team_a, _team_b, _duty, _division, _date_dd, _date_mm, _date_yyyy, _time_hr, _time_min, _sorting]
 // [     0              1          2          3          4         5        6         7     8         9        10         11         12        13          14       15
 async function modifyPdf(fix, venues, leagues, dates) {
     console.log(venues);
     console.log(leagues);
     var fixtures = html_to_fixture(venues, leagues, dates, fix)
-
+    console.log(fixtures)
+    fixtures.sort(sorting);
+    console.log(fixtures);
     const {PDFDocument, StandardFonts, rgb} = PDFLib;
     var total = new Array(fixtures.length);
     console.log(fixtures)
