@@ -431,7 +431,16 @@ const DIVISIONS = {
     '11/12 Male': ['11/12 Male', '11/12 M', '89'],
     '9/10 Male Pool 1': ['9/10 Male Pool 1', '9/10 M 1', '90'],
     '9/10 Male Pool 2': ['9/10 Male Pool 2', '9/10 M 2', '91'],
-    '7/8 Male': ['7/8 Male', '7/8 M', '92']
+    '7/8 Male': ['7/8 Male', '7/8 M', '92'],
+    'Year 7/8 Female Pool 1': ['7/8 Female Pool 1', '7/8 F 1', '84'],
+    'Year 7/8 Female Pool 2': ['7/8 Female Pool 2', '7/8 F 2', '85'],
+    'Year 9/10 Female Pool 1': ['9/10 Female Pool 1', '9/10 F 1', '86'],
+    'Year 9/10 Female Pool 2': ['9/10 Female Pool 2', '9/10 F 2', '87'],
+    'Year 11/12 Female': ['11/12 Female', '11/12 F', '88'],
+    'Year 11/12 Male': ['11/12 Male', '11/12 M', '89'],
+    'Year 9/10 Male Pool 1': ['9/10 Male Pool 1', '9/10 M 1', '90'],
+    'Year 9/10 Male Pool 2': ['9/10 Male Pool 2', '9/10 M 2', '91'],
+    'Year 7/8 Male': ['7/8 Male', '7/8 M', '92']
 }
 
 const VENUE_SPLIT = {
@@ -618,63 +627,66 @@ async function modifyPdf(fix, venues, leagues, dates) {
     var total = new Array(fixtures.length);
     console.log(fixtures)
     for (var i = 0; i < fixtures.length; i++) {
-        var url = "";
-        console.log(fixtures[i][9])
+        var WAVLurl = "../static/def.pdf";
+        var JLurl =  "../static/def_jl.pdf";
+
+        var WAVLexistingPdfBytes = await fetch(WAVLurl).then(res => res.arrayBuffer())
+
+        var WAVLpdfDoc = await PDFLib.PDFDocument.load(WAVLexistingPdfBytes)
+        var WAVLhelveticaFont = await WAVLpdfDoc.embedFont(PDFLib.StandardFonts.Helvetica)
+        var WAVLhelveticaBold = await WAVLpdfDoc.embedFont(PDFLib.StandardFonts.HelveticaBold)
+        var WAVLpages = await WAVLpdfDoc.getPages()
+        var WAVLfirstPage = await WAVLpages[0]
+
+        var JLexistingPdfBytes = await fetch(JLurl).then(resp => resp.arrayBuffer())
+
+        var JLpdfDoc = await PDFLib.PDFDocument.load(JLexistingPdfBytes)
+        var JLhelveticaFont = await JLpdfDoc.embedFont(PDFLib.StandardFonts.Helvetica)
+        var JLhelveticaBold = await JLpdfDoc.embedFont(PDFLib.StandardFonts.HelveticaBold)
+        var JLpages = await JLpdfDoc.getPages()
+        var JLfirstPage = await JLpages[0]
+
         if(fixtures[i][9][0][0] == "D" ||  fixtures[i][9][0][0] == "S"){
-            url = "../static/def.pdf";
-        }else{
-            url = "../static/def_jl.pdf";
-        }
-
-        var existingPdfBytes = await fetch(url).then(res => res.arrayBuffer())
-
-        var pdfDoc = await PDFLib.PDFDocument.load(existingPdfBytes)
-        var helveticaFont = await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica)
-        var helveticaBold = await pdfDoc.embedFont(PDFLib.StandardFonts.HelveticaBold)
-        var pages = await pdfDoc.getPages()
-        var firstPage = await pages[0]
-
-        if(fixtures[i][9][0][0] == "D" ||  fixtures[i][9][0][0] == "S"){
-            await firstPage.drawText(fixtures[i][1], {
+            await WAVLfirstPage.drawText(fixtures[i][1], {
                 x: parseInt((310 - measureText(fixtures[i][1],10)).toString()),
                 y: 575,
                 size: 10,
-                font: helveticaFont
+                font: WAVLhelveticaFont
             })
-            await firstPage.drawText(fixtures[i][2], {
+            await WAVLfirstPage.drawText(fixtures[i][2], {
                 x: parseInt((310 - measureText(fixtures[i][2],10)).toString()),
                 y: 566,
                 size: 10,
-                font: helveticaFont
+                font: WAVLhelveticaFont
             })
-            await firstPage.drawText(fixtures[i][3], {
+            await WAVLfirstPage.drawText(fixtures[i][3], {
                 x: parseInt((310 - measureText(fixtures[i][3],10)).toString()),
                 y: 557,
                 size: 10,
-                font: helveticaFont
+                font: WAVLhelveticaFont
             })
-            await firstPage.drawText(fixtures[i][5], {
+            await WAVLfirstPage.drawText(fixtures[i][5], {
                 x: parseInt((400 - measureBold(fixtures[i][5],13)).toString()),
                 y: 557,
                 size: 13,
-                font: helveticaBold
+                font: WAVLhelveticaBold
             })
             try {
                 var hour = " ";
                 if (parseInt(fixtures[i][13]).toString().length == 1) {
                     hour = " " + parseInt(fixtures[i][13]).toString()
                 }else{hour = parseInt(fixtures[i][13]).toString()}
-                await firstPage.drawText(hour, {
+                await WAVLfirstPage.drawText(hour, {
                     x: parseInt((492 - measureBold(hour,13) - measureBold(hour,13)).toString()),
                     y: 557,
                     size: 13,
-                    font: helveticaBold
+                    font: WAVLhelveticaBold
                 })
-                await firstPage.drawText(fixtures[i][14], {
+                await WAVLfirstPage.drawText(fixtures[i][14], {
                     x: 500,
                     y: 557,
                     size: 13,
-                    font: helveticaBold
+                    font: WAVLhelveticaBold
                 })
             }catch (e){console.log(e);}
             // catch - continue
@@ -683,71 +695,144 @@ async function modifyPdf(fix, venues, leagues, dates) {
                 dd = " " + parseInt(fixtures[i][10]).toString()
             }else{dd = parseInt(fixtures[i][10]).toString()}
 
-            await firstPage.drawText(dd, {
+            await WAVLfirstPage.drawText(dd, {
                 x: parseInt((596 - measureBold(dd,13) - measureBold(dd,13)).toString()),
                 y: 557,
                 size: 13,
-                font: helveticaBold
+                font: WAVLhelveticaBold
             })
-            await firstPage.drawText(parseInt(fixtures[i][11]).toString(), {
+            await WAVLfirstPage.drawText(parseInt(fixtures[i][11]).toString(), {
                 x: parseInt((613 - measureBold(fixtures[i][11],13)).toString()),
                 y: 557,
                 size: 13,
-                font: helveticaBold
+                font: WAVLhelveticaBold
             })
-            await firstPage.drawText(fixtures[i][12].slice(2,4), {
+            await WAVLfirstPage.drawText(fixtures[i][12].slice(2,4), {
                 x: 625,
                 y: 557,
                 size: 13,
-                font: helveticaBold
+                font: WAVLhelveticaBold
             })
-            await firstPage.drawText(fixtures[i][9][1], {
+            await WAVLfirstPage.drawText(fixtures[i][9][1], {
                 x: parseInt((773 - measureBold(fixtures[i][9][1],13)).toString()),
                 y: 557.5,
                 size: 13,
-                font: helveticaBold
+                font: WAVLhelveticaBold
             })
-            await firstPage.drawText(fixtures[i][8], {
+            await WAVLfirstPage.drawText(fixtures[i][8], {
                 x: parseInt((710 - measureText(fixtures[i][8],14)).toString()),
                 y: 528,
                 size: 14,
-                font: helveticaFont
+                font: WAVLhelveticaFont
             })
             // if length > 18
             if(fixtures[i][6].length > 18 || fixtures[i][7].length > 18) {
-                await firstPage.drawText(fixtures[i][6], {
+                await WAVLfirstPage.drawText(fixtures[i][6], {
                     x: parseInt((320 - measureText(fixtures[i][6],10)).toString()),
                     y: 527,
                     size: 10,
-                    font: helveticaFont
+                    font: WAVLhelveticaFont
                 })
-                await firstPage.drawText(fixtures[i][7], {
+                await WAVLfirstPage.drawText(fixtures[i][7], {
                     x: parseInt((460 - measureText(fixtures[i][7],10)).toString()),
                     y: 527,
                     size: 10,
-                    font: helveticaFont
+                    font: WAVLhelveticaFont
                 })
             }else {
-                pdfDoc.TextAlignment = 1;
-                await firstPage.drawText(fixtures[i][6], {
+                WAVLpdfDoc.TextAlignment = 1;
+                await WAVLfirstPage.drawText(fixtures[i][6], {
                     x: parseInt((320 - measureText(fixtures[i][6],14)).toString()),
                     y: 527,
                     size: 14,
-                    font: helveticaFont
+                    font: WAVLhelveticaFont
                 })
-                await firstPage.drawText(fixtures[i][7], {
+                await WAVLfirstPage.drawText(fixtures[i][7], {
                     x: parseInt((460 - measureText(fixtures[i][7],14)).toString()),
                     y: 527,
                     size: 14,
-                    font: helveticaFont
+                    font: WAVLhelveticaFont
                 })
             }
+            var saved = await WAVLpdfDoc.saveAsBase64();
         }else{
-            url = "/static/def_jl.pdf";
-            console.log("Junior league...???")
+            // Junior League
+            // full venue
+			await JLfirstPage.drawText(fixtures[i][0], {
+                x: parseInt((180 - measureText(fixtures[i][0],13)).toString()),
+                y: 504,
+                size: 13,
+                font: JLhelveticaFont
+            })
+            // court
+			await JLfirstPage.drawText(fixtures[i][5], {
+                x: parseInt((562 - measureText(fixtures[i][5],13)).toString()),
+                y: 504,
+                size: 13,
+                font: JLhelveticaFont
+            })
+			try{
+			    // time
+				let time = " "
+				if (parseInt(fixtures[i][13]).toString().length == 1) {
+                    time = " " + parseInt(fixtures[i][13]).toString() + ":" + fixtures[1][14];
+                }else{time = parseInt(fixtures[i][13]).toString() + ":" + fixtures[1][14];}
+				await JLfirstPage.drawText(time, {
+					x: 442,
+					y: 504,
+					size: 13,
+					font: JLhelveticaFont
+				})
+			} catch (e) {console.log(e)}
+			try{
+			    // date
+				let dt = " ";
+				dt = parseInt(fixtures[i][10]).toString() + "/" + parseInt(fixtures[i][11]).toString() + "/" + fixtures[i][12]
+				await JLfirstPage.drawText(dt, {
+					x: 315,
+					y: 504,
+					size: 13,
+					font: JLhelveticaFont
+				})
+			} catch (e) {console.log(e)}
+			// division
+			await JLfirstPage.drawText(fixtures[i][9][0], {
+                x: parseInt((720 - measureText(fixtures[i][9][0],13)).toString()),
+                y: 504,
+                size: 13,
+                font: JLhelveticaFont
+            })
+			// if length > 25
+            if(fixtures[i][6].length > 25 || fixtures[i][7].length > 25) {
+                await JLfirstPage.drawText(fixtures[i][6], {
+                    x: parseInt((250 - measureText(fixtures[i][6],10)).toString()),
+                    y: 472,
+                    size: 10,
+                    font: JLhelveticaFont
+                })
+                await JLfirstPage.drawText(fixtures[i][7], {
+                    x: parseInt((660 - measureText(fixtures[i][7],10)).toString()),
+                    y: 472,
+                    size: 10,
+                    font: JLhelveticaFont
+                })
+            }else {
+                JLpdfDoc.TextAlignment = 1;
+                await JLfirstPage.drawText(fixtures[i][6], {
+                    x: parseInt((250 - measureText(fixtures[i][6],14)).toString()),
+                    y: 472,
+                    size: 14,
+                    font: JLhelveticaFont
+                })
+                await JLfirstPage.drawText(fixtures[i][7], {
+                    x: parseInt((660 - measureText(fixtures[i][7],14)).toString()),
+                    y: 472,
+                    size: 14,
+                    font: JLhelveticaFont
+                })
+            }
+        var saved = await JLpdfDoc.saveAsBase64();
         }
-
-        var saved = await pdfDoc.saveAsBase64();
         total[i] = saved;
     }
     //download(pdfBytes, "pdf-lib_creation_example.pdf", "application/pdf");
@@ -762,15 +847,31 @@ async function mergePDFDocuments(documents) {
     for(var i = 0; i < documents.length; i++) {
         console.log(i)
         var docone = await PDFLib.PDFDocument.load(await documents[i]);
-        var copiedPagesone = await mergedPdf.copyPages(docone, [0, 1]);
-        await mergedPdf.addPage(await copiedPagesone[0]);
-        await mergedPdf.addPage(await copiedPagesone[1]);
+        //var copiedPagesone = await mergedPdf.copyPages(docone, [0, 1]);
+        //await mergedPdf.addPage(await copiedPagesone[0]);
+        //await mergedPdf.addPage(await copiedPagesone[1]);
+        var copiedPagesone = await mergedPdf.copyPages(docone, docone.getPageIndices());
+        for(var j = 0; j < docone.getPageIndices().length; j++){
+            mergedPdf.addPage(await copiedPagesone[j]);
+        }
     }
 	var saved = await mergedPdf.save();
 
 	return await saved;
 
 	//download(await mergedPdf, "pdf-lib_creation_example.pdf", "application/pdf");
+}
+
+async function merge_PDF(existing) {
+    const mergedPdf = await PDFLib.PDFDocument.create();
+    console.log(await existing)
+    for (var i = 0; i < await existing.length; i++) {
+        var doc = await PDFLib.PDFDocument.load(await existing[1]);
+        var copiedPages = await mergedPdf.copyPages(doc, doc.getPageIndices());
+        copiedPages.forEach((page) => mergedPdf.addPage(page));
+    }
+
+    return await mergedPdf.save();
 }
 
 
@@ -832,6 +933,7 @@ function html_to_fixture(venues, leagues, date, all_html) {
             console.log("***")
             console.log(div_table.rows.item(1).cells.item(2).innerText)
             let temp_div = DIVISIONS[div_table.rows.item(1).cells.item(2).innerText]
+            console.log(temp_div)
             let table = htmlDoc.getElementsByTagName("table")[2]
             let rowLength = table.rows.length;
             for (let i = 1; i < rowLength; i++) {
@@ -861,7 +963,7 @@ function html_to_fixture(venues, leagues, date, all_html) {
                     let url = all_html[x].request.responseURL;
                     let split_url = url.split('/');
                     let _division = temp_div;
-
+                    console.log(temp_div)
                     //let _division = __CONFIG__
                     //console.log(_division)
                     let _date = date.split('-');
