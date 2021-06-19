@@ -524,6 +524,7 @@ var dots = window.setInterval( function() {
 
 
 function WAVL_ONLINE(){
+    console.log(configure);
     var venues = []
     var wavjl = []
     var wavl = []
