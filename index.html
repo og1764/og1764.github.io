@@ -36,9 +36,8 @@
                   changeYear: false,
                   showButtonPanel: false,
                   showAnim: 'show',
-                  onSelect: function(){
-                    $("#DatePicker2").datepicker('option', 'maxDate', '07/20/2021');
-                  }
+                  minDate: '01/01/2021',
+                  maxDate: '07/20/2021'
                });
                $("#DatePicker2").datepicker("setDate", nextSunday());
                $("#DatePicker2").change(function()
