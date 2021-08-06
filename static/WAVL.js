@@ -48,6 +48,12 @@ const __CONFIG__ = {
       "bot": "Centre",
       "alias": ["Geographe", "Geographe Leisure"]
     },
+	{"name": "Hale",
+      "top": "",
+      "mid": "",
+      "bot": "Hale",
+      "alias": []
+    },
     {"name": "Kingsway",
       "top": "",
       "mid": "",
@@ -450,6 +456,7 @@ const VENUE_SPLIT = {
     "curtin stadium": "*Curtin*Stadium",
     "ecu mt. lawley": "*ECU*Mt. Lawley",
     "geographe leisure": "Geographe*Leisure*Centre",
+    "hale": "**Hale",
     "kingsway": "**Kingsway",
     "loftus": "**Loftus",
     "mandurah arc": "*Mandurah*ARC",
