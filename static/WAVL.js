@@ -468,7 +468,7 @@ const VENUE_SPLIT = {
     "curtin stadium": "*Curtin*Stadium",
     "ecu mt. lawley": "*ECU*Mt. Lawley",
     "geographe leisure": "Geographe*Leisure*Centre",
-    "gold netball centre": "Gold*Netball*Centre,
+    "gold netball centre": "Gold*Netball*Centre",
     "hale": "**Hale",
     "Halls Head Rec Centr": "Halls Head*Recreation*Centre",
     "kingsway": "**Kingsway",
