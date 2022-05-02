@@ -46,12 +46,24 @@ const __CONFIG__ = {
       "top": "Geographe",
       "mid": "Leisure",
       "bot": "Centre",
-      "alias": ["Geographe", "Geographe Leisure"]
+      "alias": ["Geographe", "Geographe Leisure", "Geographe Lei. Centr"]
+    },
+    {"name": "Gold Netball Centre",
+      "top": "Gold",
+      "mid": "Netball",
+      "bot": "Centre",
+      "alias": []
     },
 	{"name": "Hale",
       "top": "",
       "mid": "",
       "bot": "Hale",
+      "alias": []
+    },
+	  {"name": "Halls Head Rec Centr",
+      "top": "Halls Head",
+      "mid": "Recreation",
+      "bot": "Centre",
       "alias": []
     },
     {"name": "Kingsway",
@@ -112,7 +124,7 @@ const __CONFIG__ = {
       "top": "UWA",
       "mid": "Recreation",
       "bot": "Centre",
-      "alias": ["UWA", "UWA Rec. Centre"]
+      "alias": ["UWA", "UWA Rec. Centre", "UWA Rec Centre"]
     },
     {"name": "Wesley College",
       "top": "",
@@ -122,19 +134,19 @@ const __CONFIG__ = {
     }
   ],
   "wavl": [
-    { "id": 80,
+    { "id": 103,
       "long": "State League Women",
       "short": "SL Women"
     },
-    { "id": 81,
+    { "id": 102,
       "long": "State League Men",
       "short": "SL Men"
     },
-    { "id": 82,
+    { "id": 104,
       "long": "State League Reserve Women",
       "short": "SLR Women"
     },
-    { "id": 83,
+    { "id": 105,
       "long": "State League Reserve Men",
       "short": "SLR Men"
     },
