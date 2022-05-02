@@ -721,23 +721,23 @@ const __CONFIG__ = {
               } catch (e) {console.log(e);}
               try {
                   var hour = " ";
-                  console.log("index of tbc");
-                  console.log(fixtures[i][13].toString().toLowerCase().indexOf("tbc"));
-                  if (parseInt(fixtures[i][13]).toString().length == 1) {
-                      hour = " " + parseInt(fixtures[i][13]).toString()
-                  }else{hour = parseInt(fixtures[i][13]).toString()}
-                  await WAVLfirstPage.drawText(hour, {
-                      x: parseInt((492 - measureBold(hour,13) - measureBold(hour,13)).toString()),
-                      y: 557,
-                      size: 13,
-                      font: WAVLhelveticaBold
-                  })
-                  await WAVLfirstPage.drawText(fixtures[i][14], {
-                      x: 500,
-                      y: 557,
-                      size: 13,
-                      font: WAVLhelveticaBold
-                  })
+                  if (fixtures[i][13].toString().toLowerCase().substring(0,3) != "tbc") {
+                    if (parseInt(fixtures[i][13]).toString().length == 1) {
+                        hour = " " + parseInt(fixtures[i][13]).toString()
+                    }else{hour = parseInt(fixtures[i][13]).toString()}
+                    await WAVLfirstPage.drawText(hour, {
+                        x: parseInt((492 - measureBold(hour,13) - measureBold(hour,13)).toString()),
+                        y: 557,
+                        size: 13,
+                        font: WAVLhelveticaBold
+                    })
+                    await WAVLfirstPage.drawText(fixtures[i][14], {
+                        x: 500,
+                        y: 557,
+                        size: 13,
+                        font: WAVLhelveticaBold
+                    })
+                  }
               }catch (e){console.log(e);}
               // catch - continue
               var dd = " ";
