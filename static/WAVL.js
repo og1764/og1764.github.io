@@ -721,6 +721,8 @@ const __CONFIG__ = {
               } catch (e) {console.log(e);}
               try {
                   var hour = " ";
+                  console.log("index of tbc");
+                  console.log(fixtures[i][13].toString().toLowerCase().indexOf("tbc"));
                   if (parseInt(fixtures[i][13]).toString().length == 1) {
                       hour = " " + parseInt(fixtures[i][13]).toString()
                   }else{hour = parseInt(fixtures[i][13]).toString()}
