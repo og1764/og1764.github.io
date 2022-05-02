@@ -708,14 +708,15 @@ const __CONFIG__ = {
                   size: 10,
                   font: WAVLhelveticaFont
               })
-              console.log("*****");
-              console.log(fixtures[i][5]);
-              await WAVLfirstPage.drawText(fixtures[i][5].toString(), {
-                  x: parseInt((400 - measureBold(fixtures[i][5],13).toString()).toString()),
-                  y: 557,
-                  size: 13,
-                  font: WAVLhelveticaBold
-              })
+              try {
+                  // court
+                  await WAVLfirstPage.drawText(fixtures[i][5], {
+                    x: parseInt((400 - measureBold(fixtures[i][5],13).toString()).toString()),
+                    y: 557,
+                    size: 13,
+                    font: WAVLhelveticaBold
+                })
+              } catch (e) {console.log(e);}
               try {
                   var hour = " ";
                   if (parseInt(fixtures[i][13]).toString().length == 1) {
