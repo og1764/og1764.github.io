@@ -1,3 +1,5 @@
+// Front Facing Config. Aliases are when there are multiple names for the one venue.
+// Also need to add those aliases / new venues to ~ line 466
 const __CONFIG__ = {
     "venues": [
       {"name": "Cockburn",
@@ -60,11 +62,11 @@ const __CONFIG__ = {
         "bot": "Hale",
         "alias": []
       },
-        {"name": "Halls Head Rec Centr",
+        {"name": "Halls Head Recreation Centre",
         "top": "Halls Head",
         "mid": "Recreation",
         "bot": "Centre",
-        "alias": []
+        "alias": ["Halls Head Rec Centr"]
       },
       {"name": "Kingsway",
         "top": "",
