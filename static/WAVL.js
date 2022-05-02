@@ -669,8 +669,9 @@ const __CONFIG__ = {
       var total = new Array(fixtures.length);
       console.log(fixtures)
       for (var i = 0; i < fixtures.length; i++) {
-          var WAVLurl = "../static/def.pdf";
-          var JLurl =  "../static/def_jl.pdf";
+          ///var WAVLurl = "./static/def.pdf";
+          var WAVLurl = "./src/def.pdf"
+          var JLurl =  "./static/def_jl.pdf";
   
           var WAVLexistingPdfBytes = await fetch(WAVLurl).then(res => res.arrayBuffer())
   
@@ -707,8 +708,10 @@ const __CONFIG__ = {
                   size: 10,
                   font: WAVLhelveticaFont
               })
-              await WAVLfirstPage.drawText(fixtures[i][5], {
-                  x: parseInt((400 - measureBold(fixtures[i][5],13)).toString()),
+              console.log("*****");
+              console.log(fixtures[i][5]);
+              await WAVLfirstPage.drawText(fixtures[i][5].toString(), {
+                  x: parseInt((400 - measureBold(fixtures[i][5],13).toString()).toString()),
                   y: 557,
                   size: 13,
                   font: WAVLhelveticaBold
