@@ -429,10 +429,10 @@ function cleanup(){
 
 
 const DIVISIONS = {
-    "State League Women": ["State League Women", "SL Women", "80"],
-    "State League Men": ["State League Men", "SL Men", "81"],
-    "State League Reserve Men": ["State League Reserve Men", "SLR Men", "82"],
-    "State League Reserve Women": ["State League Reserve Women", "SLR Women", "83"],
+    "State League Women": ["State League Women", "SL Women", "103"],
+    "State League Men": ["State League Men", "SL Men", "102"],
+    "State League Reserve Men": ["State League Reserve Men", "SLR Men", "104"],
+    "State League Reserve Women": ["State League Reserve Women", "SLR Women", "105"],
     "Division 1 Men": ['Division 1 Men', 'Div 1 M', "94"],
     "Division 1 Women": ['Division 1 Women', 'Div 1 W', "95"],
     "Division 2 Men": ['Division 2 Men', 'Div 2 M', "96"],
@@ -468,7 +468,9 @@ const VENUE_SPLIT = {
     "curtin stadium": "*Curtin*Stadium",
     "ecu mt. lawley": "*ECU*Mt. Lawley",
     "geographe leisure": "Geographe*Leisure*Centre",
+    "gold netball centre": "Gold*Netball*Centre
     "hale": "**Hale",
+    "Halls Head Rec Centr": "Halls Head*Recreation*Centre",
     "kingsway": "**Kingsway",
     "loftus": "**Loftus",
     "mandurah arc": "*Mandurah*ARC",
@@ -481,6 +483,7 @@ const VENUE_SPLIT = {
     "st mary's": "**St Mary's",
     "the rise": "**The Rise",
     "uwa rec. centre": "UWA*Recreation*Centre",
+    "uwa rec centre": "UWA*Recreation*Centre",
     "warwick": "**Warwick",
     "wesley college": "*Wesley*College"
 }
