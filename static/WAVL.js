@@ -670,7 +670,7 @@ const __CONFIG__ = {
       console.log(fixtures)
       for (var i = 0; i < fixtures.length; i++) {
           ///var WAVLurl = "./static/def.pdf";
-          var WAVLurl = "./src/def.pdf"
+          var WAVLurl = "./static/def.pdf"
           var JLurl =  "./static/def_jl.pdf";
   
           var WAVLexistingPdfBytes = await fetch(WAVLurl).then(res => res.arrayBuffer())
