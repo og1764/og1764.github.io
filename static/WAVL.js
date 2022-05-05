@@ -18,7 +18,7 @@ const __CONFIG__ = {
         "top": "",
         "mid": "",
         "bot": "Warwick",
-        "alias": ["Warwick Stadium"]
+        "alias": ["Warwick Stadium", "Warwick Stad."]
       },
       {"name": "Aquinas College",
         "top": "",
@@ -72,7 +72,7 @@ const __CONFIG__ = {
         "top": "",
         "mid": "",
         "bot": "HBF Stadium",
-        "alias": ["HBF Stad. Claremont", "HBF", "HBF Stadium"]
+        "alias": ["HBF Stad. Claremont", "HBF", "HBF Stadium", "HBF Stad."]
       },
       {"name": "Kingsway",
         "top": "",
