@@ -68,6 +68,12 @@ const __CONFIG__ = {
         "bot": "Centre",
         "alias": ["Halls Head Rec Centr"]
       },
+      {"name": "HBF Stadium Claremont",
+        "top": "",
+        "mid": "",
+        "bot": "HBF Stadium",
+        "alias": ["HBF Stad. Claremont", "HBF", "HBF Stadium"]
+      },
       {"name": "Kingsway",
         "top": "",
         "mid": "",
