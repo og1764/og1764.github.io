@@ -152,37 +152,45 @@ const __CONFIG__ = {
         "long": "State League Reserve Men",
         "short": "SLR Men"
       },
-      { "id": 94,
+      { "id": 107,
         "long": "Division 1 Women",
         "short": "Div 1 W"
       },
-      { "id": 95,
+      { "id": 106,
         "long": "Division 1 Men",
         "short": "Div 1 M"
       },
-      { "id": 96,
+      { "id": 109,
         "long": "Division 2 Women",
         "short": "Div 2 W"
       },
-      { "id": 97,
+      { "id": 108,
         "long": "Division 2 Men",
         "short": "Div 2 M"
       },
-      { "id": 98,
+      { "id": 111,
         "long": "Division 3 Women",
         "short": "Div 3 W"
       },
-      { "id": 99,
+      { "id": 115,
         "long": "Division 3 Men",
         "short": "Div 3 M"
       },
-      { "id": 100,
+      { "id": 129,
         "long": "Division 4 Men",
         "short": "Div 4 M"
       },
-      { "id": 101,
+      { "id": 112,
+        "long": "Division 4 Women",
+        "short": "Div 4 W"
+      },
+      { "id": 130,
         "long": "Division 5 Men",
         "short": "Div 5 M"
+      },
+      { "id": 131,
+        "long": "Division 6 Men",
+        "short": "Div 6 M"
       }
     ],
     "jl": [
@@ -429,20 +437,21 @@ const __CONFIG__ = {
   
   
   
-  
   const DIVISIONS = {
       "State League Women": ["State League Women", "SL Women", "103"],
       "State League Men": ["State League Men", "SL Men", "102"],
       "State League Reserve Men": ["State League Reserve Men", "SLR Men", "104"],
       "State League Reserve Women": ["State League Reserve Women", "SLR Women", "105"],
-      "Division 1 Men": ['Division 1 Men', 'Div 1 M', "94"],
-      "Division 1 Women": ['Division 1 Women', 'Div 1 W', "95"],
-      "Division 2 Men": ['Division 2 Men', 'Div 2 M', "96"],
-      "Division 2 Women": ['Division 2 Women', 'Div 2 W', "97"],
-      "Division 3 Men": ['Division 3 Men', 'Div 3 M', "98"],
-      "Division 3 Women": ['Division 3 Women', 'Div 3 W', "99"],
-      "Division 4 Men": ['Division 4 Men', 'Div 4 M', "100"],
-      "Division 5 Men": ['Division 5 Men', 'Div 5 M', "101"],
+      "Division 1 Men": ['Division 1 Men', 'Div 1 M', "106"],
+      "Division 1 Women": ['Division 1 Women', 'Div 1 W', "107"],
+      "Division 2 Men": ['Division 2 Men', 'Div 2 M', "108"],
+      "Division 2 Women": ['Division 2 Women', 'Div 2 W', "109"],
+      "Division 3 Men": ['Division 3 Men', 'Div 3 M', "115"],
+      "Division 3 Women": ['Division 3 Women', 'Div 3 W', "111"],
+      "Division 4 Men": ['Division 4 Men', 'Div 4 M', "129"],
+      "Division 4 Women": ['Division 4 Women', 'Div 4 W', "112"],
+      "Division 5 Men": ['Division 5 Men', 'Div 5 M', "130"],
+      "Division 6 Men": ['Division 6 Men', 'Div 6 M', "131"],
       '7/8 Female Pool 1': ['7/8 Female Pool 1', '7/8 F 1', '84'],
       '7/8 Female Pool 2': ['7/8 Female Pool 2', '7/8 F 2', '85'],
       '9/10 Female Pool 1': ['9/10 Female Pool 1', '9/10 F 1', '86'],
@@ -478,7 +487,8 @@ const __CONFIG__ = {
       "geographe lei. centr": "Geographe*Leisure*Centre",
       "gold netball centre": "Gold*Netball*Centre",
       "hale": "**Hale",
-      "halls head rec centr": "Halls Head*Recreation*Centre",
+      "halls head rec centre": "Halls Head*Recreation*Centre",
+      "hbf stad. claremont": "**HBF Stadium",
       "kingsway": "**Kingsway",
       "loftus": "**Loftus",
       "mandurah arc": "*Mandurah*ARC",
@@ -1068,8 +1078,9 @@ const __CONFIG__ = {
                       console.log(fixtures_list)
   
                   } else {
-                      console.log("UNUSED VENUE")
+                      console.log("UNUSED VENUE\n***")
                       console.log(zero_venue_split)
+                      console.log("***")
                   }
   
               }
