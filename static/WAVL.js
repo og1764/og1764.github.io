@@ -6,7 +6,7 @@ const __CONFIG__ = {
         "top": "",
         "mid": "",
         "bot": "Cockburn",
-        "alias": []
+        "alias": ["Cockburn ARC"]
       },
       {"name": "Loftus",
         "top": "",
@@ -66,7 +66,7 @@ const __CONFIG__ = {
         "top": "Halls Head",
         "mid": "Recreation",
         "bot": "Centre",
-        "alias": ["Halls Head Rec Centr"]
+        "alias": ["Halls Head Rec Centr", "Halls Head Rec"]
       },
       {"name": "HBF Stadium Claremont",
         "top": "",
@@ -103,6 +103,12 @@ const __CONFIG__ = {
         "mid": "Ladies",
         "bot": "College",
         "alias": ["MLC", "Methodist L. Col"]
+      },
+        {"name": "Murdoch Active",
+        "top": "",
+        "mid": "Murdoch",
+        "bot": "Active",
+        "alias": []
       },
       {"name": "Penrhos College",
         "top": "",
@@ -504,6 +510,7 @@ const __CONFIG__ = {
       "methodist ladies college": "Methodist*Ladies*College",
       "methodist l. col": "Methodist*Ladies*College",
       "mlc": "Methodist*Ladies*College",
+      "murdoch active": "*Murdoch*Active",
       "penrhos college": "*Penrhos*College",
       "rossmoyne": "**Rossmoyne",
       "st mary's": "**St Mary's",
