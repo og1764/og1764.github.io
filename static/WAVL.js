@@ -2,35 +2,29 @@
 // Also need to add those aliases / new venues to ~ line 466
 const __CONFIG__ = {
     "venues": [
-      {"name": "Cockburn",
-        "top": "",
-        "mid": "",
-        "bot": "Cockburn",
-        "alias": ["Cockburn ARC"]
-      },
-      {"name": "Loftus",
-        "top": "",
-        "mid": "",
-        "bot": "Loftus",
-        "alias": []
-      },
-      {"name": "Warwick",
-        "top": "",
-        "mid": "",
-        "bot": "Warwick",
-        "alias": ["Warwick Stadium", "Warwick Stad."]
-      },
-      {"name": "Aquinas College",
+      {"name": "Aquinas",
         "top": "",
         "mid": "Aquinas",
         "bot": "College",
-        "alias": ["Aquinas"]
+        "alias": ["Aquinas College"]
+      },
+	  {"name": "Ballajura",
+        "top": "",
+        "mid": "",
+        "bot": "Ballajura",
+        "alias": []
       },
       {"name": "Bendat",
         "top": "",
         "mid": "",
         "bot": "Bendat",
         "alias": []
+      },
+	  {"name": "Cockburn",
+        "top": "",
+        "mid": "",
+        "bot": "Cockburn",
+        "alias": ["Cockburn ARC"]
       },
       {"name": "Curtin Stadium",
         "top": "",
@@ -56,6 +50,12 @@ const __CONFIG__ = {
         "bot": "Centre",
         "alias": []
       },
+	  {"name": "Greenwood College",
+        "top": "",
+        "mid": "Greenwood",
+        "bot": "College",
+        "alias": []
+      },
       {"name": "Hale",
         "top": "",
         "mid": "",
@@ -74,10 +74,22 @@ const __CONFIG__ = {
         "bot": "Stadium",
         "alias": ["HBF Stad. Claremont", "HBF", "HBF Stadium", "HBF Stad."]
       },
+	  {"name": "John Wollaston",
+        "top": "",
+        "mid": "John",
+        "bot": "Wollaston",
+        "alias": []
+      },
       {"name": "Kingsway",
         "top": "",
         "mid": "",
         "bot": "Kingsway",
+        "alias": []
+      },
+	  {"name": "Loftus",
+        "top": "",
+        "mid": "",
+        "bot": "Loftus",
         "alias": []
       },
       {"name": "Mandurah ARC",
@@ -90,7 +102,7 @@ const __CONFIG__ = {
         "top": "",
         "mid": "",
         "bot": "MBC",
-        "alias": ["Mandurah Baptist College"]
+        "alias": ["Mandurah Baptist College", "Mandurah Baptist Col"]
       },
       {"name": "Melville LeisureFit",
         "top": "",
@@ -122,6 +134,12 @@ const __CONFIG__ = {
         "bot": "Rossmoyne",
         "alias": []
       },
+	  {"name": "Santa Maria",
+        "top": "",
+        "mid": "Santa",
+        "bot": "Maria",
+        "alias": []
+      },
       {"name": "St Mary's",
         "top": "",
         "mid": "",
@@ -145,6 +163,12 @@ const __CONFIG__ = {
         "mid": "Wesley",
         "bot": "College",
         "alias": ["Wesley"]
+      },
+	  {"name": "Warwick",
+        "top": "",
+        "mid": "",
+        "bot": "Warwick",
+        "alias": ["Warwick Stadium", "Warwick Stad."]
       }
     ],
     "wavl": [
@@ -484,12 +508,14 @@ const __CONFIG__ = {
       'Year 7/8 Male': ['7/8 Male', '7/8 M', '92']
   }
   
+  
   const VENUE_SPLIT = {
       "aquinas": "*Aquinas*College",
       "aquinas college": "*Aquinas*College",
+	  "ballajura": "**Ballajura",
       "bendat": "**Bendat",
       "cockburn": "**Cockburn",
-      "cockburn ARC": "**Cockburn",
+      "cockburn arc": "**Cockburn",
       "curtin stadium": "*Curtin*Stadium",
       "curtin": "*Curtin*Stadium",
       "ecu": "*ECU*Mt. Lawley",
@@ -498,9 +524,11 @@ const __CONFIG__ = {
       "geographe leisure": "Geographe*Leisure*Centre",
       "geographe lei. centr": "Geographe*Leisure*Centre",
       "gold netball centre": "Gold*Netball*Centre",
+	  "greenwood college": "*Greenwood*College",
       "hale": "**Hale",
       "halls head rec centre": "Halls Head*Recreation*Centre",
       "hbf stad. claremont": "*HBF*Stadium",
+	  "john wollaston": "*John*Wallaston",
       "kingsway": "**Kingsway",
       "loftus": "**Loftus",
       "mandurah arc": "*Mandurah*ARC",
@@ -513,6 +541,7 @@ const __CONFIG__ = {
       "murdoch active": "*Murdoch*Active",
       "penrhos college": "*Penrhos*College",
       "rossmoyne": "**Rossmoyne",
+	  "santa maria": "*Santa*Maria",
       "st mary's": "**St Mary's",
       "the rise": "**The Rise",
       "uwa rec. centre": "UWA*Recreation*Centre",
