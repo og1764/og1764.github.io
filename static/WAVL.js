@@ -755,6 +755,7 @@ const __CONFIG__ = {
 			  crt = "";
 		  } else {
 			  crt = crt.trim();
+		  }
 		  csv.push([date, fixtures[i][4], full_time, fixtures[i][9][1], crt, fixtures[i][6], fixtures[i][7], fixtures[i][8], "", "", "", "", "", "", ""]);
               await WAVLfirstPage.drawText(fixtures[i][1], {
                   x: parseInt((310 - measureText(fixtures[i][1],10)).toString()),
