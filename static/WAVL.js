@@ -1105,7 +1105,7 @@ const __CONFIG__ = {
           try {
               let div_table = htmlDoc.getElementsByTagName("table")[1]
               console.log("***")
-              //console.log(div_table.rows.item(1).cells.item(2).innerText)
+              console.log(div_table.rows.item(1).cells.item(2).innerText)
               let temp_div = DIVISIONS[div_table.rows.item(1).cells.item(2).innerText]
               console.log(temp_div)
               let table = htmlDoc.getElementsByTagName("table")[2]
@@ -1113,11 +1113,11 @@ const __CONFIG__ = {
               for (let i = 1; i < rowLength; i++) {
                   let cells = table.rows.item(i).cells;
                   let venue = cells.item(1).innerText;
-                  //console.log(venue);
+                  console.log(venue);
                   let venue_split = venue.split(" Ct")
                   let zero_venue_split = venue_split[0].replaceAll(" Ct", "");
-                  //console.log(venue_usage);
-                  //console.log(zero_venue_split);
+                  console.log(venue_usage);
+                  console.log(zero_venue_split);
                   if (venue_usage.includes(zero_venue_split)) {
                       let _court = cells.item(1).innerText.split("Ct")[1];
                       const _team_a = cells.item(2).innerText;
