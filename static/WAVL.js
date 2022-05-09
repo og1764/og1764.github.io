@@ -1122,7 +1122,13 @@ const __CONFIG__ = {
                   console.log(venue_usage);
                   console.log(zero_venue_split);
                   if (venue_usage.includes(zero_venue_split)) {
-                      let _court = cells.item(1).innerText.split("Ct")[1];
+                      let _court = "";
+                      try {
+                        _court = cells.item(1).innerText.split("Ct")[1];
+                      } catch (e) {
+                        _court = "";
+                      }
+                      console.log(_court);
                       const _team_a = cells.item(2).innerText;
                       const _team_b = cells.item(5).innerText;
                       console.log(_team_a);
