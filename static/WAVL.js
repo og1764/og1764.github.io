@@ -1,5 +1,9 @@
 // Front Facing Config. Aliases are when there are multiple names for the one venue.
 // Also need to add those aliases / new venues to ~ line 466
+
+// VENUE_SPLIT should show how to parse every venue that is shown ON BRACKETPAL
+// __CONFIG__ is used for front end to braketpal parse.
+
 const __CONFIG__ = {
     "venues": [
       {"name": "Aquinas",
@@ -560,6 +564,7 @@ const __CONFIG__ = {
       "loftus": "**Loftus",
       "mandurah arc": "*Mandurah*ARC",
       "mandurah baptist college": "**MBC",
+      "mandurah baptist col": "**MBC",
       "mbc": "**MBC",
       "melville leisurefit": "*Melville*LeisureFit",
       "methodist ladies college": "Methodist*Ladies*College",
@@ -1100,7 +1105,7 @@ const __CONFIG__ = {
           try {
               let div_table = htmlDoc.getElementsByTagName("table")[1]
               console.log("***")
-              console.log(div_table.rows.item(1).cells.item(2).innerText)
+              //console.log(div_table.rows.item(1).cells.item(2).innerText)
               let temp_div = DIVISIONS[div_table.rows.item(1).cells.item(2).innerText]
               console.log(temp_div)
               let table = htmlDoc.getElementsByTagName("table")[2]
@@ -1108,17 +1113,17 @@ const __CONFIG__ = {
               for (let i = 1; i < rowLength; i++) {
                   let cells = table.rows.item(i).cells;
                   let venue = cells.item(1).innerText;
-                  console.log(venue);
+                  //console.log(venue);
                   let venue_split = venue.split(" Ct")
                   let zero_venue_split = venue_split[0].replaceAll(" Ct", "");
-                  console.log(venue_usage);
-                  console.log(zero_venue_split);
+                  //console.log(venue_usage);
+                  //console.log(zero_venue_split);
                   if (venue_usage.includes(zero_venue_split)) {
                       let _court = cells.item(1).innerText.split("Ct")[1];
                       const _team_a = cells.item(2).innerText;
                       const _team_b = cells.item(5).innerText;
-                      console.log(_team_a);
-                      console.log(x)
+                      //console.log(_team_a);
+                      //console.log(x)
                       let _duty = " ";
                       let _time_hr = " ";
                       let _time_min = " ";
@@ -1132,7 +1137,7 @@ const __CONFIG__ = {
                       let url = all_html[x].request.responseURL;
                       let split_url = url.split('/');
                       let _division = temp_div;
-                      console.log(temp_div)
+                      //console.log(temp_div)
                       //let _division = __CONFIG__
                       //console.log(_division)
                       let _date = date.split('-');
@@ -1185,12 +1190,14 @@ const __CONFIG__ = {
                       //console.log(fix)
                       fixtures_list.push([zero_venue_split, _venue_0, _venue_1, _venue_2, _venue_full, _court,
                           _team_a, _team_b, _duty, _division, _date_dd, _date_mm, _date_yyyy, _time_hr, _time_min, _sorting, _time_sorting])
-                      console.log(fixtures_list)
+                      //console.log(fixtures_list)
   
                   } else {
-                      console.log("UNUSED VENUE\n***")
-                      console.log(zero_venue_split)
-                      console.log("***")
+                      if(cells.item(3).innerText != "BYE") {
+                        console.log("UNUSED VENUE\n***")
+                        console.log(zero_venue_split)
+                        console.log("***")
+                      }
                   }
   
               }
