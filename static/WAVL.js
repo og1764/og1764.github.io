@@ -512,7 +512,7 @@ const __CONFIG__ = {
 
       '7/8 Female North': ['7/8 Female North', '7/8 F N', '117'],
       '7/8 Female South': ['7/8 Female South', '7/8 F S', '118'],
-      '9/10 Female Pool 1': ['9/10 Female Pool 1', '9/10 F 1', '112'],
+      '9/10 Female Pool 1': ['9/10 Female Pool 1', '9/10 F 1', '122'],
       '9/10 Female Pool 2': ['9/10 Female Pool 2', '9/10 F 2', '125'],
       '9/10 Female Pool 3': ['9/10 Female Pool 3', '9/10 F 3', '124'],
       '11/12 Female': ['11/12 Female', '11/12 F', '128'],
@@ -526,7 +526,7 @@ const __CONFIG__ = {
       
       'Year 7/8 Female North': ['7/8 Female North', '7/8 F N', '117'],
       'Year 7/8 Female South': ['7/8 Female South', '7/8 F S', '118'],
-      'Year 9/10 Female Pool 1': ['9/10 Female Pool 1', '9/10 F 1', '112'],
+      'Year 9/10 Female Pool 1': ['9/10 Female Pool 1', '9/10 F 1', '122'],
       'Year 9/10 Female Pool 2': ['9/10 Female Pool 2', '9/10 F 2', '125'],
       'Year 9/10 Female Pool 3': ['9/10 Female Pool 3', '9/10 F 3', '124'],
       'Year 11/12 Female': ['11/12 Female', '11/12 F', '128'],
