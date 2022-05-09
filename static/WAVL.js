@@ -230,41 +230,57 @@ const __CONFIG__ = {
       }
     ],
     "jl": [
-      { "id": 84,
-        "long": "7/8 Female Pool 1",
-        "short": "7/8 F 1"
+      { "id": 117,
+        "long": "7/8 Female North",
+        "short": "7/8 F N"
       },
-      { "id": 85,
-        "long": "7/8 Female Pool 2",
-        "short": "7/8 F 2"
+      { "id": 118,
+        "long": "7/8 Female South",
+        "short": "7/8 F S"
       },
-      { "id": 92,
-        "long": "7/8 Male",
-        "short": "7/8 M"
+      { "id": 110,
+        "long": "7/8 Male North",
+        "short": "7/8 M N"
       },
-      { "id": 86,
+      { "id": 116,
+        "long": "7/8 Male South",
+        "short": "7/8 M S"
+      },
+      { "id": 122,
         "long": "9/10 Female Pool 1",
         "short": "9/10 F 1"
       },
-      { "id": 87,
+      { "id": 125,
         "long": "9/10 Female Pool 2",
         "short": "9/10 F 2"
       },
-      { "id": 90,
-        "long": "9/10 Male Pool 1",
-        "short": "9/10 M 1"
+      { "id": 124,
+        "long": "9/10 Female Pool 3",
+        "short": "9/10 F 3"
       },
-      { "id": 91,
-        "long": "9/10 Male Pool 2",
-        "short": "9/10 M 2"
+      { "id": 121,
+        "long": "9/10 Male North",
+        "short": "9/10 M N"
       },
-      { "id": 88,
+      { "id": 119,
+        "long": "9/10 Male South Pool 1",
+        "short": "9/10 M S 1"
+      },
+      { "id": 120,
+        "long": "9/10 Male South Pool 2",
+        "short": "9/10 M S 2"
+      },
+      { "id": 128,
         "long": "11/12 Female",
-        "short": "SL Women"
+        "short": "11/12 F"
       },
-      { "id": 89,
-        "long": "11/12 Male",
-        "short": "11/12 M"
+      { "id": 127,
+        "long": "11/12 Male North",
+        "short": "11/12 M N"
+      },
+      { "id": 126,
+        "long": "11/12 Male South",
+        "short": "11/12 M S"
       }
     ], "div": {80:["W", "State League Women", "SL W"]}
   
@@ -478,6 +494,7 @@ const __CONFIG__ = {
       "State League Men": ["State League Men", "SL Men", "102"],
       "State League Reserve Men": ["State League Reserve Men", "SLR Men", "104"],
       "State League Reserve Women": ["State League Reserve Women", "SLR Women", "105"],
+      
       "Division 1 Men": ['Division 1 Men', 'Div 1 M', "106"],
       "Division 1 Women": ['Division 1 Women', 'Div 1 W', "107"],
       "Division 2 Men": ['Division 2 Men', 'Div 2 M', "108"],
@@ -488,24 +505,34 @@ const __CONFIG__ = {
       "Division 4 Women": ['Division 4 Women', 'Div 4 W', "112"],
       "Division 5 Men": ['Division 5 Men', 'Div 5 M', "130"],
       "Division 6 Men": ['Division 6 Men', 'Div 6 M', "131"],
-      '7/8 Female Pool 1': ['7/8 Female Pool 1', '7/8 F 1', '84'],
-      '7/8 Female Pool 2': ['7/8 Female Pool 2', '7/8 F 2', '85'],
-      '9/10 Female Pool 1': ['9/10 Female Pool 1', '9/10 F 1', '86'],
-      '9/10 Female Pool 2': ['9/10 Female Pool 2', '9/10 F 2', '87'],
-      '11/12 Female': ['11/12 Female', '11/12 F', '88'],
-      '11/12 Male': ['11/12 Male', '11/12 M', '89'],
-      '9/10 Male Pool 1': ['9/10 Male Pool 1', '9/10 M 1', '90'],
-      '9/10 Male Pool 2': ['9/10 Male Pool 2', '9/10 M 2', '91'],
-      '7/8 Male': ['7/8 Male', '7/8 M', '92'],
-      'Year 7/8 Female Pool 1': ['7/8 Female Pool 1', '7/8 F 1', '84'],
-      'Year 7/8 Female Pool 2': ['7/8 Female Pool 2', '7/8 F 2', '85'],
-      'Year 9/10 Female Pool 1': ['9/10 Female Pool 1', '9/10 F 1', '86'],
-      'Year 9/10 Female Pool 2': ['9/10 Female Pool 2', '9/10 F 2', '87'],
-      'Year 11/12 Female': ['11/12 Female', '11/12 F', '88'],
-      'Year 11/12 Male': ['11/12 Male', '11/12 M', '89'],
-      'Year 9/10 Male Pool 1': ['9/10 Male Pool 1', '9/10 M 1', '90'],
-      'Year 9/10 Male Pool 2': ['9/10 Male Pool 2', '9/10 M 2', '91'],
-      'Year 7/8 Male': ['7/8 Male', '7/8 M', '92']
+
+      '7/8 Female North': ['7/8 Female North', '7/8 F N', '117'],
+      '7/8 Female South': ['7/8 Female South', '7/8 F S', '118'],
+      '9/10 Female Pool 1': ['9/10 Female Pool 1', '9/10 F 1', '112'],
+      '9/10 Female Pool 2': ['9/10 Female Pool 2', '9/10 F 2', '125'],
+      '9/10 Female Pool 3': ['9/10 Female Pool 3', '9/10 F 3', '124'],
+      '11/12 Female': ['11/12 Female', '11/12 F', '128'],
+      '11/12 Male North': ['11/12 Male North', '11/12 M N', '127'],
+      '11/12 Male South': ['11/12 Male South', '11/12 M S', '126'],
+      '9/10 Male North': ['9/10 Male North', '9/10 M N', '121'],
+      '9/10 Male South Pool 1': ['9/10 Male South Pool 1', '9/10 M S 1', '119'],
+      '9/10 Male South Pool 2': ['9/10 Male South Pool 2', '9/10 M S 2', '120'],
+      '7/8 Male North': ['7/8 Male North', '7/8 M N', '110'],
+      '7/8 Male South': ['7/8 Male South', '7/8 M S', '116'],
+      
+      'Year 7/8 Female North': ['7/8 Female North', '7/8 F N', '117'],
+      'Year 7/8 Female South': ['7/8 Female South', '7/8 F S', '118'],
+      'Year 9/10 Female Pool 1': ['9/10 Female Pool 1', '9/10 F 1', '112'],
+      'Year 9/10 Female Pool 2': ['9/10 Female Pool 2', '9/10 F 2', '125'],
+      'Year 9/10 Female Pool 3': ['9/10 Female Pool 3', '9/10 F 3', '124'],
+      'Year 11/12 Female': ['11/12 Female', '11/12 F', '128'],
+      'Year 11/12 Male North': ['11/12 Male North', '11/12 M N', '127'],
+      'Year 11/12 Male South': ['11/12 Male South', '11/12 M S', '126'],
+      'Year 9/10 Male North': ['9/10 Male North', '9/10 M N', '121'],
+      'Year 9/10 Male South Pool 1': ['9/10 Male South Pool 1', '9/10 M S 1', '119'],
+      'Year 9/10 Male South Pool 2': ['9/10 Male South Pool 2', '9/10 M S 2', '120'],
+      'Year 7/8 Male North': ['7/8 Male North', '7/8 M N', '110'],
+      'Year 7/8 Male South': ['7/8 Male South', '7/8 M S', '116'],
   }
   
   
