@@ -864,6 +864,7 @@ const __CONFIG__ = {
                   })
               }
               var saved = await WAVLpdfDoc.saveAsBase64();
+		  console.log(csv);
 	      let csvContent = "data:text/csv;charset=utf-8," + csv.map(e => e.join(",")).join("\n");
 	      var encodedUri = encodeURI(csvContent);
 	      window.open(encodedUri);
