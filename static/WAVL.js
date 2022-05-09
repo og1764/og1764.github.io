@@ -724,10 +724,6 @@ const __CONFIG__ = {
   // [zero_venue_split, _venue_0, _venue_1, _venue_2, _venue_full, _court, _team_a, _team_b, _duty, _division, _date_dd, _date_mm, _date_yyyy, _time_hr, _time_min, _sorting, _time_sorting]
   // [     0              1          2          3          4         5        6         7     8         9        10         11         12        13          14       15          16
   async function modifyPdf(fix, venues, leagues, dates) {
-      var csv = [
-	      ["WAVL 2022","","","","","","","","","","","","","",""],
-	      ["Date", "Venue", "Time", "Div", "Court", "Team A", "Team B", "Duty Team", "Time", "Sets", "Referee 1st", "Qualifications", "Referee 2nd", "Qualifications", "Assessor"]
-		   ]
       console.log(venues);
       console.log(leagues);
       var fixtures = html_to_fixture(venues, leagues, dates, fix)
@@ -953,7 +949,11 @@ const __CONFIG__ = {
           total[i] = saved;
       }
 
-      fixtures.sort(sorting);
+      var csv = [
+        ["WAVL 2022","","","","","","","","","","","","","",""],
+        ["Date", "Venue", "Time", "Div", "Court", "Team A", "Team B", "Duty Team", "Time", "Sets", "Referee 1st", "Qualifications", "Referee 2nd", "Qualifications", "Assessor"]
+         ];
+      fixtures.sort(time_sorting);
       for (var i = 0; i < fixtures.length; i++) {
         if(fixtures[i][9][0][0] == "D" ||  fixtures[i][9][0][0] == "S"){
             let date = fixtures[i][10] + "/" + fixtures[i][11] + "/" + fixtures[i][12];
@@ -965,6 +965,7 @@ const __CONFIG__ = {
                 crt = crt.trim();
             }
             csv.push([date, fixtures[i][4], full_time, fixtures[i][9][1], crt, fixtures[i][6], fixtures[i][7], fixtures[i][8], "", "", "", "", "", "", ""]);
+        }
       }
 
       //download(pdfBytes, "pdf-lib_creation_example.pdf", "application/pdf");
