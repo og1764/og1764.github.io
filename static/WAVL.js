@@ -556,7 +556,7 @@ const __CONFIG__ = {
   
   class Fixture{
       constructor(venue, venue_0, venue_1, venue_2, venue_full, court, team_a, team_b, duty, division, date_dd, date_mm,
-                  date_yyyy, time_hr, time_min, sorting) {
+                  date_yyyy, time_hr, time_min, sorting, time_sorting) {
           self.venue = venue
           self.venue_0 = venue_0
           self.venue_1 = venue_1
@@ -573,6 +573,7 @@ const __CONFIG__ = {
           self.time_hr = time_hr
           self.time_min = time_min
          self.sorting = sorting
+         self.time_sorting = time_sorting;
       }
   
       get venue(){return self.venue}
@@ -591,6 +592,7 @@ const __CONFIG__ = {
       get time_hr(){return self.time_hr}
       get time_min(){return self.time_min}
       get sorting(){return self.sorting}
+      get time_sorting(){return self.time_sorting}
   }
   
   
@@ -709,9 +711,18 @@ const __CONFIG__ = {
           return (a[15] < b[15]) ? -1 : 1;
       }
   }
+
+  function time_sorting(a, b) {
+      if (a[16] === b[16]) {
+          return 0;
+      }
+      else {
+          return (a[16] < b[16]) ? -1 : 1;
+      }
+  }
   
-  // [zero_venue_split, _venue_0, _venue_1, _venue_2, _venue_full, _court, _team_a, _team_b, _duty, _division, _date_dd, _date_mm, _date_yyyy, _time_hr, _time_min, _sorting]
-  // [     0              1          2          3          4         5        6         7     8         9        10         11         12        13          14       15
+  // [zero_venue_split, _venue_0, _venue_1, _venue_2, _venue_full, _court, _team_a, _team_b, _duty, _division, _date_dd, _date_mm, _date_yyyy, _time_hr, _time_min, _sorting, _time_sorting]
+  // [     0              1          2          3          4         5        6         7     8         9        10         11         12        13          14       15          16
   async function modifyPdf(fix, venues, leagues, dates) {
       var csv = [
 	      ["WAVL 2022","","","","","","","","","","","","","",""],
@@ -748,15 +759,6 @@ const __CONFIG__ = {
           var JLfirstPage = await JLpages[0]
   
           if(fixtures[i][9][0][0] == "D" ||  fixtures[i][9][0][0] == "S"){
-		  let date = fixtures[i][10] + "/" + fixtures[i][11] + "/" + fixtures[i][12];
-		  let full_time = fixtures[i][13] + ":" + fixtures[i][14];
-		  let crt = fixtures[i][5];
-		  if (!(crt)) {
-			  crt = "";
-		  } else {
-			  crt = crt.trim();
-		  }
-		  csv.push([date, fixtures[i][4], full_time, fixtures[i][9][1], crt, fixtures[i][6], fixtures[i][7], fixtures[i][8], "", "", "", "", "", "", ""]);
               await WAVLfirstPage.drawText(fixtures[i][1], {
                   x: parseInt((310 - measureText(fixtures[i][1],10)).toString()),
                   y: 575,
@@ -777,8 +779,8 @@ const __CONFIG__ = {
               })
               try {
                   // court
-                  await WAVLfirstPage.drawText(fixtures[i][5].trim(), {
-                    x: parseInt((400 - measureBold(fixtures[i][5].trim(),13).toString()).toString()),
+                  await WAVLfirstPage.drawText(fixtures[i][5], {
+                    x: parseInt((400 - measureBold(fixtures[i][5],13).toString()).toString()),
                     y: 557,
                     size: 13,
                     font: WAVLhelveticaBold
@@ -950,6 +952,21 @@ const __CONFIG__ = {
           }
           total[i] = saved;
       }
+
+      fixtures.sort(sorting);
+      for (var i = 0; i < fixtures.length; i++) {
+        if(fixtures[i][9][0][0] == "D" ||  fixtures[i][9][0][0] == "S"){
+            let date = fixtures[i][10] + "/" + fixtures[i][11] + "/" + fixtures[i][12];
+            let full_time = fixtures[i][13] + ":" + fixtures[i][14];
+            let crt = fixtures[i][5];
+            if (!(crt)) {
+                crt = "";
+            } else {
+                crt = crt.trim();
+            }
+            csv.push([date, fixtures[i][4], full_time, fixtures[i][9][1], crt, fixtures[i][6], fixtures[i][7], fixtures[i][8], "", "", "", "", "", "", ""]);
+      }
+
       //download(pdfBytes, "pdf-lib_creation_example.pdf", "application/pdf");
 	  console.log(csv);
 	      let csvContent = "data:text/csv;charset=utf-8," + csv.map(e => e.join(",")).join("\n");
@@ -1109,6 +1126,7 @@ const __CONFIG__ = {
                       const _venue_2 = _tmp_venue[2]
                       let _venue_full = VENUE_SPLIT[zero_venue_split.toLowerCase()].replaceAll("*", " ").trimLeft();
                       let _sorting = _venue_full + " " + _court + " " + _time_hr
+                      let _time_sorting = _venue_full + " " + _time_hr + " " + _court;
                       /*fix['venue'] = zero_venue_split;
                       fix['venue_0'] = _venue_0
                       fix['venue_1'] = _venue_1
@@ -1138,7 +1156,7 @@ const __CONFIG__ = {
                       //    _team_a, _team_b, _duty, _division, _date_dd, _date_mm, _date_yyyy, _time_hr, _time_min, _sorting)
                       //console.log(fix)
                       fixtures_list.push([zero_venue_split, _venue_0, _venue_1, _venue_2, _venue_full, _court,
-                          _team_a, _team_b, _duty, _division, _date_dd, _date_mm, _date_yyyy, _time_hr, _time_min, _sorting])
+                          _team_a, _team_b, _duty, _division, _date_dd, _date_mm, _date_yyyy, _time_hr, _time_min, _sorting, _time_sorting])
                       console.log(fixtures_list)
   
                   } else {
