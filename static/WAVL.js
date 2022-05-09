@@ -766,7 +766,7 @@ const __CONFIG__ = {
       var total = new Array(fixtures.length);
       console.log(fixtures)
       for (var i = 0; i < fixtures.length; i++) {
-          ///var WAVLurl = "./static/def.pdf";
+          //var WAVLurl = "./static/def.pdf";
           var WAVLurl = "./static/def.pdf"
           var JLurl =  "./static/def_jl.pdf";
   
@@ -980,7 +980,7 @@ const __CONFIG__ = {
           }
           total[i] = saved;
       }
-
+      console.log("End of modifyPdf");
       var csv = [
         ["WAVL 2022","","","","","","","","","","","","","",""],
         ["Date", "Venue", "Time", "Div", "Court", "Team A", "Team B", "Duty Team", "Time", "Sets", "Referee 1st", "Qualifications", "Referee 2nd", "Qualifications", "Assessor"]
@@ -999,7 +999,7 @@ const __CONFIG__ = {
             csv.push([date, fixtures[i][4], full_time, fixtures[i][9][1], crt, fixtures[i][6], fixtures[i][7], fixtures[i][8], "", "", "", "", "", "", ""]);
         }
       }
-
+      console.log("fixtures x2");
       //download(pdfBytes, "pdf-lib_creation_example.pdf", "application/pdf");
       try {
         console.log(csv);
@@ -1013,6 +1013,7 @@ const __CONFIG__ = {
             link.click();
       } catch (e) {console.log(e)}
       console.log(total);
+      console.log("???");
       return await total;
   
   }
@@ -1124,8 +1125,8 @@ const __CONFIG__ = {
                       let _court = cells.item(1).innerText.split("Ct")[1];
                       const _team_a = cells.item(2).innerText;
                       const _team_b = cells.item(5).innerText;
-                      //console.log(_team_a);
-                      //console.log(x)
+                      console.log(_team_a);
+                      console.log(x)
                       let _duty = " ";
                       let _time_hr = " ";
                       let _time_min = " ";
@@ -1195,13 +1196,17 @@ const __CONFIG__ = {
                       //console.log(fixtures_list)
   
                   } else {
+                      /*
                       try{
                         if(cells.item(3).innerText != "BYE") {
                             console.log("UNUSED VENUE\n***")
                             console.log(zero_venue_split)
                             console.log("***")
                         }
-                      } catch (e) {console.log(e); console.log(zero_venue_split);}
+                      } catch (e) {console.log(e); console.log(zero_venue_split);}*/
+                      console.log("UNUSED VENUE\n***")
+                            console.log(zero_venue_split)
+                            console.log("***")
                   }
   
               }
@@ -1209,7 +1214,7 @@ const __CONFIG__ = {
               console.log(e)
           }
       }
-      //console.log(fixtures_list);
+      console.log(fixtures_list);
       return fixtures_list
   }
   
