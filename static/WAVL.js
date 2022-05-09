@@ -1128,6 +1128,9 @@ const __CONFIG__ = {
                       } catch (e) {
                         _court = "";
                       }
+                      if (_court == null) {
+                          _court = "";
+                      }
                       console.log(_court);
                       const _team_a = cells.item(2).innerText;
                       const _team_b = cells.item(5).innerText;
