@@ -1193,11 +1193,13 @@ const __CONFIG__ = {
                       //console.log(fixtures_list)
   
                   } else {
-                      if(cells.item(3).innerText != "BYE") {
-                        console.log("UNUSED VENUE\n***")
-                        console.log(zero_venue_split)
-                        console.log("***")
-                      }
+                      try{
+                        if(cells.item(3).innerText != "BYE") {
+                            console.log("UNUSED VENUE\n***")
+                            console.log(zero_venue_split)
+                            console.log("***")
+                        }
+                      } catch (e) {console.log(e); console.log(zero_venue_split);}
                   }
   
               }
