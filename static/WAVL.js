@@ -750,7 +750,12 @@ const __CONFIG__ = {
           if(fixtures[i][9][0][0] == "D" ||  fixtures[i][9][0][0] == "S"){
 		  let date = fixtures[i][10] + "/" + fixtures[i][11] + "/" + fixtures[i][12];
 		  let full_time = fixtures[i][13] + ":" + fixtures[i][14];
-		  csv.push([date, fixtures[i][4], full_time, fixtures[i][9], fixtures[i][5], fixtures[i][6], fixtures[i][7], fixtures[i][8], "", "", "", "", "", "", ""]);
+		  let crt = fixtures[i][5];
+		  if (!(crt)) {
+			  crt = "";
+		  } else {
+			  crt = crt.trim();
+		  csv.push([date, fixtures[i][4], full_time, fixtures[i][9][1], crt, fixtures[i][6], fixtures[i][7], fixtures[i][8], "", "", "", "", "", "", ""]);
               await WAVLfirstPage.drawText(fixtures[i][1], {
                   x: parseInt((310 - measureText(fixtures[i][1],10)).toString()),
                   y: 575,
@@ -771,8 +776,8 @@ const __CONFIG__ = {
               })
               try {
                   // court
-                  await WAVLfirstPage.drawText(fixtures[i][5], {
-                    x: parseInt((400 - measureBold(fixtures[i][5],13).toString()).toString()),
+                  await WAVLfirstPage.drawText(fixtures[i][5].trim(), {
+                    x: parseInt((400 - measureBold(fixtures[i][5].trim(),13).toString()).toString()),
                     y: 557,
                     size: 13,
                     font: WAVLhelveticaBold
@@ -864,10 +869,6 @@ const __CONFIG__ = {
                   })
               }
               var saved = await WAVLpdfDoc.saveAsBase64();
-		  console.log(csv);
-	      let csvContent = "data:text/csv;charset=utf-8," + csv.map(e => e.join(",")).join("\n");
-	      var encodedUri = encodeURI(csvContent);
-	      window.open(encodedUri);
           }else{
               // Junior League
               // full venue
@@ -949,6 +950,10 @@ const __CONFIG__ = {
           total[i] = saved;
       }
       //download(pdfBytes, "pdf-lib_creation_example.pdf", "application/pdf");
+	  console.log(csv);
+	      let csvContent = "data:text/csv;charset=utf-8," + csv.map(e => e.join(",")).join("\n");
+	      var encodedUri = encodeURI(csvContent);
+	      window.open(encodedUri);
       console.log(total);
       return await total;
   
