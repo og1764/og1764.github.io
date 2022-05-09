@@ -1001,15 +1001,17 @@ const __CONFIG__ = {
       }
 
       //download(pdfBytes, "pdf-lib_creation_example.pdf", "application/pdf");
-	  console.log(csv);
-	      let csvContent = "data:text/csv;charset=utf-8," + csv.map(e => e.join(",")).join("\n");
-	      var encodedUri = encodeURI(csvContent);
-		var link = document.createElement("a");
-		link.setAttribute("href", encodedUri);
-		link.setAttribute("download", "my_data.csv");
-		document.body.appendChild(link); // Required for FF
+      try {
+        console.log(csv);
+            let csvContent = "data:text/csv;charset=utf-8," + csv.map(e => e.join(",")).join("\n");
+            var encodedUri = encodeURI(csvContent);
+            var link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "my_data.csv");
+            document.body.appendChild(link); // Required for FF
 
-		link.click();
+            link.click();
+      } catch (e) {console.log(e)}
       console.log(total);
       return await total;
   
