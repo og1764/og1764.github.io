@@ -3528,6 +3528,7 @@ input:focus, textarea:focus, select:focus
    height: 16px;
    left: 0;
    top: 0;
+   cursor: pointer;
 }
 #wb_Checkbox32 label
 {
@@ -3644,6 +3645,7 @@ input:focus, textarea:focus, select:focus
    height: 16px;
    left: 0;
    top: 0;
+   cursor: pointer;
 }
 #wb_Checkbox33 label
 {
@@ -3756,6 +3758,7 @@ input:focus, textarea:focus, select:focus
    height: 16px;
    left: 0;
    top: 0;
+   cursor: pointer;
 }
 #wb_Checkbox34 label
 {
