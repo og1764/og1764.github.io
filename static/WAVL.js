@@ -1323,9 +1323,15 @@ function html_to_fixture(venues, leagues, date, all_html) {
                           console.log("***")
                       }
                     } catch (e) {console.log(e); console.log(zero_venue_split);}*/
-                    if (Number.isInteger(zero_venue_split.substring(0, 2).trim())) {
-                        console.log("BYE: " + zero_venue_split);
-                    } else {
+                    try {
+                        if (Number.isInteger(parseInt(zero_venue_split.substring(0, 2).trim()))) {
+                            console.log("BYE: " + zero_venue_split);
+                        } else {
+                            console.log("UNUSED VENUE\n***")
+                            console.log(zero_venue_split)
+                            console.log("***")
+                        }
+                    } catch (e) {
                         console.log("UNUSED VENUE\n***")
                         console.log(zero_venue_split)
                         console.log("***")
