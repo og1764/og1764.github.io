@@ -335,6 +335,14 @@ const __CONFIG__ = {
               document.getElementById("Button4").style.backgroundColor = "red";
               document.getElementById("Button4").style.fontSize = "15px";
               window.clearInterval(dots);
+          } else if (this.readyState == 4 && this.status != 200){
+              console.log("timeout :(");
+              document.getElementById("Button4").disabled = false;
+              document.getElementById("Button4").value = "Error code: " + this.status + ". Try again?";
+              document.getElementById("Button4").style.color = "white";
+              document.getElementById("Button4").style.backgroundColor = "red";
+              document.getElementById("Button4").style.fontSize = "15px";
+              window.clearInterval(dots);
           }
       };
       xhttp.open("GET", url, true);
@@ -981,37 +989,39 @@ const __CONFIG__ = {
           total[i] = saved;
       }
       console.log("End of modifyPdf");
-      var csv = [
-        ["WAVL 2022","","","","","","","","","","","","","",""],
-        ["Date", "Venue", "Time", "Div", "Court", "Team A", "Team B", "Duty Team", "Time", "Sets", "Referee 1st", "Qualifications", "Referee 2nd", "Qualifications", "Assessor"]
-         ];
-      fixtures.sort(time_sorting);
-      for (var i = 0; i < fixtures.length; i++) {
-        if(fixtures[i][9][0][0] == "D" ||  fixtures[i][9][0][0] == "S"){
-            let date = fixtures[i][10] + "/" + fixtures[i][11] + "/" + fixtures[i][12];
-            let full_time = fixtures[i][13] + ":" + fixtures[i][14];
-            let crt = fixtures[i][5];
-            if (!(crt)) {
-                crt = "";
-            } else {
-                crt = crt.trim();
-            }
-            csv.push([date, fixtures[i][4], full_time, fixtures[i][9][1], crt, fixtures[i][6], fixtures[i][7], fixtures[i][8], "", "", "", "", "", "", ""]);
-        }
-      }
-      console.log("fixtures x2");
-      //download(pdfBytes, "pdf-lib_creation_example.pdf", "application/pdf");
-      try {
-        console.log(csv);
-            let csvContent = "data:text/csv;charset=utf-8," + csv.map(e => e.join(",")).join("\n");
-            var encodedUri = encodeURI(csvContent);
-            var link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", "my_data.csv");
-            document.body.appendChild(link); // Required for FF
+	console.log(document.getElementById("Checkbox99").checked);
+	  if (document.getElementById("Checkbox99").checked) {
+	      var csv = [
+		["WAVL 2022","","","","","","","","","","","","","",""],
+		["Date", "Venue", "Time", "Div", "Court", "Team A", "Team B", "Duty Team", "Time", "Sets", "Referee 1st", "Qualifications", "Referee 2nd", "Qualifications", "Assessor"]
+		 ];
+	      fixtures.sort(time_sorting);
+	      for (var i = 0; i < fixtures.length; i++) {
+		    let date = fixtures[i][10] + "/" + fixtures[i][11] + "/" + fixtures[i][12];
+		    let full_time = fixtures[i][13] + ":" + fixtures[i][14];
+		    let crt = fixtures[i][5];
+		    if (!(crt)) {
+			crt = "";
+		    } else {
+			crt = crt.trim();
+		    }
+		    csv.push([date, fixtures[i][4], full_time, fixtures[i][9][1], crt, fixtures[i][6], fixtures[i][7], fixtures[i][8], "", "", "", "", "", "", ""]);
+	      }
+	      console.log("fixtures x2");
+	      //download(pdfBytes, "pdf-lib_creation_example.pdf", "application/pdf");
+	      try {
+		console.log(csv);
+		    let csvContent = "data:text/csv;charset=utf-8," + csv.map(e => e.join(",")).join("\n");
+		    var encodedUri = encodeURI(csvContent);
+		    var link = document.createElement("a");
+		    link.setAttribute("href", encodedUri);
+		      let filename = "Runsheet" + dates + ".csv";
+		    link.setAttribute("download", filename);
+		    document.body.appendChild(link); // Required for FF
 
-            link.click();
-      } catch (e) {console.log(e)}
+		    link.click();
+	      } catch (e) {console.log(e)}
+	  }
       console.log(total);
       console.log("???");
       return await total;
