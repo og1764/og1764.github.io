@@ -1332,142 +1332,143 @@ function html_to_fixture(venues, leagues, date, all_html) {
                     }
 
                 }
-            } catch (e) {
-                console.log(e)
             }
+        } catch (e) {
+            console.log(e)
         }
-        console.log(fixtures_list);
-        return fixtures_list
     }
+    console.log(fixtures_list);
+    return fixtures_list
+}
 
-    function measureText(string, fontSize = 10) {
-        const widths = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.1546875, 0.278125, 0.4, 0.721875, 0.5609375, 0.9609375, 0.7203125, 0.240625, 0.4, 0.4, 0.48125, 0.640625, 0.278125, 0.4, 0.278125, 0.4015625, 0.5609375, 0.55625, 0.5609375, 0.5609375, 0.640625, 0.5609375, 0.5609375, 0.5609375, 0.5609375, 0.5609375, 0.278125, 0.278125, 0.640625, 0.640625, 0.640625, 0.5609375, 1.1203125, 0.88125, 0.7203125, 0.8, 0.7234375, 0.7203125, 0.640625, 0.8, 0.7234375, 0.278125, 0.5, 0.8, 0.640625, 0.88125, 0.7234375, 0.8, 0.7203125, 0.8, 0.8, 0.7203125, 0.640625, 0.7234375, 0.8015625, 1.121875, 0.8015625, 0.8015625, 0.721875, 0.3203125, 0.48125, 0.3203125, 0.48125, 0.721875, 0.334375, 0.5609375, 0.640625, 0.5609375, 0.5609375, 0.5609375, 0.48125, 0.5609375, 0.5609375, 0.240625, 0.321875, 0.5609375, 0.240625, 0.88125, 0.5609375, 0.5609375, 0.640625, 0.5609375, 0.4, 0.5609375, 0.4015625, 0.5609375, 0.6421875, 0.88125, 0.6421875, 0.6421875, 0.6421875, 0.4, 0.2609375, 0.48125, 0.640625]
-        const avg = 0.5823026315789476
+function measureText(string, fontSize = 10) {
+    const widths = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.1546875, 0.278125, 0.4, 0.721875, 0.5609375, 0.9609375, 0.7203125, 0.240625, 0.4, 0.4, 0.48125, 0.640625, 0.278125, 0.4, 0.278125, 0.4015625, 0.5609375, 0.55625, 0.5609375, 0.5609375, 0.640625, 0.5609375, 0.5609375, 0.5609375, 0.5609375, 0.5609375, 0.278125, 0.278125, 0.640625, 0.640625, 0.640625, 0.5609375, 1.1203125, 0.88125, 0.7203125, 0.8, 0.7234375, 0.7203125, 0.640625, 0.8, 0.7234375, 0.278125, 0.5, 0.8, 0.640625, 0.88125, 0.7234375, 0.8, 0.7203125, 0.8, 0.8, 0.7203125, 0.640625, 0.7234375, 0.8015625, 1.121875, 0.8015625, 0.8015625, 0.721875, 0.3203125, 0.48125, 0.3203125, 0.48125, 0.721875, 0.334375, 0.5609375, 0.640625, 0.5609375, 0.5609375, 0.5609375, 0.48125, 0.5609375, 0.5609375, 0.240625, 0.321875, 0.5609375, 0.240625, 0.88125, 0.5609375, 0.5609375, 0.640625, 0.5609375, 0.4, 0.5609375, 0.4015625, 0.5609375, 0.6421875, 0.88125, 0.6421875, 0.6421875, 0.6421875, 0.4, 0.2609375, 0.48125, 0.640625]
+    const avg = 0.5823026315789476
+    try {
+        var tmp = string
+            .split('')
+            .map(c => c.charCodeAt(0) < widths.length ? widths[c.charCodeAt(0)] : avg)
+            .reduce((cur, acc) => acc + cur) * fontSize
+        return tmp / 2;
+    } catch {
+        return 0
+    }
+}
+
+function measureBold(string, fontSize = 10) {
+    const widths = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.1265625, 0.334375, 0.409375, 0.6421875, 0.5609375, 0.88125, 0.8, 0.18125, 0.4, 0.4, 0.5, 0.721875, 0.25, 0.4, 0.25, 0.4015625, 0.5609375, 0.5, 0.5609375, 0.5, 0.5609375, 0.5, 0.5609375, 0.5609375, 0.5609375, 0.5609375, 0.278125, 0.3203125, 0.721875, 0.721875, 0.721875, 0.48125, 0.9609375, 0.88125, 0.8015625, 0.7203125, 0.88125, 0.721875, 0.721875, 0.8, 0.88125, 0.4, 0.5625, 0.88125, 0.721875, 1.0421875, 0.88125, 0.8, 0.721875, 0.8, 0.88125, 0.5609375, 0.640625, 0.88125, 0.88125, 1.040625, 0.88125, 0.8, 0.8015625, 0.4, 0.4015625, 0.334375, 0.6421875, 0.6421875, 0.334375, 0.5609375, 0.6421875, 0.48125, 0.5609375, 0.48125, 0.5609375, 0.5609375, 0.6421875, 0.3203125, 0.4390625, 0.6421875, 0.3203125, 0.9625, 0.6421875, 0.5609375, 0.6421875, 0.5609375, 0.48125, 0.4, 0.4015625, 0.6421875, 0.6421875, 0.88125, 0.6421875, 0.6421875, 0.5625, 0.48125, 0.2015625, 0.48125, 0.721875]
+    const avg = 0.5999835526315791
+    try {
+        var tmp = string
+            .split('')
+            .map(c => c.charCodeAt(0) < widths.length ? widths[c.charCodeAt(0)] : avg)
+            .reduce((cur, acc) => acc + cur) * fontSize
+        return tmp / 2;
+    } catch {
+        return 0
+    }
+}
+
+function generate_Table() {
+    var venue_list = [];
+    var wavl_list = [];
+    var jl_list = [];
+
+    var table = document.getElementById("Table1")
+
+    //console.log(__CONFIG__.venues.length)
+    //console.log(__CONFIG__.wavl.length)
+    //console.log(__CONFIG__.jl.length)
+    //console.log(__CONFIG__.jl[3].name)
+    for (var i = 0; i < Math.max(__CONFIG__.venues.length, __CONFIG__.wavl.length, __CONFIG__.jl.length); i++) {
+        var row = table.insertRow(-1);
+        var cell0 = row.insertCell(0);
+        var cell1 = row.insertCell(1);
+        var cell2 = row.insertCell(2);
+        var cell3 = row.insertCell(3);
+        var cell4 = row.insertCell(4);
+        var cell5 = row.insertCell(5);
+        var cell6 = row.insertCell(6);
+        var cell7 = row.insertCell(7);
+        var cell8 = row.insertCell(8);
+        var cell9 = row.insertCell(9);
+
+        // venue
+        cell0.classList.add("cell12");
+        cell0.innerHTML = '<p style="font-size:8px;line-height:9.5px;">&nbsp;</p>'
+
         try {
-            var tmp = string
-                .split('')
-                .map(c => c.charCodeAt(0) < widths.length ? widths[c.charCodeAt(0)] : avg)
-                .reduce((cur, acc) => acc + cur) * fontSize
-            return tmp / 2;
-        } catch {
-            return 0
-        }
-    }
+            var venue = __CONFIG__.venues[i];
+            cell1.classList.add("cell2")
+            cell1.innerHTML = '<div id="venue_' + i.toString() + '" style="display:inline-block;width:16px;height:20px;z-index:56;">' +
+                '<input type="checkbox" id="checkvenue_' + i.toString() + '" name="Venues" value="on" checked="" style="display:inline-block;opacity:0;" title="' + venue.name + '">' +
+                '<label for="checkvenue_' + i.toString() + '"></label>' +
+                '</div>'
 
-    function measureBold(string, fontSize = 10) {
-        const widths = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.1265625, 0.334375, 0.409375, 0.6421875, 0.5609375, 0.88125, 0.8, 0.18125, 0.4, 0.4, 0.5, 0.721875, 0.25, 0.4, 0.25, 0.4015625, 0.5609375, 0.5, 0.5609375, 0.5, 0.5609375, 0.5, 0.5609375, 0.5609375, 0.5609375, 0.5609375, 0.278125, 0.3203125, 0.721875, 0.721875, 0.721875, 0.48125, 0.9609375, 0.88125, 0.8015625, 0.7203125, 0.88125, 0.721875, 0.721875, 0.8, 0.88125, 0.4, 0.5625, 0.88125, 0.721875, 1.0421875, 0.88125, 0.8, 0.721875, 0.8, 0.88125, 0.5609375, 0.640625, 0.88125, 0.88125, 1.040625, 0.88125, 0.8, 0.8015625, 0.4, 0.4015625, 0.334375, 0.6421875, 0.6421875, 0.334375, 0.5609375, 0.6421875, 0.48125, 0.5609375, 0.48125, 0.5609375, 0.5609375, 0.6421875, 0.3203125, 0.4390625, 0.6421875, 0.3203125, 0.9625, 0.6421875, 0.5609375, 0.6421875, 0.5609375, 0.48125, 0.4, 0.4015625, 0.6421875, 0.6421875, 0.88125, 0.6421875, 0.6421875, 0.5625, 0.48125, 0.2015625, 0.48125, 0.721875]
-        const avg = 0.5999835526315791
+            cell2.classList.add("cell9")
+            cell2.innerHTML = '<div id="wb_Text8">' +
+                '<span style="color:#000000;font-family:Arial;font-size:16px;">' + venue.name + '</span>' +
+                '</div>'
+        } catch (e) {
+            //console.log(e)
+            cell1.classList.add("cell10")
+            cell1.innerHTML = '<p style="font-size:8px;line-height:9.5px;">&nbsp;</p>'
+            cell2.classList.add("cell11")
+            cell2.innerHTML = '<p style="font-size:8px;line-height:9.5px;">&nbsp;</p>'
+        }
+
+        cell3.classList.add("cell1")
+        cell3.innerHTML = '<p style="font-size:8px;line-height:9.5px;">&nbsp;</p>'
+
         try {
-            var tmp = string
-                .split('')
-                .map(c => c.charCodeAt(0) < widths.length ? widths[c.charCodeAt(0)] : avg)
-                .reduce((cur, acc) => acc + cur) * fontSize
-            return tmp / 2;
-        } catch {
-            return 0
+            var wavl = __CONFIG__.wavl[i];
+            cell4.classList.add("cell2")
+            cell4.innerHTML = '<div id="wavl_' + i.toString() + '" style="display:inline-block;width:16px;height:20px;z-index:58;">' +
+                '<input type="checkbox" id="checkwavl_' + i.toString() + '" name="WAVL_teams" value="on" checked="" style="display:inline-block;opacity:0;" title="' + wavl.long + '">' +
+                '<label for="checkwavl_' + i.toString() + '"></label>' +
+                '</div>'
+
+            cell5.classList.add("cell9")
+            cell5.innerHTML = '<div id="wb_Text32">' +
+                '<span style="color:#000000;font-family:Arial;font-size:16px;">' + wavl.long + '</span>' +
+                '</div>'
+        } catch (e) {
+            //console.log(e)
+            //console.log(i)
+            cell4.classList.add("cell10")
+            cell4.innerHTML = '<p style="font-size:8px;line-height:9.5px;">&nbsp;</p>'
+            cell5.classList.add("cell11")
+            cell5.innerHTML = '<p style="font-size:8px;line-height:9.5px;">&nbsp;</p>'
+        }
+
+        cell6.classList.add("cell1")
+        cell6.innerHTML = '<p style="font-size:8px;line-height:9.5px;">&nbsp;</p>'
+
+        try {
+            var jl = __CONFIG__.jl[i]
+            cell7.classList.add("cell2")
+            cell7.innerHTML = '<div id="wavjl_' + i.toString() + '" style="display:inline-block;width:16px;height:20px;z-index:60;">' +
+                '<input type="checkbox" id="checkwavjl_' + i.toString() + '" name="WAVjL_teams" value="on" checked="" style="display:inline-block;opacity:0;" title="' + jl.long + '">' +
+                '<label for="checkwavjl_' + i.toString() + '"></label>' +
+                '</div>'
+
+            cell8.classList.add("cell9")
+            cell8.innerHTML = '<div id="wb_Text49">' +
+                '<span style="color:#000000;font-family:Arial;font-size:16px;">' + jl.long + '</span>' +
+                '</div>'
+        } catch (e) {
+            //console.log(e)
+            //console.log(i)
+            cell7.classList.add("cell10")
+            cell7.innerHTML = '<p style="font-size:8px;line-height:9.5px;">&nbsp;</p>'
+            cell8.classList.add("cell11")
+            cell8.innerHTML = '<p style="font-size:8px;line-height:9.5px;">&nbsp;</p>'
+
         }
     }
+    var fin_row = table.insertRow(-1);
+    var fin_cell = fin_row.insertCell(0);
+    fin_cell.classList.add("cell99")
+}
 
-    function generate_Table() {
-        var venue_list = [];
-        var wavl_list = [];
-        var jl_list = [];
-
-        var table = document.getElementById("Table1")
-
-        //console.log(__CONFIG__.venues.length)
-        //console.log(__CONFIG__.wavl.length)
-        //console.log(__CONFIG__.jl.length)
-        //console.log(__CONFIG__.jl[3].name)
-        for (var i = 0; i < Math.max(__CONFIG__.venues.length, __CONFIG__.wavl.length, __CONFIG__.jl.length); i++) {
-            var row = table.insertRow(-1);
-            var cell0 = row.insertCell(0);
-            var cell1 = row.insertCell(1);
-            var cell2 = row.insertCell(2);
-            var cell3 = row.insertCell(3);
-            var cell4 = row.insertCell(4);
-            var cell5 = row.insertCell(5);
-            var cell6 = row.insertCell(6);
-            var cell7 = row.insertCell(7);
-            var cell8 = row.insertCell(8);
-            var cell9 = row.insertCell(9);
-
-            // venue
-            cell0.classList.add("cell12");
-            cell0.innerHTML = '<p style="font-size:8px;line-height:9.5px;">&nbsp;</p>'
-
-            try {
-                var venue = __CONFIG__.venues[i];
-                cell1.classList.add("cell2")
-                cell1.innerHTML = '<div id="venue_' + i.toString() + '" style="display:inline-block;width:16px;height:20px;z-index:56;">' +
-                    '<input type="checkbox" id="checkvenue_' + i.toString() + '" name="Venues" value="on" checked="" style="display:inline-block;opacity:0;" title="' + venue.name + '">' +
-                    '<label for="checkvenue_' + i.toString() + '"></label>' +
-                    '</div>'
-
-                cell2.classList.add("cell9")
-                cell2.innerHTML = '<div id="wb_Text8">' +
-                    '<span style="color:#000000;font-family:Arial;font-size:16px;">' + venue.name + '</span>' +
-                    '</div>'
-            } catch (e) {
-                //console.log(e)
-                cell1.classList.add("cell10")
-                cell1.innerHTML = '<p style="font-size:8px;line-height:9.5px;">&nbsp;</p>'
-                cell2.classList.add("cell11")
-                cell2.innerHTML = '<p style="font-size:8px;line-height:9.5px;">&nbsp;</p>'
-            }
-
-            cell3.classList.add("cell1")
-            cell3.innerHTML = '<p style="font-size:8px;line-height:9.5px;">&nbsp;</p>'
-
-            try {
-                var wavl = __CONFIG__.wavl[i];
-                cell4.classList.add("cell2")
-                cell4.innerHTML = '<div id="wavl_' + i.toString() + '" style="display:inline-block;width:16px;height:20px;z-index:58;">' +
-                    '<input type="checkbox" id="checkwavl_' + i.toString() + '" name="WAVL_teams" value="on" checked="" style="display:inline-block;opacity:0;" title="' + wavl.long + '">' +
-                    '<label for="checkwavl_' + i.toString() + '"></label>' +
-                    '</div>'
-
-                cell5.classList.add("cell9")
-                cell5.innerHTML = '<div id="wb_Text32">' +
-                    '<span style="color:#000000;font-family:Arial;font-size:16px;">' + wavl.long + '</span>' +
-                    '</div>'
-            } catch (e) {
-                //console.log(e)
-                //console.log(i)
-                cell4.classList.add("cell10")
-                cell4.innerHTML = '<p style="font-size:8px;line-height:9.5px;">&nbsp;</p>'
-                cell5.classList.add("cell11")
-                cell5.innerHTML = '<p style="font-size:8px;line-height:9.5px;">&nbsp;</p>'
-            }
-
-            cell6.classList.add("cell1")
-            cell6.innerHTML = '<p style="font-size:8px;line-height:9.5px;">&nbsp;</p>'
-
-            try {
-                var jl = __CONFIG__.jl[i]
-                cell7.classList.add("cell2")
-                cell7.innerHTML = '<div id="wavjl_' + i.toString() + '" style="display:inline-block;width:16px;height:20px;z-index:60;">' +
-                    '<input type="checkbox" id="checkwavjl_' + i.toString() + '" name="WAVjL_teams" value="on" checked="" style="display:inline-block;opacity:0;" title="' + jl.long + '">' +
-                    '<label for="checkwavjl_' + i.toString() + '"></label>' +
-                    '</div>'
-
-                cell8.classList.add("cell9")
-                cell8.innerHTML = '<div id="wb_Text49">' +
-                    '<span style="color:#000000;font-family:Arial;font-size:16px;">' + jl.long + '</span>' +
-                    '</div>'
-            } catch (e) {
-                //console.log(e)
-                //console.log(i)
-                cell7.classList.add("cell10")
-                cell7.innerHTML = '<p style="font-size:8px;line-height:9.5px;">&nbsp;</p>'
-                cell8.classList.add("cell11")
-                cell8.innerHTML = '<p style="font-size:8px;line-height:9.5px;">&nbsp;</p>'
-
-            }
-        }
-        var fin_row = table.insertRow(-1);
-        var fin_cell = fin_row.insertCell(0);
-        fin_cell.classList.add("cell99")
-    }
-
-    generate_Table()
+generate_Table()
