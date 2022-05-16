@@ -1223,6 +1223,9 @@ const __CONFIG__ = {
                             console.log("***")
                         }
                       } catch (e) {console.log(e); console.log(zero_venue_split);}*/
+			  if (Number.isInteger(zero_venue_split.substring(0,2)) {
+			      console.log("BYE: " + zero_venue_split);
+		  } else {
                       console.log("UNUSED VENUE\n***")
                             console.log(zero_venue_split)
                             console.log("***")
