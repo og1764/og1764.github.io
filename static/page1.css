@@ -32,7 +32,7 @@ div#container
    width: 16px;
    height: 16px;
    left: 450px;
-   top: 130px;
+   top: 170px;
 }
 #Checkbox99 label
 {
@@ -41,7 +41,7 @@ div#container
    margin: 0;
    z-index: 1;
    left: 450px;
-   top: 130px;
+   top: 170px;
 }
 
 #wb_Checkbox99
@@ -83,7 +83,7 @@ div#container
    width: 16px;
    height: 16px;
    left: 450px;
-   top: 130px;
+   top: 170px;
    background-color: #FFFFFF;
    border: 1px solid #CCCCCC;
    border-radius: 4px;
@@ -95,7 +95,7 @@ div#container
    width: 16px;
    height: 16px;
    left: 450px;
-   top: 130px;
+   top: 170px;
    padding: 0;
    text-align: center;
    line-height: 16px;
