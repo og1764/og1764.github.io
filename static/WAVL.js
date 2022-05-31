@@ -16,7 +16,7 @@ const __CONFIG__ = {
             "top": "",
             "mid": "",
             "bot": "Ballajura",
-            "alias": []
+            "alias": ["Ballajura Indoor Spo"]
         },
         {
             "name": "Bendat",
@@ -93,14 +93,14 @@ const __CONFIG__ = {
             "top": "",
             "mid": "John",
             "bot": "Wollaston",
-            "alias": []
+            "alias": ["John Wollaston ACS C", "John Wollaston ACS",]
         },
         {
             "name": "Kingsway",
             "top": "",
             "mid": "",
             "bot": "Kingsway",
-            "alias": []
+            "alias": ["Kingsway Indoor Stad", "Kingsway Indoor"]
         },
         {
             "name": "Loftus",
@@ -128,7 +128,7 @@ const __CONFIG__ = {
             "top": "",
             "mid": "Melville",
             "bot": "LeisureFit",
-            "alias": []
+            "alias": ["Melville Leisure"]
         },
         {
             "name": "Methodist Ladies College",
@@ -156,14 +156,14 @@ const __CONFIG__ = {
             "top": "",
             "mid": "",
             "bot": "Rossmoyne",
-            "alias": []
+            "alias": ["Rossmoyne SHS"]
         },
         {
             "name": "Santa Maria",
             "top": "",
             "mid": "Santa",
             "bot": "Maria",
-            "alias": []
+            "alias": ["Santa Maria College"]
         },
         {
             "name": "St Mary's",
@@ -593,6 +593,7 @@ const VENUE_SPLIT = {
     "aquinas": "*Aquinas*College",
     "aquinas college": "*Aquinas*College",
     "ballajura": "**Ballajura",
+    "ballajura indoor spo": "**Ballajura",
     "bendat": "**Bendat",
     "cockburn": "**Cockburn",
     "cockburn arc": "**Cockburn",
@@ -607,15 +608,19 @@ const VENUE_SPLIT = {
     "greenwood college": "*Greenwood*College",
     "hale": "**Hale",
     "halls head rec centre": "Halls Head*Recreation*Centre",
+    "halls head rec": "Halls Head*Recreation*Centre",
     "hbf stad. claremont": "*HBF*Stadium",
     "john wollaston": "*John*Wallaston",
+    "john wollaston acs": "*John*Wallaston",
     "kingsway": "**Kingsway",
+    "kingsway indoor stad": "**Kingsway",
     "loftus": "**Loftus",
     "mandurah arc": "*Mandurah*ARC",
     "mandurah baptist college": "**MBC",
     "mandurah baptist col": "**MBC",
     "mbc": "**MBC",
     "melville leisurefit": "*Melville*LeisureFit",
+    "melville leisure": "*Melville*LeisureFit",
     "methodist ladies college": "Methodist*Ladies*College",
     "methodist l. col": "Methodist*Ladies*College",
     "mlc": "Methodist*Ladies*College",
@@ -623,12 +628,14 @@ const VENUE_SPLIT = {
     "penrhos college": "*Penrhos*College",
     "rossmoyne": "**Rossmoyne",
     "santa maria": "*Santa*Maria",
+    "santa maria college": "*Santa*Maria",
     "st mary's": "**St Mary's",
     "the rise": "**The Rise",
     "uwa rec. centre": "UWA*Recreation*Centre",
     "uwa rec centre": "UWA*Recreation*Centre",
     "warwick": "**Warwick",
     "warwick stadium": "**Warwick",
+    "warwick stad.": "**Warwick",
     "wesley college": "*Wesley*College"
 }
 
