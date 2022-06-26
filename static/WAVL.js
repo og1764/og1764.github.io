@@ -784,7 +784,7 @@ function pdf_init(venues, wavl, wavjl, date) {
     //modifyPdf(fixtures[1]).then(value => {mix.push(value)})
     if (document.getElementById("Checkbox99").checked) {
         console.log(date);
-        for (var j = 0; i < 7; j++) {
+        for (var j = 0; j < 7; j++) {
           var date_time = $("#DatePicker2").datepicker("option", "dateFormat", "yy-mm-dd").setDate("-"+j.toString()).val()
           console.log(date_time);
           for (var i = 0; i < leagues.length; i++) {
