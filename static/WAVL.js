@@ -788,13 +788,21 @@ function pdf_init(venues, wavl, wavjl, date_init) {
         console.log(date_init);
         console.log($("#DatePicker2").datepicker("getDate"))
         console.log("LOOPING DAYS");
+
         for (var j = -6; j <= 0; j++) {
+            var looping_date = $("#DatePicker2").datepicker("getDate");
+            looping_date.setTime(looping_date.getTime() + (j * (24*60*60*1000)));
+            var date_time = looping_date.getFullYear().ToString().split(-2) + "-" +
+                                looping_date.getMonth().ToString().padStart(2, '0') + "-" +
+                                looping_date.getDate().ToString().padStart(2, '0');
+            /*
             $("#DatePicker2").datepicker("getDate");
-            $("#DatePicker2").datepicker("setDate",j.toString());
+            console.log($("#DatePicker2").datepicker("setDate",j.toString()));
             var testing = $("#DatePicker2").datepicker("setDate",j.toString()).datepicker("option", "dateFormat", "yy-mm-dd").val();
             var date_time = $("#DatePicker2").datepicker("option", "dateFormat", "yy-mm-dd").val()
             console.log(date_time);
             console.log(testing);
+            */
             for (var i = 0; i < leagues.length; i++) {
             var indiv = get_single_fixture(venues, leagues[i], date_time);
             console.log(indiv);
