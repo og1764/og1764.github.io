@@ -351,7 +351,7 @@ function WAVL_MAIN() {
     // POST to python URL
     const url = '/WAVL/PUT';
 
-    var token = generate_token();
+    //var token = generate_token();
     var force = document.getElementById("Checkbox99").checked;
     document.getElementById("Button4").value = "Please Wait";
     window.setInterval(dots)
@@ -370,7 +370,7 @@ function WAVL_MAIN() {
             document.getElementById("Button4").style.color = "white";
             document.getElementById("Button4").style.fontSize = "20px";
             window.clearInterval(dots);
-            download(token);
+            //download(token);
             document.getElementById("Button4").value = "Generate Scoresheets";
             document.getElementById("Button4").style.backgroundColor = "#3370B7";
             document.getElementById("Button4").disabled = false;
@@ -396,7 +396,7 @@ function WAVL_MAIN() {
     };
     xhttp.open("GET", url, true);
     xhttp.setRequestHeader("Access-Control-Allow-Headers", "*");
-    xhttp.setRequestHeader("TOKEN", token);
+    //xhttp.setRequestHeader("TOKEN", token);
     xhttp.setRequestHeader("FORCE", force);
     xhttp.send();
     var dots = window.setInterval(function() {
@@ -487,7 +487,7 @@ function token_download(token) {
 }
 
 
-function generate_token() {
+/*function generate_token() {
     var date = $("#DatePicker2").datepicker("option", "dateFormat", "yy-mm-dd").val()
     var sep = "-"
     var venues = ""
@@ -528,6 +528,7 @@ function generate_token() {
 
     return token
 }
+*/
 
 function cleanup() {
     var url = '/cleanup'
@@ -736,7 +737,8 @@ function WAVL_ONLINE() {
     var venues = []
     var wavjl = []
     var wavl = []
-    var date = $("#DatePicker2").datepicker("option", "dateFormat", "yy-mm-dd").val()
+    let date = $("#DatePicker2").datepicker("option", "dateFormat", "yy-mm-dd").val()
+    //var date = $("#DatePicker2").datepicker("option", "dateFormat", "yy-mm-dd").val()
     document.getElementsByName("Venues").forEach((checkbox) => {
         if (document.getElementById(checkbox.id).checked) {
             venues.push(document.getElementById(checkbox.id).title)
@@ -768,7 +770,7 @@ function WAVL_ONLINE() {
     //pdf_init(venues, wavl, wavjl, date)
 }
 
-function pdf_init(venues, wavl, wavjl, date) {
+function pdf_init(venues, wavl, wavjl, date_init) {
     var concatted = wavl.concat(wavjl)
     var leagues = []
     console.log(concatted)
@@ -783,7 +785,7 @@ function pdf_init(venues, wavl, wavjl, date) {
     //modifyPdf(fixtures[0]).then(value => {mix.push(value)})
     //modifyPdf(fixtures[1]).then(value => {mix.push(value)})
     if (document.getElementById("Checkbox99").checked) {
-        console.log(date);
+        console.log(date_init);
         console.log($("#DatePicker2").datepicker("getDate"))
         console.log("LOOPING DAYS");
         for (var j = -6; j <= 0; j++) {
@@ -801,7 +803,7 @@ function pdf_init(venues, wavl, wavjl, date) {
         }
     } else {
         for (var i = 0; i < leagues.length; i++) {
-            var indiv = get_single_fixture(venues, leagues[i], date);
+            var indiv = get_single_fixture(venues, leagues[i], date_init);
             console.log(indiv);
             fixtures.push(indiv);
         }
@@ -809,11 +811,11 @@ function pdf_init(venues, wavl, wavjl, date) {
 
     //Promise.all(get_fixtures(venues, leagues, date)).then(fix_val => {
     Promise.all(fixtures).then(fix_val => {
-        modifyPdf(fix_val, venues, leagues, date).then(value => {
+        modifyPdf(fix_val, venues, leagues, date_init).then(value => {
             Promise.all(value).then(value_3 => {
                 mergePDFDocuments(value_3).then(value_2 => {
                     console.log(value_2);
-                    let filename = "Scoresheets " + date.toString() + ".pdf"
+                    let filename = "Scoresheets " + date_init.toString() + ".pdf"
                     download(value_2, filename, "application/pdf");
                     window.clearInterval(dots);
                     document.getElementById("Button4").value = "Generate Scoresheets";
