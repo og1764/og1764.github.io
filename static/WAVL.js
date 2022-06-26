@@ -784,12 +784,16 @@ function pdf_init(venues, wavl, wavjl, date) {
     //modifyPdf(fixtures[1]).then(value => {mix.push(value)})
     if (document.getElementById("Checkbox99").checked) {
         console.log(date);
-        for (var j = 0; j < 6; j++) {
-          var date_time = $("#DatePicker2").datepicker("getDate");
+        console.log("LOOPING DAYS");
+        for (var j = 6; j >= 0; j--) {
+            $("#DatePicker2").datepicker("setdate","-"+j.toString());
+            var date_time = $("#DatePicker2").datepicker("option", "dateFormat", "yy-mm-dd").val()
+          console.log(date_time);
           date_time.setDate(date_time.getDate() - j);
+            
           console.log(date_time);
           for (var i = 0; i < leagues.length; i++) {
-            var indiv = get_single_fixture(venues, leagues[i], date_time);
+            var indiv = get_single_fixture(venues, leagues[i], date_time.);
             console.log(indiv);
             fixtures.push(indiv);
         }
