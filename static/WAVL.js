@@ -1238,6 +1238,7 @@ function html_to_fixture(venues, leagues, date, all_html) {
         let parser = new DOMParser();
         let htmlDoc = parser.parseFromString(all_html[x].data, 'text/html');
         console.log(all_html[x].request.responseURL)
+        let dt = all_html[x].request.responseURL.slice(-10);
         try {
             let div_table = htmlDoc.getElementsByTagName("table")[1]
             console.log("***")
@@ -1285,7 +1286,8 @@ function html_to_fixture(venues, leagues, date, all_html) {
                     //console.log(temp_div)
                     //let _division = __CONFIG__
                     //console.log(_division)
-                    let _date = date.split('-');
+                    //let _date = date.split('-');
+                    let _date = dt.split('-');
                     let _date_dd = _date[2];
                     let _date_mm = _date[1];
                     let _date_yyyy = _date[0]
