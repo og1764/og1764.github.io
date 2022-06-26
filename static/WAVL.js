@@ -1024,6 +1024,7 @@ async function modifyPdf(fix, venues, leagues, dates) {
         } else {
             // Junior League
             // full venue
+            console.log(fixtures[i]);
             await JLfirstPage.drawText(fixtures[i][0], {
                 x: parseInt((180 - measureText(fixtures[i][0], 13)).toString()),
                 y: 504,
