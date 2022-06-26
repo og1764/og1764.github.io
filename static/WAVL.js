@@ -796,6 +796,7 @@ function pdf_init(venues, wavl, wavjl, date_init) {
             var date_time = looping_date.getFullYear().toString().split(-2) + "-" +
                                 mon.toString().padStart(2, '0') + "-" +
                                 looping_date.getDate().toString().padStart(2, '0');
+            console.log(date_time);
             /*
             $("#DatePicker2").datepicker("getDate");
             console.log($("#DatePicker2").datepicker("setDate",j.toString()));
