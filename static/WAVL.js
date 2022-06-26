@@ -789,11 +789,11 @@ function pdf_init(venues, wavl, wavjl, date) {
             $("#DatePicker2").datepicker("setdate","-"+j.toString());
             var date_time = $("#DatePicker2").datepicker("option", "dateFormat", "yy-mm-dd").val()
           console.log(date_time);
-          date_time.setDate(date_time.getDate() - j);
+          //date_time.setDate(date_time.getDate() - j);
             
           console.log(date_time);
           for (var i = 0; i < leagues.length; i++) {
-            var indiv = get_single_fixture(venues, leagues[i], date_time.);
+            var indiv = get_single_fixture(venues, leagues[i], date_time);
             console.log(indiv);
             fixtures.push(indiv);
         }
