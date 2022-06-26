@@ -786,7 +786,7 @@ function pdf_init(venues, wavl, wavjl, date) {
         console.log(date);
         console.log($("#DatePicker2").datepicker("getDate"))
         console.log("LOOPING DAYS");
-        for (var j = -6; j >= 0; j++) {
+        for (var j = -6; j <= 0; j++) {
             $("#DatePicker2").datepicker("getDate");
             $("#DatePicker2").datepicker("setDate",j.toString());
             var testing = $("#DatePicker2").datepicker("setDate",j.toString()).datepicker("option", "dateFormat", "yy-mm-dd").val();
