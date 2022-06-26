@@ -782,11 +782,23 @@ function pdf_init(venues, wavl, wavjl, date) {
     var fixtures = []
     //modifyPdf(fixtures[0]).then(value => {mix.push(value)})
     //modifyPdf(fixtures[1]).then(value => {mix.push(value)})
-
-    for (var i = 0; i < leagues.length; i++) {
-        var indiv = get_single_fixture(venues, leagues[i], date);
-        console.log(indiv);
-        fixtures.push(indiv);
+    if (document.getElementById("Checkbox99").checked) {
+        console.log(date);
+        for (var j = 0; i < 7; j++) {
+          var date_time = $("#DatePicker2").datepicker("option", "dateFormat", "yy-mm-dd").setDate("-"+j.toString()).val()
+          console.log(date_time);
+          for (var i = 0; i < leagues.length; i++) {
+            var indiv = get_single_fixture(venues, leagues[i], date_time);
+            console.log(indiv);
+            fixtures.push(indiv);
+        }
+        }
+    } else {
+        for (var i = 0; i < leagues.length; i++) {
+            var indiv = get_single_fixture(venues, leagues[i], date);
+            console.log(indiv);
+            fixtures.push(indiv);
+        }
     }
 
     //Promise.all(get_fixtures(venues, leagues, date)).then(fix_val => {
