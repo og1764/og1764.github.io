@@ -1304,9 +1304,11 @@ function html_to_fixture(venues, leagues, date, all_html) {
                     const _venue_0 = _tmp_venue[0]
                     const _venue_1 = _tmp_venue[1]
                     const _venue_2 = _tmp_venue[2]
+                    console.log(VENUE_SPLIT);
+                    console.log(zero_venue_split);
                     let _venue_full = VENUE_SPLIT[zero_venue_split.toLowerCase()].replaceAll("*", " ").trimLeft();
-                    let _sorting = _venue_full + " " + _court + " " + _time_hr
-                    let _time_sorting = _venue_full + " " + _time_hr + " " + _court;
+                    let _sorting = _date_yyyy + " " + _date_mm + " " + _date_dd + " " + _venue_full + " " + _court + " " + _time_hr
+                    let _time_sorting = _date_yyyy + " " + _date_mm + " " + _date_dd + " " + _venue_full + " " + _time_hr + " " + _court;
                     /*fix['venue'] = zero_venue_split;
                       fix['venue_0'] = _venue_0
                       fix['venue_1'] = _venue_1
