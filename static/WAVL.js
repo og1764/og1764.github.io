@@ -51,7 +51,7 @@ const __CONFIG__ = {
             "top": "Geographe",
             "mid": "Leisure",
             "bot": "Centre",
-            "alias": ["Geographe", "Geographe Leisure", "Geographe Lei. Centr"]
+            "alias": ["Geographe", "Geographe Leisure", "Geographe Lei. Centr", "Geographe Lei. Cntr"]
         },
         {
             "name": "Gold Netball Centre",
@@ -93,7 +93,7 @@ const __CONFIG__ = {
             "top": "",
             "mid": "John",
             "bot": "Wollaston",
-            "alias": ["John Wollaston ACS C", "John Wollaston ACS",]
+            "alias": ["John Wollaston ACS C", "John Wollaston ACS"]
         },
         {
             "name": "Kingsway",
@@ -186,6 +186,13 @@ const __CONFIG__ = {
             "bot": "Centre",
             "alias": ["UWA", "UWA Rec. Centre", "UWA Rec Centre"]
         },
+        {
+            "name": "UWA Sport Science",
+            "top": "UWA",
+            "mid": "Sport",
+            "bot": "Science",
+            "alias": []
+        },  
         {
             "name": "Wesley College",
             "top": "",
@@ -605,6 +612,7 @@ const VENUE_SPLIT = {
     "ecu mt lawley": "*ECU*Mt. Lawley",
     "geographe leisure": "Geographe*Leisure*Centre",
     "geographe lei. centr": "Geographe*Leisure*Centre",
+    "geographe lei. cntr": "Geographe*Leisure*Centre",
     "gold netball centre": "Gold*Netball*Centre",
     "greenwood college": "*Greenwood*College",
     "hale": "**Hale",
@@ -628,12 +636,14 @@ const VENUE_SPLIT = {
     "murdoch active": "*Murdoch*Active",
     "penrhos college": "*Penrhos*College",
     "rossmoyne": "**Rossmoyne",
+    "rossmoyne shs": "**Rossmoyne",
     "santa maria": "*Santa*Maria",
     "santa maria college": "*Santa*Maria",
     "st mary's": "**St Mary's",
     "the rise": "**The Rise",
     "uwa rec. centre": "UWA*Recreation*Centre",
     "uwa rec centre": "UWA*Recreation*Centre",
+    "uwa sport science":"UWA*Sport*Science",
     "warwick": "**Warwick",
     "warwick stadium": "**Warwick",
     "warwick stad.": "**Warwick",
