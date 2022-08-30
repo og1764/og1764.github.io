@@ -3,6 +3,8 @@
 
 // VENUE_SPLIT should show how to parse every venue that is shown ON BRACKETPAL
 // __CONFIG__ is used for front end to braketpal parse.
+const FINALS_DATES = ["2022-09-04","2022-09-11","2022-09-18"];
+
 const __CONFIG__ = {
     "venues": [{
             "name": "Aquinas",
@@ -1303,6 +1305,12 @@ function html_to_fixture(venues, leagues, date, all_html) {
                         console.log(e)
                         _duty = " ";
                     }
+                    
+                    
+                    if (FINALS_DATES.includes(dt) && _duty.length < 4) {
+                        _duty = "Previous Loser";
+                    }
+                    
                     //var division = leagues[j];
                     let url = all_html[x].request.responseURL;
                     let split_url = url.split('/');
