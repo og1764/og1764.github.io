@@ -865,7 +865,8 @@ async function get_single_fixture(venues, division, date) {
         rgb
     } = PDFLib;
     axios;
-    const head = 'https://calm-sea-71189.herokuapp.com/vwa.bracketpal.com/dailyform/';
+    //const head = 'https://calm-sea-71189.herokuapp.com/vwa.bracketpal.com/dailyform/';
+    const head = 'https://crossorigin.me/vwa.bracketpal.com/dailyform/';
 
     var url = head + division[2] + "/" + date.toString();
     return await axios.get(url)
