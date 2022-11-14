@@ -869,7 +869,11 @@ async function get_single_fixture(venues, division, date) {
     const head = 'https://crossorigin.me/vwa.bracketpal.com/dailyform/';
 
     var url = head + division[2] + "/" + date.toString();
-    return await axios.get(url)
+    return await axios.get(url, {
+        headers: {
+            'Access-Control-Allow-Origin': '*'
+        }
+    } )
 }
 
 function sorting(a, b) {
