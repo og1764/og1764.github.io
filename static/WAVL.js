@@ -384,7 +384,7 @@ async function get_single_fixture(start_date, end_date) {
     } = PDFLib;
     axios;
     //const head = 'https://calm-sea-71189.herokuapp.com/vwa.bracketpal.com/dailyform/';
-    const head = 'https://cors-anywhere-og.onrender.com/vwa.bracketpal.com/dailyform/range?start_date=';
+    const head = 'https://cors-anywhere-og-v5kf.onrender.com/vwa.bracketpal.com/dailyform/range?start_date=';
 
     var url = head + start_date.toString() + "&end_date=" + end_date.toString();
     return await axios.get(url);
@@ -398,7 +398,7 @@ async function get_single_team_list_html(team_id) {
     } = PDFLib;
     axios;
     //const head = 'https://calm-sea-71189.herokuapp.com/vwa.bracketpal.com/dailyform/';
-    const head = 'https://cors-anywhere-og.onrender.com/vwa.bracketpal.com/teaminfo/';
+    const head = 'https://cors-anywhere-og-v5kf.onrender.com/vwa.bracketpal.com/teaminfo/';
 
     var url = head + team_id.toString();
     return await axios.get(url);
@@ -487,7 +487,7 @@ async function modifyPdf(fix, venues, leagues, dates) {
         if (fixtures[i][9][0][0] == "D" || fixtures[i][9][0][0] == "S") {
 
             await WAVLfirstPage.drawText(fixtures[i][6], {
-                x: 472,
+                x: 471,
                 y: 498,
                 size: 12,
                 font: WAVLhelveticaFont
