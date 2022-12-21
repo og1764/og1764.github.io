@@ -4,362 +4,6 @@
 // VENUE_SPLIT should show how to parse every venue that is shown ON BRACKETPAL
 // __CONFIG__ is used for front end to braketpal parse.
 
-import {configure} from "./configuration.mjs"
-
-console.log(configure);
-
-const FINALS_DATES = ["2022-09-04","2022-09-11","2022-09-18"];
-
-const __CONFIG__ = {
-    "venues": [{
-            "name": "Aquinas",
-            "top": "",
-            "mid": "Aquinas",
-            "bot": "College",
-            "alias": ["Aquinas College"]
-        },
-        {
-            "name": "Ballajura",
-            "top": "",
-            "mid": "",
-            "bot": "Ballajura",
-            "alias": ["Ballajura Indoor Spo"]
-        },
-        {
-            "name": "Bendat",
-            "top": "",
-            "mid": "",
-            "bot": "Bendat",
-            "alias": []
-        },
-        {
-            "name": "Cockburn",
-            "top": "",
-            "mid": "",
-            "bot": "Cockburn",
-            "alias": ["Cockburn ARC"]
-        },
-        {
-            "name": "Curtin Stadium",
-            "top": "",
-            "mid": "Curtin",
-            "bot": "Stadium",
-            "alias": ["Curtin"]
-        },
-        {
-            "name": "ECU Mt. Lawley",
-            "top": "",
-            "mid": "ECU",
-            "bot": "Mt. Lawley",
-            "alias": ["ECU", "ECU Mount Lawley", "ECU Mt Lawley"]
-        },
-        {
-            "name": "Geographe Leisure Centre",
-            "top": "Geographe",
-            "mid": "Leisure",
-            "bot": "Centre",
-            "alias": ["Geographe", "Geographe Leisure", "Geographe Lei. Centr", "Geographe Lei. Cntr"]
-        },
-        {
-            "name": "Gold Netball Centre",
-            "top": "Gold",
-            "mid": "Netball",
-            "bot": "Centre",
-            "alias": []
-        },
-        {
-            "name": "Greenwood College",
-            "top": "",
-            "mid": "Greenwood",
-            "bot": "College",
-            "alias": []
-        },
-        {
-            "name": "Hale",
-            "top": "",
-            "mid": "",
-            "bot": "Hale",
-            "alias": []
-        },
-        {
-            "name": "Halls Head Recreation Centre",
-            "top": "Halls Head",
-            "mid": "Recreation",
-            "bot": "Centre",
-            "alias": ["Halls Head Rec Centr", "Halls Head Rec"]
-        },
-        {
-            "name": "HBF Stadium Claremont",
-            "top": "",
-            "mid": "HBF",
-            "bot": "Stadium",
-            "alias": ["HBF Stad. Claremont", "HBF", "HBF Stadium", "HBF Stad."]
-        },
-        {
-            "name": "John Wollaston",
-            "top": "",
-            "mid": "John",
-            "bot": "Wollaston",
-            "alias": ["John Wollaston ACS C", "John Wollaston ACS"]
-        },
-        {
-            "name": "Kingsway",
-            "top": "",
-            "mid": "",
-            "bot": "Kingsway",
-            "alias": ["Kingsway Indoor Stad", "Kingsway Indoor"]
-        },
-        {
-            "name": "Loftus",
-            "top": "",
-            "mid": "",
-            "bot": "Loftus",
-            "alias": []
-        },
-        {
-            "name": "Mandurah ARC",
-            "top": "",
-            "mid": "Mandurah",
-            "bot": "ARC",
-            "alias": []
-        },
-        {
-            "name": "MBC",
-            "top": "",
-            "mid": "",
-            "bot": "MBC",
-            "alias": ["Mandurah Baptist College", "Mandurah Baptist Col"]
-        },
-        {
-            "name": "Melville LeisureFit",
-            "top": "",
-            "mid": "Melville",
-            "bot": "LeisureFit",
-            "alias": ["Melville Leisure"]
-        },
-        {
-            "name": "Methodist Ladies College",
-            "top": "Methodist",
-            "mid": "Ladies",
-            "bot": "College",
-            "alias": ["MLC", "Methodist L. Col"]
-        },
-        {
-            "name": "Murdoch Active",
-            "top": "",
-            "mid": "Murdoch",
-            "bot": "Active",
-            "alias": []
-        },
-        {
-            "name": "Penrhos College",
-            "top": "",
-            "mid": "Penrhos",
-            "bot": "College",
-            "alias": ["Penrhos"]
-        },
-        {
-            "name": "Rossmoyne",
-            "top": "",
-            "mid": "",
-            "bot": "Rossmoyne",
-            "alias": ["Rossmoyne SHS"]
-        },
-        {
-            "name": "Santa Maria",
-            "top": "",
-            "mid": "Santa",
-            "bot": "Maria",
-            "alias": ["Santa Maria College"]
-        },
-        {
-            "name": "St Mary's",
-            "top": "",
-            "mid": "",
-            "bot": "St Mary's",
-            "alias": []
-        },
-        {
-            "name": "The Rise",
-            "top": "",
-            "mid": "",
-            "bot": "The Rise",
-            "alias": []
-        },
-        {
-            "name": "UWA Recreation Centre",
-            "top": "UWA",
-            "mid": "Recreation",
-            "bot": "Centre",
-            "alias": ["UWA", "UWA Rec. Centre", "UWA Rec Centre"]
-        },
-        {
-            "name": "UWA Sport Science",
-            "top": "UWA",
-            "mid": "Sport",
-            "bot": "Science",
-            "alias": []
-        },  
-        {
-            "name": "Wesley College",
-            "top": "",
-            "mid": "Wesley",
-            "bot": "College",
-            "alias": ["Wesley"]
-        },
-        {
-            "name": "Warwick",
-            "top": "",
-            "mid": "",
-            "bot": "Warwick",
-            "alias": ["Warwick Stadium", "Warwick Stad."]
-        }
-    ],
-    "wavl": [{
-            "id": 103,
-            "long": "State League Women",
-            "short": "SL Women"
-        },
-        {
-            "id": 102,
-            "long": "State League Men",
-            "short": "SL Men"
-        },
-        {
-            "id": 104,
-            "long": "State League Reserve Women",
-            "short": "SLR Women"
-        },
-        {
-            "id": 105,
-            "long": "State League Reserve Men",
-            "short": "SLR Men"
-        },
-        {
-            "id": 107,
-            "long": "Division 1 Women",
-            "short": "Div 1 W"
-        },
-        {
-            "id": 106,
-            "long": "Division 1 Men",
-            "short": "Div 1 M"
-        },
-        {
-            "id": 109,
-            "long": "Division 2 Women",
-            "short": "Div 2 W"
-        },
-        {
-            "id": 108,
-            "long": "Division 2 Men",
-            "short": "Div 2 M"
-        },
-        {
-            "id": 111,
-            "long": "Division 3 Women",
-            "short": "Div 3 W"
-        },
-        {
-            "id": 115,
-            "long": "Division 3 Men",
-            "short": "Div 3 M"
-        },
-        {
-            "id": 129,
-            "long": "Division 4 Men",
-            "short": "Div 4 M"
-        },
-        {
-            "id": 112,
-            "long": "Division 4 Women",
-            "short": "Div 4 W"
-        },
-        {
-            "id": 130,
-            "long": "Division 5 Men",
-            "short": "Div 5 M"
-        },
-        {
-            "id": 131,
-            "long": "Division 6 Men",
-            "short": "Div 6 M"
-        }
-    ],
-    "jl": [{
-            "id": 117,
-            "long": "7/8 Female North",
-            "short": "7/8 F N"
-        },
-        {
-            "id": 118,
-            "long": "7/8 Female South",
-            "short": "7/8 F S"
-        },
-        {
-            "id": 110,
-            "long": "7/8 Male North",
-            "short": "7/8 M N"
-        },
-        {
-            "id": 116,
-            "long": "7/8 Male South",
-            "short": "7/8 M S"
-        },
-        {
-            "id": 122,
-            "long": "9/10 Female Pool 1",
-            "short": "9/10 F 1"
-        },
-        {
-            "id": 125,
-            "long": "9/10 Female Pool 2",
-            "short": "9/10 F 2"
-        },
-        {
-            "id": 124,
-            "long": "9/10 Female Pool 3",
-            "short": "9/10 F 3"
-        },
-        {
-            "id": 121,
-            "long": "9/10 Male North",
-            "short": "9/10 M N"
-        },
-        {
-            "id": 119,
-            "long": "9/10 Male South Pool 1",
-            "short": "9/10 M S 1"
-        },
-        {
-            "id": 120,
-            "long": "9/10 Male South Pool 2",
-            "short": "9/10 M S 2"
-        },
-        {
-            "id": 128,
-            "long": "11/12 Female",
-            "short": "11/12 F"
-        },
-        {
-            "id": 127,
-            "long": "11/12 Male North",
-            "short": "11/12 M N"
-        },
-        {
-            "id": 126,
-            "long": "11/12 Male South",
-            "short": "11/12 M S"
-        }
-    ],
-    "div": {
-        80: ["W", "State League Women", "SL W"]
-    }
-
-}
-
-
-
 
 function WAVL_MAIN() {
     // POST to python URL
@@ -501,49 +145,6 @@ function token_download(token) {
 }
 
 
-/*function generate_token() {
-    var date = $("#DatePicker2").datepicker("option", "dateFormat", "yy-mm-dd").val()
-    var sep = "-"
-    var venues = ""
-    var wavl = ""
-    var wavjl = ""
-
-    document.getElementsByName("Venues").forEach((checkbox) => {
-        if (document.getElementById(checkbox.id).checked) {
-            venues = venues + "1";
-        } else {
-            venues = venues + "0";
-        }
-    });
-    document.getElementsByName("WAVL_teams").forEach((checkbox) => {
-        if (document.getElementById(checkbox.id).checked) {
-            wavl = wavl + "1";
-        } else {
-            wavl = wavl + "0";
-        }
-    });
-    document.getElementsByName("WAVjL_teams").forEach((checkbox) => {
-        if (document.getElementById(checkbox.id).checked) {
-            wavjl = wavjl + "1";
-        } else {
-            wavjl = wavjl + "0";
-        }
-    });
-    var v_hex = parseInt(venues, 2).toString(16)
-    var w_hex = parseInt(wavl, 2).toString(16)
-    var j_hex = parseInt(wavjl, 2).toString(16)
-    var v_len = venues.length
-    var w_len = wavl.length
-    var j_len = wavjl.length
-    console.log(v_hex)
-    console.log(w_hex)
-    console.log(j_hex)
-    var token = date + sep + v_hex + sep + v_len + sep + w_hex + sep + w_len + sep + j_hex + sep + j_len
-
-    return token
-}
-*/
-
 function cleanup() {
     var url = '/cleanup'
     var xhttp = new XMLHttpRequest();
@@ -553,110 +154,6 @@ function cleanup() {
     }
     xhttp.send();
 }
-
-
-
-
-const DIVISIONS = {
-    "State League Women": ["State League Women", "SL Women", "103"],
-    "State League Men": ["State League Men", "SL Men", "102"],
-    "State League Reserve Men": ["State League Reserve Men", "SLR Men", "104"],
-    "State League Reserve Women": ["State League Reserve Women", "SLR Women", "105"],
-
-    "Division 1 Men": ['Division 1 Men', 'Div 1 M', "106"],
-    "Division 1 Women": ['Division 1 Women', 'Div 1 W', "107"],
-    "Division 2 Men": ['Division 2 Men', 'Div 2 M', "108"],
-    "Division 2 Women": ['Division 2 Women', 'Div 2 W', "109"],
-    "Division 3 Men": ['Division 3 Men', 'Div 3 M', "115"],
-    "Division 3 Women": ['Division 3 Women', 'Div 3 W', "111"],
-    "Division 4 Men": ['Division 4 Men', 'Div 4 M', "129"],
-    "Division 4 Women": ['Division 4 Women', 'Div 4 W', "112"],
-    "Division 5 Men": ['Division 5 Men', 'Div 5 M', "130"],
-    "Division 6 Men": ['Division 6 Men', 'Div 6 M', "131"],
-
-    '7/8 Female North': ['7/8 Female North', '7/8 F N', '117'],
-    '7/8 Female South': ['7/8 Female South', '7/8 F S', '118'],
-    '9/10 Female Pool 1': ['9/10 Female Pool 1', '9/10 F 1', '122'],
-    '9/10 Female Pool 2': ['9/10 Female Pool 2', '9/10 F 2', '125'],
-    '9/10 Female Pool 3': ['9/10 Female Pool 3', '9/10 F 3', '124'],
-    '11/12 Female': ['11/12 Female', '11/12 F', '128'],
-    '11/12 Male North': ['11/12 Male North', '11/12 M N', '127'],
-    '11/12 Male South': ['11/12 Male South', '11/12 M S', '126'],
-    '9/10 Male North': ['9/10 Male North', '9/10 M N', '121'],
-    '9/10 Male South Pool 1': ['9/10 Male South Pool 1', '9/10 M S 1', '119'],
-    '9/10 Male South Pool 2': ['9/10 Male South Pool 2', '9/10 M S 2', '120'],
-    '7/8 Male North': ['7/8 Male North', '7/8 M N', '110'],
-    '7/8 Male South': ['7/8 Male South', '7/8 M S', '116'],
-
-    'Year 7/8 Female North': ['7/8 Female North', '7/8 F N', '117'],
-    'Year 7/8 Female South': ['7/8 Female South', '7/8 F S', '118'],
-    'Year 9/10 Female Pool 1': ['9/10 Female Pool 1', '9/10 F 1', '122'],
-    'Year 9/10 Female Pool 2': ['9/10 Female Pool 2', '9/10 F 2', '125'],
-    'Year 9/10 Female Pool 3': ['9/10 Female Pool 3', '9/10 F 3', '124'],
-    'Year 11/12 Female': ['11/12 Female', '11/12 F', '128'],
-    'Year 11/12 Male North': ['11/12 Male North', '11/12 M N', '127'],
-    'Year 11/12 Male South': ['11/12 Male South', '11/12 M S', '126'],
-    'Year 9/10 Male North': ['9/10 Male North', '9/10 M N', '121'],
-    'Year 9/10 Male South Pool 1': ['9/10 Male South Pool 1', '9/10 M S 1', '119'],
-    'Year 9/10 Male South Pool 2': ['9/10 Male South Pool 2', '9/10 M S 2', '120'],
-    'Year 7/8 Male North': ['7/8 Male North', '7/8 M N', '110'],
-    'Year 7/8 Male South': ['7/8 Male South', '7/8 M S', '116'],
-}
-
-
-const VENUE_SPLIT = {
-    "aquinas": "*Aquinas*College",
-    "aquinas college": "*Aquinas*College",
-    "ballajura": "**Ballajura",
-    "ballajura indoor spo": "**Ballajura",
-    "bendat": "**Bendat",
-    "cockburn": "**Cockburn",
-    "cockburn arc": "**Cockburn",
-    "curtin stadium": "*Curtin*Stadium",
-    "curtin": "*Curtin*Stadium",
-    "ecu": "*ECU*Mt. Lawley",
-    "ecu mt. lawley": "*ECU*Mt. Lawley",
-    "ecu mt lawley": "*ECU*Mt. Lawley",
-    "geographe leisure": "Geographe*Leisure*Centre",
-    "geographe lei. centr": "Geographe*Leisure*Centre",
-    "geographe lei. cntr": "Geographe*Leisure*Centre",
-    "gold netball centre": "Gold*Netball*Centre",
-    "greenwood college": "*Greenwood*College",
-    "hale": "**Hale",
-    "halls head rec centre": "Halls Head*Recreation*Centre",
-    "halls head rec": "Halls Head*Recreation*Centre",
-    "hbf stad. claremont": "*HBF*Stadium",
-    "john wollaston": "*John*Wallaston",
-    "john wollaston acs": "*John*Wallaston",
-    "kingsway": "**Kingsway",
-    "kingsway indoor stad": "**Kingsway",
-    "loftus": "**Loftus",
-    "mandurah arc": "*Mandurah*ARC",
-    "mandurah baptist college": "**MBC",
-    "mandurah baptist col": "**MBC",
-    "mbc": "**MBC",
-    "melville leisurefit": "*Melville*LeisureFit",
-    "melville leisure": "*Melville*LeisureFit",
-    "methodist ladies college": "Methodist*Ladies*College",
-    "methodist l. col": "Methodist*Ladies*College",
-    "mlc": "Methodist*Ladies*College",
-    "murdoch active": "*Murdoch*Active",
-    "penrhos college": "*Penrhos*College",
-    "rossmoyne": "**Rossmoyne",
-    "rossmoyne shs": "**Rossmoyne",
-    "santa maria": "*Santa*Maria",
-    "santa maria college": "*Santa*Maria",
-    "st mary's": "**St Mary's",
-    "the rise": "**The Rise",
-    "uwa rec. centre": "UWA*Recreation*Centre",
-    "uwa rec centre": "UWA*Recreation*Centre",
-    "uwa sport science":"UWA*Sport*Science",
-    "warwick": "**Warwick",
-    "warwick stadium": "**Warwick",
-    "warwick stad.": "**Warwick",
-    "wesley college": "*Wesley*College"
-}
-
 
 
 
@@ -801,57 +298,73 @@ function pdf_init(venues, wavl, wavjl, date_init) {
     var fixtures = []
     //modifyPdf(fixtures[0]).then(value => {mix.push(value)})
     //modifyPdf(fixtures[1]).then(value => {mix.push(value)})
-    if (document.getElementById("Checkbox99").checked) {
-        console.log(date_init);
-        console.log($("#DatePicker2").datepicker("getDate"))
-        console.log("LOOPING DAYS");
+    
+    var temp_end_date = $("#DatePicker2").datepicker("getDate");
+    
+    temp_end_date.setTime(temp_end_date.getTime() + (1 * (24*60*60*1000)));
+   
+    var mon = temp_end_date.getMonth() + 1;
+    var end_date = temp_end_date.getFullYear().toString().split(-2) + "-" +
+                        mon.toString().padStart(2, '0') + "-" +
+                        temp_end_date.getDate().toString().padStart(2, '0');
+    
+    console.log(end_date);
 
-        for (var j = -6; j <= 0; j++) {
-            var looping_date = $("#DatePicker2").datepicker("getDate");
-            looping_date.setTime(looping_date.getTime() + (j * (24*60*60*1000)));
-            var mon = looping_date.getMonth() + 1;
-            var date_time = looping_date.getFullYear().toString().split(-2) + "-" +
-                                mon.toString().padStart(2, '0') + "-" +
-                                looping_date.getDate().toString().padStart(2, '0');
-            console.log(date_time);
-            /*
-            $("#DatePicker2").datepicker("getDate");
-            console.log($("#DatePicker2").datepicker("setDate",j.toString()));
-            var testing = $("#DatePicker2").datepicker("setDate",j.toString()).datepicker("option", "dateFormat", "yy-mm-dd").val();
-            var date_time = $("#DatePicker2").datepicker("option", "dateFormat", "yy-mm-dd").val()
-            console.log(date_time);
-            console.log(testing);
-            */
-            for (var i = 0; i < leagues.length; i++) {
-            var indiv = get_single_fixture(venues, leagues[i], date_time);
-            console.log(indiv);
-            fixtures.push(indiv);
-        }
-        }
-    } else {
-        for (var i = 0; i < leagues.length; i++) {
-            var indiv = get_single_fixture(venues, leagues[i], date_init);
-            console.log(indiv);
-            fixtures.push(indiv);
-        }
+    var temp_start_date = $("#DatePicker2").datepicker("getDate");
+
+    if (document.getElementById("Checkbox99").checked) {
+        temp_start_date.setTime(temp_start_date.getTime() + (-6 * (24*60*60*1000)));
     }
+    
+    var month = temp_start_date.getMonth() + 1;
+    var start_date = temp_start_date.getFullYear().toString().split(-2) + "-" +
+                        month.toString().padStart(2, '0') + "-" +
+                        temp_start_date.getDate().toString().padStart(2, '0');
+    
+    console.log(start_date);
+
+    var indiv = get_single_fixture(start_date, end_date);
+    console.log(indiv);
+    fixtures.push(indiv);
 
     //Promise.all(get_fixtures(venues, leagues, date)).then(fix_val => {
     Promise.all(fixtures).then(fix_val => {
-        modifyPdf(fix_val, venues, leagues, date_init).then(value => {
-            Promise.all(value).then(value_3 => {
-                mergePDFDocuments(value_3).then(value_2 => {
-                    console.log(value_2);
-                    let filename = "Scoresheets " + date_init.toString() + ".pdf"
-                    download(value_2, filename, "application/pdf");
-                    window.clearInterval(dots);
-                    document.getElementById("Button4").value = "Generate Scoresheets";
-                    document.getElementById("Button4").style.backgroundColor = "#3370B7";
-                    document.getElementById("Button4").style.color = "#FFFFFF"
-                    document.getElementById("Button4").disabled = false;
+        var upd_fixtures = html_to_fixture(venues, leagues, date_init, fix_val);
+
+        var team_list = []
+        for (i = 0; i < upd_fixtures.length; i++){
+            if (upd_fixtures[i][9][0][0] == "D" || upd_fixtures[i][9][0][0] == "S"){
+                var a_team = TEAM_ID[upd_fixtures[i][6]][2];
+                var b_team = TEAM_ID[upd_fixtures[i][7]][2];
+                
+                var upd_a = get_single_team_list_html(a_team);
+                team_list.push(upd_a);
+                var upd_b = get_single_team_list_html(b_team);
+                team_list.push(upd_b);
+            }
+        }
+
+        Promise.all(team_list).then(player_names => {
+            let finalised_fixtures = addTeamList(player_names, upd_fixtures);
+
+            modifyPdf(finalised_fixtures, venues, leagues, date_init).then(value => {
+                Promise.all(value).then(value_3 => {
+                    mergePDFDocuments(value_3).then(value_2 => {
+                        console.log(value_2);
+                        let filename = "Scoresheets " + date_init.toString() + ".pdf"
+                        download(value_2, filename, "application/pdf");
+                        window.clearInterval(dots);
+                        document.getElementById("Button4").value = "Generate Scoresheets";
+                        document.getElementById("Button4").style.backgroundColor = "#3370B7";
+                        document.getElementById("Button4").style.color = "#FFFFFF"
+                        document.getElementById("Button4").disabled = false;
+                    })
                 })
             })
         })
+
+
+        
     })
     //download(res, "pdf-lib_creation_example.pdf", "application/pdf");
 
@@ -863,7 +376,7 @@ function pdf_init(venues, wavl, wavjl, date_init) {
 }
 
 
-async function get_single_fixture(venues, division, date) {
+async function get_single_fixture(start_date, end_date) {
     const {
         PDFDocument,
         StandardFonts,
@@ -871,10 +384,50 @@ async function get_single_fixture(venues, division, date) {
     } = PDFLib;
     axios;
     //const head = 'https://calm-sea-71189.herokuapp.com/vwa.bracketpal.com/dailyform/';
-    const head = 'https://cors-anywhere-og.onrender.com/vwa.bracketpal.com/dailyform/';
+    const head = 'https://cors-anywhere-og.onrender.com/vwa.bracketpal.com/dailyform/range?start_date=';
 
-    var url = head + division[2] + "/" + date.toString();
+    var url = head + start_date.toString() + "&end_date=" + end_date.toString();
     return await axios.get(url);
+}
+
+async function get_single_team_list_html(team_id) {
+    const {
+        PDFDocument,
+        StandardFonts,
+        rgb
+    } = PDFLib;
+    axios;
+    //const head = 'https://calm-sea-71189.herokuapp.com/vwa.bracketpal.com/dailyform/';
+    const head = 'https://cors-anywhere-og.onrender.com/vwa.bracketpal.com/teaminfo/';
+
+    var url = head + team_id.toString();
+    return await axios.get(url);
+}
+
+function addTeamList(player_names_html, fixtures) {
+    let j = 0;
+
+    for (i = 0; i < player_names_html.length; i = i + 2){
+        var Aparser = new DOMParser();
+	    var Adoc = Aparser.parseFromString(player_names_html[i].request.responseText, "text/html");
+        let Aselector = '[class^="team_roster_player wfid_temp"]'
+        var Aelements = Adoc.querySelectorAll(Aselector);
+	    const Anames = [...Aelements];
+        let Aplayer_names = Anames.map((tmp => tmp.innerText.substring(2)));
+
+        var Bparser = new DOMParser();
+	    var Bdoc = Bparser.parseFromString(player_names_html[i+1].request.responseText, "text/html");
+        let Bselector = '[class^="team_roster_player wfid_temp"]'
+        var Belements = Bdoc.querySelectorAll(Bselector);
+	    const Bnames = [...Belements];
+        let Bplayer_names = Bnames.map((tmp => tmp.innerText.substring(2)));
+
+        fixtures[j][17] = Aplayer_names;
+        fixtures[j][18] = Bplayer_names;
+        j = j + 1;
+    }
+
+    return fixtures;
 }
 
 function sorting(a, b) {
@@ -893,12 +446,12 @@ function time_sorting(a, b) {
     }
 }
 
-// [zero_venue_split, _venue_0, _venue_1, _venue_2, _venue_full, _court, _team_a, _team_b, _duty, _division, _date_dd, _date_mm, _date_yyyy, _time_hr, _time_min, _sorting, _time_sorting]
-// [     0              1          2          3          4         5        6         7     8         9        10         11         12        13          14       15          16
+// [zero_venue_split, _venue_0, _venue_1, _venue_2, _venue_full, _court, _team_a, _team_b, _duty, _division, _date_dd, _date_mm, _date_yyyy, _time_hr, _time_min, _sorting, _time_sorting, [_a_List], [b_List]]
+// [     0              1          2          3          4         5        6         7     8         9        10         11         12        13          14       15          16            17         18
 async function modifyPdf(fix, venues, leagues, dates) {
     console.log(venues);
     console.log(leagues);
-    var fixtures = html_to_fixture(venues, leagues, dates, fix)
+    var fixtures = fix;
     console.log(fixtures)
     fixtures.sort(sorting);
     console.log(fixtures);
@@ -910,9 +463,10 @@ async function modifyPdf(fix, venues, leagues, dates) {
     var total = new Array(fixtures.length);
     console.log(fixtures)
     for (var i = 0; i < fixtures.length; i++) {
-        //var WAVLurl = "./static/def.pdf";
-        var WAVLurl = "./static/def.pdf"
-        var JLurl = "./static/def_jl.pdf";
+        var WAVLurl = "https://og1764.github.io/static/def.pdf";
+        var JLurl = "https://og1764.github.io/static/def_jl.pdf";
+        //var WAVLurl = "./static/def.pdf"
+        //var JLurl = "./static/def_jl.pdf";
 
         var WAVLexistingPdfBytes = await fetch(WAVLurl).then(res => res.arrayBuffer())
 
@@ -931,6 +485,39 @@ async function modifyPdf(fix, venues, leagues, dates) {
         var JLfirstPage = await JLpages[0]
 
         if (fixtures[i][9][0][0] == "D" || fixtures[i][9][0][0] == "S") {
+
+            await WAVLfirstPage.drawText(fixtures[i][6], {
+                x: 472,
+                y: 498,
+                size: 12,
+                font: WAVLhelveticaFont
+            })
+
+            for (var k = 0; k < fixtures[i][17].length; k++) {
+                await WAVLfirstPage.drawText(fixtures[i][17][k].toUpperCase(), {
+                    x: 441,
+                    y: 472-Math.floor((8.5*k)),
+                    size: 6,
+                    font: WAVLhelveticaFont
+                })
+            }
+
+            await WAVLfirstPage.drawText(fixtures[i][7], {
+                x: 672,
+                y: 498,
+                size: 12,
+                font: WAVLhelveticaFont
+            })
+
+            for (var k = 0; k < fixtures[i][18].length; k++) {
+                await WAVLfirstPage.drawText(fixtures[i][18][k].toUpperCase(), {
+                    x: 645,
+                    y: 472-Math.floor((8.5*k)),
+                    size: 6,
+                    font: WAVLhelveticaFont
+                })
+            }
+
             await WAVLfirstPage.drawText(fixtures[i][1], {
                 x: parseInt((310 - measureText(fixtures[i][1], 10)).toString()),
                 y: 575,
@@ -1185,7 +772,7 @@ async function mergePDFDocuments(documents) {
     console.log(documents);
     var mergedPdf = await PDFLib.PDFDocument.create();
     for (var i = 0; i < documents.length; i++) {
-        console.log(i)
+        //console.log(i)
         var docone = await PDFLib.PDFDocument.load(await documents[i]);
         //var copiedPagesone = await mergedPdf.copyPages(docone, [0, 1]);
         //await mergedPdf.addPage(await copiedPagesone[0]);
@@ -1239,179 +826,235 @@ function div_from_id(id) {
 }
 
 function add_aliases(venues) {
-    var resultant = [];
+    let resultant = [];
     var low_venues = [];
+    let alias_layer = {};
+
+    
     for (var j = 0; j < venues.length; j++) {
         low_venues.push(venues[j].toLowerCase())
     }
 
-    console.log(low_venues)
-    for (var i = 0; i < __CONFIG__.venues.length; i++) {
-        console.log(__CONFIG__.venues[i].name.toLowerCase())
-        if (low_venues.includes(__CONFIG__.venues[i].name.toLowerCase())) {
-            resultant.push(__CONFIG__.venues[i].name);
-            for (var k = 0; k < __CONFIG__.venues[i].alias.length; k++) {
-                var _alias = __CONFIG__.venues[i].alias[k];
+    let all_venues = Object.keys(__CONFIG__.venues);
+    for (var i = 0; i < all_venues.length; i++) {
+        if (low_venues.includes(__CONFIG__.venues[all_venues[i]].name.toLowerCase())) {
+            resultant.push(__CONFIG__.venues[all_venues[i]].name);
+            for (var k = 0; k < __CONFIG__.venues[all_venues[i]].alias.length; k++) {
+                var _alias = __CONFIG__.venues[all_venues[i]].alias[k];
                 resultant.push(_alias)
+                alias_layer[_alias] = __CONFIG__.venues[[all_venues[i]]].name;
             }
+            alias_layer[__CONFIG__.venues[[all_venues[i]]].name] = __CONFIG__.venues[[all_venues[i]]].name;
         }
     }
-    return resultant;
+    return [resultant, alias_layer];
 }
 
 function html_to_fixture(venues, leagues, date, all_html) {
     let fixtures_list = []
     console.log(leagues);
     console.log(all_html);
-    let venue_usage = add_aliases(venues);
+    let temporary = add_aliases(venues);
+    let alias_layer = temporary[1];
+    let venue_usage = temporary[0];
+    console.log(alias_layer);
     console.log(venue_usage)
     console.log("HERE HERE HERE")
+    console.log(leagues.flat())
+    const NamesArr = leagues.flat();
     for (let x = 0; x < all_html.length; x++) {
         let parser = new DOMParser();
-        let htmlDoc = parser.parseFromString(all_html[x].data, 'text/html');
-        console.log(all_html[x].request.responseURL)
-        let dt = all_html[x].request.responseURL.slice(-10);
-        try {
-            let div_table = htmlDoc.getElementsByTagName("table")[1]
-            console.log("***")
-            console.log(div_table.rows.item(1).cells.item(2).innerText)
-            let temp_div = DIVISIONS[div_table.rows.item(1).cells.item(2).innerText]
-            console.log(temp_div)
-            let table = htmlDoc.getElementsByTagName("table")[2]
-            let rowLength = table.rows.length;
-            for (let i = 1; i < rowLength; i++) {
-                let cells = table.rows.item(i).cells;
-                let venue = cells.item(1).innerText;
-                console.log(venue);
-                let venue_split = venue.split(" Ct")
-                let zero_venue_split = venue_split[0].replaceAll(" Ct", "");
-                console.log(venue_usage);
-                console.log(zero_venue_split);
-                if (venue_usage.includes(zero_venue_split)) {
-                    let _court = "";
-                    try {
-                        _court = cells.item(1).innerText.split("Ct")[1];
-                    } catch (e) {
-                        _court = "";
-                    }
-                    if (_court == null) {
-                        _court = "";
-                    }
-                    console.log(_court);
-                    const _team_a = cells.item(2).innerText;
-                    const _team_b = cells.item(5).innerText;
-                    console.log(_team_a);
-                    console.log(x)
-                    let _duty = " ";
-                    let _time_hr = " ";
-                    let _time_min = " ";
-                    try {
-                        _duty = cells.item(7).innerText.slice(5);
-                    } catch (e) {
-                        console.log(e)
-                        _duty = " ";
-                    }
-                    
-                    
-                    if (FINALS_DATES.includes(dt) && _duty.length < 4) {
-                        _duty = "Previous Loser";
-                    }
-                    
-                    //var division = leagues[j];
-                    let url = all_html[x].request.responseURL;
-                    let split_url = url.split('/');
-                    let _division = temp_div;
-                    //console.log(temp_div)
-                    //let _division = __CONFIG__
-                    //console.log(_division)
-                    //let _date = date.split('-');
-                    let _date = dt.split('-');
-                    let _date_dd = _date[2];
-                    let _date_mm = _date[1];
-                    let _date_yyyy = _date[0]
-                    try {
-                        let time = cells.item(0).innerText.split(":")
-                        _time_hr = time[0].padStart(2, "0");
-                        _time_min = time[1];
-                    } catch (e) {
-                        console.log(e);
-                        _time_hr = " ";
-                        _time_min = " ";
-                    }
-                    let _tmp_venue = VENUE_SPLIT[zero_venue_split.toLowerCase()].split("*");
-                    const _venue_0 = _tmp_venue[0]
-                    const _venue_1 = _tmp_venue[1]
-                    const _venue_2 = _tmp_venue[2]
-                    console.log(VENUE_SPLIT);
+        let htmlDoc = parser.parseFromString(all_html[x].request.responseText, 'text/html');
+        //console.log(all_html.request.responseURL)
+        //let dt = all_html.request.responseURL.slice(-10);
+        console.log(htmlDoc);
+        console.log("test");
+        let all_tables = htmlDoc.getElementsByTagName("table")
+        console.log(all_tables);
+        let numFix = all_tables.length;
+        for (let y = 0; y < numFix; y = y + 3) {
+            let meta = y + 1;
+            let data = y + 2;
+            
+            let meta_table = all_tables[meta];
+            let data_table = all_tables[data];
+            console.log(meta_table);
+            let dt = meta_table.rows.item(1).cells.item(0).innerText;
+            let match_division = meta_table.rows.item(1).cells.item(2).innerText;
+            
+            if (!(NamesArr.includes(match_division))) {
+                console.log(match_division);
+                console.log(NamesArr);
+                continue;
+            }
+
+            console.log("inputDate");
+            console.log(date);
+            if ((!(dt === date)) && (!(document.getElementById("Checkbox99").checked))){
+                console.log("BREAK DUE TO DATE DIFFERENCE");
+                console.log(dt);
+                continue;
+            }
+            console.log(dt);
+            console.log(match_division);
+
+            try {
+                //let div_table = htmlDoc.getElementsByTagName("table")[1]
+                //console.log("***")
+                //console.log(div_table.rows.item(1).cells.item(2).innerText)
+                //let temp_div = DIVISIONS[div_table.rows.item(1).cells.item(2).innerText]
+                //console.log(temp_div)
+                //let table = htmlDoc.getElementsByTagName("table")[2]
+                let rowLength = data_table.rows.length;
+                for (let i = 1; i < rowLength; i++) {
+                    let cells = data_table.rows.item(i).cells;
+                    let venue = cells.item(1).innerText;
+                    console.log(venue);
+                    let venue_split = venue.split(" Ct")
+                    let zero_venue_split = venue_split[0].replaceAll(" Ct", "");
+                    console.log(venue_usage);
                     console.log(zero_venue_split);
-                    let _venue_full = VENUE_SPLIT[zero_venue_split.toLowerCase()].replaceAll("*", " ").trimLeft();
-                    let _sorting = _date_yyyy + " " + _date_mm + " " + _date_dd + " " + _venue_full + " " + _court + " " + _time_hr
-                    let _time_sorting = _date_yyyy + " " + _date_mm + " " + _date_dd + " " + _venue_full + " " + _time_hr + " " + _court;
-                    /*fix['venue'] = zero_venue_split;
-                      fix['venue_0'] = _venue_0
-                      fix['venue_1'] = _venue_1
-                      fix['venue_2'] = _venue_2
-                      fix['venue_full'] = _venue_full
-                      fix['court'] = _court
-                      fix['team_a'] = _team_a
-                      fix['team_b'] = _team_b
-                      fix['duty'] = _duty
-                      fix['division'] = _division
-                      fix['date_dd'] = _date_dd
-                      fix['date_mm'] = _date_mm
-                      fix['date_yyyy'] = _date_yyyy
-                      fix['time_hr'] = _time_hr
-                      fix['time_min'] = _time_min
-                      fix['sorting'] = _sorting
-  */
-                    //console.log(zero_venue_split)
-                    //console.log(_venue_0)
-                    //console.log(_venue_1)
-                    //console.log(_venue_2)
-                    //console.log(_team_a)
-                    //console.log(_team_b)
-                    //console.log(_duty)
+                    if (venue_usage.includes(zero_venue_split)) {
+                        let _court = "";
+                        try {
+                            _court = cells.item(1).innerText.split("Ct")[1];
+                        } catch (e) {
+                            _court = "";
+                        }
+                        if (_court == null) {
+                            _court = "";
+                        }
+                        console.log(_court);
+                        const _team_a = cells.item(2).innerText;
+                        const _team_b = cells.item(5).innerText;
+                        console.log(_team_a);
+                        //console.log(x)
+                        let _duty = " ";
+                        let _time_hr = " ";
+                        let _time_min = " ";
+                        try {
+                            _duty = cells.item(7).innerText.slice(5);
+                        } catch (e) {
+                            console.log(e)
+                            _duty = " ";
+                        }
+                        
+                        
+                        if (FINALS_DATES.includes(dt) && _duty.length < 4) {
+                            _duty = "Previous Loser";
+                        }
+                        
+                        //var division = leagues[j];
+                        //let url = all_html[x].request.responseURL;
+                        //let split_url = url.split('/');
+                        //let _division = temp_div;
+                        let _division = DIVISIONS[match_division];
+                        console.log(_division);
 
-                    //const fix = new Fixture(zero_venue_split, _venue_0, _venue_1, _venue_2, _venue_full, _court,
-                    //    _team_a, _team_b, _duty, _division, _date_dd, _date_mm, _date_yyyy, _time_hr, _time_min, _sorting)
-                    //console.log(fix)
-                    fixtures_list.push([zero_venue_split, _venue_0, _venue_1, _venue_2, _venue_full, _court,
-                        _team_a, _team_b, _duty, _division, _date_dd, _date_mm, _date_yyyy, _time_hr, _time_min, _sorting, _time_sorting
-                    ])
-                    //console.log(fixtures_list)
+                        //console.log(temp_div)
+                        //let _division = __CONFIG__
+                        //console.log(_division)
+                        //let _date = date.split('-');
+                        console.log(dt);
+                        let _date = dt.split('-');
+                        console.log(_date);
+                        let _date_dd = _date[2];
+                        let _date_mm = _date[1];
+                        let _date_yyyy = _date[0];
+                        try {
+                            let time = cells.item(0).innerText.split(":")
+                            _time_hr = time[0].padStart(2, "0");
+                            _time_min = time[1];
+                        } catch (e) {
+                            console.log(e);
+                            _time_hr = " ";
+                            _time_min = " ";
+                        }
+                        //let _tmp_venue = VENUE_SPLIT[zero_venue_split.toLowerCase()].split("*");
+                        console.log(zero_venue_split);
+                        console.log(alias_layer);
+                        let venue_realname = alias_layer[zero_venue_split];
+                        console.log(venue_realname);
+                        const _venue_0 = __CONFIG__.venues[venue_realname].top;
+                        const _venue_1 = __CONFIG__.venues[venue_realname].mid;
+                        const _venue_2 = __CONFIG__.venues[venue_realname].bot;
+                        //console.log(VENUE_SPLIT);
+                        console.log(zero_venue_split);
+                        //let _venue_full = VENUE_SPLIT[zero_venue_split.toLowerCase()].replaceAll("*", " ").trimLeft();
+                        let _venue_full = __CONFIG__.venues[venue_realname].name;
+                        let _sorting = _date_yyyy + " " + _date_mm + " " + _date_dd + " " + _venue_full + " " + _court + " " + _time_hr
+                        let _time_sorting = _date_yyyy + " " + _date_mm + " " + _date_dd + " " + _venue_full + " " + _time_hr + " " + _court;
+                        /*fix['venue'] = zero_venue_split;
+                        fix['venue_0'] = _venue_0
+                        fix['venue_1'] = _venue_1
+                        fix['venue_2'] = _venue_2
+                        fix['venue_full'] = _venue_full
+                        fix['court'] = _court
+                        fix['team_a'] = _team_a
+                        fix['team_b'] = _team_b
+                        fix['duty'] = _duty
+                        fix['division'] = _division
+                        fix['date_dd'] = _date_dd
+                        fix['date_mm'] = _date_mm
+                        fix['date_yyyy'] = _date_yyyy
+                        fix['time_hr'] = _time_hr
+                        fix['time_min'] = _time_min
+                        fix['sorting'] = _sorting
+    */
+                        //console.log(zero_venue_split)
+                        //console.log(_venue_0)
+                        //console.log(_venue_1)
+                        //console.log(_venue_2)
+                        //console.log(_team_a)
+                        //console.log(_team_b)
+                        //console.log(_duty)
 
-                } else {
-                    /*
-                    try{
-                      if(cells.item(3).innerText != "BYE") {
-                          console.log("UNUSED VENUE\n***")
-                          console.log(zero_venue_split)
-                          console.log("***")
-                      }
-                    } catch (e) {console.log(e); console.log(zero_venue_split);}*/
-                    try {
-                        if (Number.isInteger(parseInt(zero_venue_split.substring(0, 2).trim()))) {
-                            console.log("BYE: " + zero_venue_split);
-                        } else {
+                        //const fix = new Fixture(zero_venue_split, _venue_0, _venue_1, _venue_2, _venue_full, _court,
+                        //    _team_a, _team_b, _duty, _division, _date_dd, _date_mm, _date_yyyy, _time_hr, _time_min, _sorting)
+                        //console.log(fix)
+                        fixtures_list.push([zero_venue_split, _venue_0, _venue_1, _venue_2, _venue_full, _court,
+                            _team_a, _team_b, _duty, _division, _date_dd, _date_mm, _date_yyyy, _time_hr, _time_min, _sorting, _time_sorting, [], []
+                        ])
+                        //console.log(fixtures_list)
+
+                    } else {
+                        /*
+                        try{
+                        if(cells.item(3).innerText != "BYE") {
                             console.log("UNUSED VENUE\n***")
                             console.log(zero_venue_split)
                             console.log("***")
                         }
-                    } catch (e) {
-                        console.log("UNUSED VENUE\n***")
-                        console.log(zero_venue_split)
-                        console.log("***")
-                    }
+                        } catch (e) {console.log(e); console.log(zero_venue_split);}*/
+                        try {
+                            if (Number.isInteger(parseInt(zero_venue_split.substring(0, 2).trim()))) {
+                                console.log("BYE: " + zero_venue_split);
+                            } else {
+                                console.log("UNUSED VENUE\n***")
+                                console.log(zero_venue_split)
+                                console.log("***")
+                            }
+                        } catch (e) {
+                            console.log("UNUSED VENUE\n***")
+                            console.log(zero_venue_split)
+                            console.log("***")
+                        }
 
+                    }
+                    console.log(fixtures_list);
                 }
+            } catch (e) {
+                console.log(e)
             }
-        } catch (e) {
-            console.log(e)
         }
     }
     console.log(fixtures_list);
     return fixtures_list
 }
+
+
+
+
 
 function measureText(string, fontSize = 10) {
     const widths = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.1546875, 0.278125, 0.4, 0.721875, 0.5609375, 0.9609375, 0.7203125, 0.240625, 0.4, 0.4, 0.48125, 0.640625, 0.278125, 0.4, 0.278125, 0.4015625, 0.5609375, 0.55625, 0.5609375, 0.5609375, 0.640625, 0.5609375, 0.5609375, 0.5609375, 0.5609375, 0.5609375, 0.278125, 0.278125, 0.640625, 0.640625, 0.640625, 0.5609375, 1.1203125, 0.88125, 0.7203125, 0.8, 0.7234375, 0.7203125, 0.640625, 0.8, 0.7234375, 0.278125, 0.5, 0.8, 0.640625, 0.88125, 0.7234375, 0.8, 0.7203125, 0.8, 0.8, 0.7203125, 0.640625, 0.7234375, 0.8015625, 1.121875, 0.8015625, 0.8015625, 0.721875, 0.3203125, 0.48125, 0.3203125, 0.48125, 0.721875, 0.334375, 0.5609375, 0.640625, 0.5609375, 0.5609375, 0.5609375, 0.48125, 0.5609375, 0.5609375, 0.240625, 0.321875, 0.5609375, 0.240625, 0.88125, 0.5609375, 0.5609375, 0.640625, 0.5609375, 0.4, 0.5609375, 0.4015625, 0.5609375, 0.6421875, 0.88125, 0.6421875, 0.6421875, 0.6421875, 0.4, 0.2609375, 0.48125, 0.640625]
@@ -1447,12 +1090,13 @@ function generate_Table() {
     var jl_list = [];
 
     var table = document.getElementById("Table1")
-
+    var all_venues = Object.keys(__CONFIG__.venues);
+    console.log(all_venues);
     //console.log(__CONFIG__.venues.length)
     //console.log(__CONFIG__.wavl.length)
     //console.log(__CONFIG__.jl.length)
     //console.log(__CONFIG__.jl[3].name)
-    for (var i = 0; i < Math.max(__CONFIG__.venues.length, __CONFIG__.wavl.length, __CONFIG__.jl.length); i++) {
+    for (var i = 0; i < Math.max(all_venues.length, __CONFIG__.wavl.length, __CONFIG__.jl.length); i++) {
         var row = table.insertRow(-1);
         var cell0 = row.insertCell(0);
         var cell1 = row.insertCell(1);
@@ -1470,7 +1114,8 @@ function generate_Table() {
         cell0.innerHTML = '<p style="font-size:8px;line-height:9.5px;">&nbsp;</p>'
 
         try {
-            var venue = __CONFIG__.venues[i];
+            var venue = __CONFIG__.venues[all_venues[i]];
+            console.log(venue);
             cell1.classList.add("cell2")
             cell1.innerHTML = '<div id="venue_' + i.toString() + '" style="display:inline-block;width:16px;height:20px;z-index:56;">' +
                 '<input type="checkbox" id="checkvenue_' + i.toString() + '" name="Venues" value="on" checked="" style="display:inline-block;opacity:0;" title="' + venue.name + '">' +
