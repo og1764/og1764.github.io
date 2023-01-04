@@ -206,77 +206,78 @@ const __CONFIG__ = {
             "alias": ["Warwick Stadium", "Warwick Stad."]
         }
     },
-    "wavl": [{
+    "wavl": {
+        "State League Women": {
             "id": 103,
             "long": "State League Women",
             "short": "SL Women"
         },
-        {
+        "State League Men": {
             "id": 102,
             "long": "State League Men",
             "short": "SL Men"
         },
-        {
+        "State League Reserve Women": {
             "id": 104,
             "long": "State League Reserve Women",
             "short": "SLR Women"
         },
-        {
+        "State League Reserve Men": {
             "id": 105,
             "long": "State League Reserve Men",
             "short": "SLR Men"
         },
-        {
+        "Division 1 Women": {
             "id": 107,
             "long": "Division 1 Women",
             "short": "Div 1 W"
         },
-        {
+        "Division 1 Men": {
             "id": 106,
             "long": "Division 1 Men",
             "short": "Div 1 M"
         },
-        {
+        "Division 2 Women": {
             "id": 109,
             "long": "Division 2 Women",
             "short": "Div 2 W"
         },
-        {
+        "Division 2 Men": {
             "id": 108,
             "long": "Division 2 Men",
             "short": "Div 2 M"
         },
-        {
+        "Division 3 Women": {
             "id": 111,
             "long": "Division 3 Women",
             "short": "Div 3 W"
         },
-        {
+        "Division 3 Men": {
             "id": 115,
             "long": "Division 3 Men",
             "short": "Div 3 M"
         },
-        {
+        "Division 4 Men": {
             "id": 129,
             "long": "Division 4 Men",
             "short": "Div 4 M"
         },
-        {
+        "Division 4 Women": {
             "id": 112,
             "long": "Division 4 Women",
             "short": "Div 4 W"
         },
-        {
+        "Division 5 Men": {
             "id": 130,
             "long": "Division 5 Men",
             "short": "Div 5 M"
         },
-        {
+        "Division 6 Men": {
             "id": 131,
             "long": "Division 6 Men",
             "short": "Div 6 M"
         }
-    ],
+    },
     "jl": [{
             "id": 117,
             "long": "7/8 Female North",
@@ -394,62 +395,6 @@ const DIVISIONS = {
     'Year 7/8 Male South': ['7/8 Male South', '7/8 M S', '116'],
     */
 }
-
-/*
-const VENUE_SPLIT = {
-    "aquinas": "*Aquinas*College",
-    "aquinas college": "*Aquinas*College",
-    "ballajura": "**Ballajura",
-    "ballajura indoor spo": "**Ballajura",
-    "bendat": "**Bendat",
-    "cockburn": "**Cockburn",
-    "cockburn arc": "**Cockburn",
-    "curtin stadium": "*Curtin*Stadium",
-    "curtin": "*Curtin*Stadium",
-    "ecu": "*ECU*Mt. Lawley",
-    "ecu mt. lawley": "*ECU*Mt. Lawley",
-    "ecu mt lawley": "*ECU*Mt. Lawley",
-    "geographe leisure": "Geographe*Leisure*Centre",
-    "geographe lei. centr": "Geographe*Leisure*Centre",
-    "geographe lei. cntr": "Geographe*Leisure*Centre",
-    "gold netball centre": "Gold*Netball*Centre",
-    "greenwood college": "*Greenwood*College",
-    "hale": "**Hale",
-    "halls head rec centre": "Halls Head*Recreation*Centre",
-    "halls head rec": "Halls Head*Recreation*Centre",
-    "hbf stad. claremont": "*HBF*Stadium",
-    "john wollaston": "*John*Wallaston",
-    "john wollaston acs": "*John*Wallaston",
-    "kingsway": "**Kingsway",
-    "kingsway indoor stad": "**Kingsway",
-    "loftus": "**Loftus",
-    "mandurah arc": "*Mandurah*ARC",
-    "mandurah baptist college": "**MBC",
-    "mandurah baptist col": "**MBC",
-    "mbc": "**MBC",
-    "melville leisurefit": "*Melville*LeisureFit",
-    "melville leisure": "*Melville*LeisureFit",
-    "methodist ladies college": "Methodist*Ladies*College",
-    "methodist l. col": "Methodist*Ladies*College",
-    "mlc": "Methodist*Ladies*College",
-    "murdoch active": "*Murdoch*Active",
-    "penrhos college": "*Penrhos*College",
-    "rossmoyne": "**Rossmoyne",
-    "rossmoyne shs": "**Rossmoyne",
-    "santa maria": "*Santa*Maria",
-    "santa maria college": "*Santa*Maria",
-    "st mary's": "**St Mary's",
-    "the rise": "**The Rise",
-    "uwa rec. centre": "UWA*Recreation*Centre",
-    "uwa rec centre": "UWA*Recreation*Centre",
-    "uwa sport science":"UWA*Sport*Science",
-    "warwick": "**Warwick",
-    "warwick stadium": "**Warwick",
-    "warwick stad.": "**Warwick",
-    "wesley college": "*Wesley*College"
-}
-
-*/
 
 const TEAM_ID = {
     '1 Fremantle': ['1', 'Fremantle', '1001', 'State League Men'],

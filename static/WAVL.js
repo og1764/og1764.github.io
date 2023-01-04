@@ -413,17 +413,19 @@ function addTeamList(player_names_html, fixtures) {
         let Aselector = '[class^="team_roster_player wfid_temp"]'
         var Aelements = Adoc.querySelectorAll(Aselector);
 	    const Anames = [...Aelements];
-        let Aplayer_names = Anames.map((tmp => tmp.innerText.substring(2)));
+        let Aplayer_names = Anames.map((tmp => split_name(tmp.innerText.substring(2))));
 
         var Bparser = new DOMParser();
 	    var Bdoc = Bparser.parseFromString(player_names_html[i+1].request.responseText, "text/html");
         let Bselector = '[class^="team_roster_player wfid_temp"]'
         var Belements = Bdoc.querySelectorAll(Bselector);
 	    const Bnames = [...Belements];
-        let Bplayer_names = Bnames.map((tmp => tmp.innerText.substring(2)));
+        let Bplayer_names = Bnames.map((tmp => split_name(tmp.innerText.substring(2))));
+
 
         fixtures[j][17] = Aplayer_names;
         fixtures[j][18] = Bplayer_names;
+        console.log(Bplayer_names);
         j = j + 1;
     }
 
@@ -494,12 +496,34 @@ async function modifyPdf(fix, venues, leagues, dates) {
             })
 
             for (var k = 0; k < fixtures[i][17].length; k++) {
-                await WAVLfirstPage.drawText(fixtures[i][17][k].toUpperCase(), {
-                    x: 441,
-                    y: 472-Math.floor((8.5*k)),
-                    size: 6,
-                    font: WAVLhelveticaFont
-                })
+                if (k < Math.ceil(fixtures[i][17].length / 2)) {
+                    await WAVLfirstPage.drawText(fixtures[i][17][k][0].toUpperCase(), {
+                        x: 442,
+                        y: 472-Math.floor((17*k)),
+                        size: 6,
+                        font: WAVLhelveticaFont
+                    })
+                    await WAVLfirstPage.drawText(fixtures[i][17][k][1].toUpperCase(), {
+                        x: 442,
+                        y: 472-Math.floor((17*k+8.5)),
+                        size: 6,
+                        font: WAVLhelveticaFont
+                    })
+                } else {
+                    await WAVLfirstPage.drawText(fixtures[i][17][k][0].toUpperCase(), {
+                        x: 541,
+                        y: 472-Math.floor((17*(k-Math.ceil(fixtures[i][17].length / 2)))),
+                        size: 6,
+                        font: WAVLhelveticaFont
+                    })
+                    await WAVLfirstPage.drawText(fixtures[i][17][k][1].toUpperCase(), {
+                        x: 541,
+                        y: 472-Math.floor((17*(k-Math.ceil(fixtures[i][17].length / 2))+8.5)),
+                        size: 6,
+                        font: WAVLhelveticaFont
+                    })
+                }
+                
             }
 
             await WAVLfirstPage.drawText(fixtures[i][7], {
@@ -510,13 +534,66 @@ async function modifyPdf(fix, venues, leagues, dates) {
             })
 
             for (var k = 0; k < fixtures[i][18].length; k++) {
-                await WAVLfirstPage.drawText(fixtures[i][18][k].toUpperCase(), {
-                    x: 645,
-                    y: 472-Math.floor((8.5*k)),
-                    size: 6,
-                    font: WAVLhelveticaFont
-                })
+                if (k < Math.ceil(fixtures[i][18].length / 2)) {
+                    await WAVLfirstPage.drawText(fixtures[i][18][k][0].toUpperCase(), {
+                        x: 645,
+                        y: 472-Math.floor((17*k)),
+                        size: 6,
+                        font: WAVLhelveticaFont
+                    })
+                    await WAVLfirstPage.drawText(fixtures[i][18][k][1].toUpperCase(), {
+                        x: 645,
+                        y: 472-Math.floor((17*k+8.5)),
+                        size: 6,
+                        font: WAVLhelveticaFont
+                    })
+                } else {
+                    await WAVLfirstPage.drawText(fixtures[i][18][k][0].toUpperCase(), {
+                        x: 745,
+                        y: 472-Math.floor((17*(k-Math.ceil(fixtures[i][18].length / 2)))),
+                        size: 6,
+                        font: WAVLhelveticaFont
+                    })
+                    await WAVLfirstPage.drawText(fixtures[i][18][k][1].toUpperCase(), {
+                        x: 745,
+                        y: 472-Math.floor((17*(k-Math.ceil(fixtures[i][18].length / 2))+8.5)),
+                        size: 6,
+                        font: WAVLhelveticaFont
+                    })
+                }
             }
+
+            await WAVLfirstPage.drawLine({
+                start: { x: 539, y: 478 },
+                end: { x: 539, y: 472-Math.floor(17*Math.ceil(fixtures[i][17].length /2)-6) },
+                thickness: 0.5,
+                color: rgb(0,0,0),
+                opacity: 1,
+            })
+            
+            await WAVLfirstPage.drawLine({
+                start: { x: 519, y: 478 },
+                end: { x: 519, y: 472-Math.floor(17*Math.ceil(fixtures[i][17].length /2)-6) },
+                thickness: 0.5,
+                color: rgb(0,0,0),
+                opacity: 1,
+            })
+            
+            await WAVLfirstPage.drawLine({
+                start: { x: 743, y: 478 },
+                end: { x: 743, y: 472-Math.floor(17*Math.ceil(fixtures[i][18].length /2)-6) },
+                thickness: 0.5,
+                color: rgb(0,0,0),
+                opacity: 1,
+            })
+            
+            await WAVLfirstPage.drawLine({
+                start: { x: 723, y: 478 },
+                end: { x: 723, y: 472-Math.floor(17*Math.ceil(fixtures[i][18].length /2)-6) },
+                thickness: 0.5,
+                color: rgb(0,0,0),
+                opacity: 1,
+            })
 
             await WAVLfirstPage.drawText(fixtures[i][1], {
                 x: parseInt((310 - measureText(fixtures[i][1], 10)).toString()),
@@ -812,9 +889,10 @@ function get_URLS(leagues, date) {
 }
 
 function div_from_id(id) {
-    for (var i = 0; i < __CONFIG__.wavl.length; i++) {
-        if (__CONFIG__.wavl[i].id == id) {
-            return [__CONFIG__.wavl[i].long, __CONFIG__.wavl[i].short, __CONFIG__.wavl[i].id]
+    let wavl_keys = Object.keys(__CONFIG__.wavl);
+    for (var i = 0; i < wavl_keys.length; i++) {
+        if (__CONFIG__.wavl[wavl_keys[i]].id == id) {
+            return [__CONFIG__.wavl[wavl_keys[i]].long, __CONFIG__.wavl[wavl_keys[i]].short, __CONFIG__.wavl[wavl_keys[i]].id]
         }
     }
     for (var i = 0; i < __CONFIG__.jl.length; i++) {
@@ -1054,7 +1132,28 @@ function html_to_fixture(venues, leagues, date, all_html) {
 
 
 
+function split_name(name){
+    let myArray = name.split(" ");
+    let comparator = 99999;
+    let front = "";
+    let back = "";
 
+    for (let i = 0; i < myArray.length-1; i++) {
+        let fr = myArray.slice(0, i+1).join(" ");
+        let bk = myArray.slice(i+1).join(" ");
+        let diff = Math.abs(fr.length - bk.length);
+
+        if (diff < comparator){
+            front = fr;
+            back = bk;
+            comparator = diff;
+        }
+    }
+
+    console.log(comparator);
+
+    return [front, back];
+}
 
 function measureText(string, fontSize = 10) {
     const widths = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.1546875, 0.278125, 0.4, 0.721875, 0.5609375, 0.9609375, 0.7203125, 0.240625, 0.4, 0.4, 0.48125, 0.640625, 0.278125, 0.4, 0.278125, 0.4015625, 0.5609375, 0.55625, 0.5609375, 0.5609375, 0.640625, 0.5609375, 0.5609375, 0.5609375, 0.5609375, 0.5609375, 0.278125, 0.278125, 0.640625, 0.640625, 0.640625, 0.5609375, 1.1203125, 0.88125, 0.7203125, 0.8, 0.7234375, 0.7203125, 0.640625, 0.8, 0.7234375, 0.278125, 0.5, 0.8, 0.640625, 0.88125, 0.7234375, 0.8, 0.7203125, 0.8, 0.8, 0.7203125, 0.640625, 0.7234375, 0.8015625, 1.121875, 0.8015625, 0.8015625, 0.721875, 0.3203125, 0.48125, 0.3203125, 0.48125, 0.721875, 0.334375, 0.5609375, 0.640625, 0.5609375, 0.5609375, 0.5609375, 0.48125, 0.5609375, 0.5609375, 0.240625, 0.321875, 0.5609375, 0.240625, 0.88125, 0.5609375, 0.5609375, 0.640625, 0.5609375, 0.4, 0.5609375, 0.4015625, 0.5609375, 0.6421875, 0.88125, 0.6421875, 0.6421875, 0.6421875, 0.4, 0.2609375, 0.48125, 0.640625]
@@ -1096,7 +1195,8 @@ function generate_Table() {
     //console.log(__CONFIG__.wavl.length)
     //console.log(__CONFIG__.jl.length)
     //console.log(__CONFIG__.jl[3].name)
-    for (var i = 0; i < Math.max(all_venues.length, __CONFIG__.wavl.length, __CONFIG__.jl.length); i++) {
+    var wavl_keys = Object.keys(__CONFIG__.wavl)
+    for (var i = 0; i < Math.max(all_venues.length, wavl_keys.length, __CONFIG__.jl.length); i++) {
         var row = table.insertRow(-1);
         var cell0 = row.insertCell(0);
         var cell1 = row.insertCell(1);
@@ -1138,7 +1238,7 @@ function generate_Table() {
         cell3.innerHTML = '<p style="font-size:8px;line-height:9.5px;">&nbsp;</p>'
 
         try {
-            var wavl = __CONFIG__.wavl[i];
+            var wavl = __CONFIG__.wavl[wavl_keys[i]];
             cell4.classList.add("cell2")
             cell4.innerHTML = '<div id="wavl_' + i.toString() + '" style="display:inline-block;width:16px;height:20px;z-index:58;">' +
                 '<input type="checkbox" id="checkwavl_' + i.toString() + '" name="WAVL_teams" value="on" checked="" style="display:inline-block;opacity:0;" title="' + wavl.long + '">' +
