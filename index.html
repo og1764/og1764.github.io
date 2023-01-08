@@ -14,14 +14,11 @@
         <link rel="icon" href="https://volleyballwa.com.au/wp-content/uploads/2021/03/cropped-VWA_logo_vertical_forBlackBG-100x100.png" sizes="32x32">
         <link rel="icon" href="https://volleyballwa.com.au/wp-content/uploads/2021/03/cropped-VWA_logo_vertical_forBlackBG-300x300.png" sizes="192x192">
         <link rel="apple-touch-icon" href="https://volleyballwa.com.au/wp-content/uploads/2021/03/cropped-VWA_logo_vertical_forBlackBG-300x300.png">
-        <!--<script src="./static/jquery-1.12.4.min.js"></script>
-        <script src="./static/jquery-ui.min.js"></script>-->
         <script type="text/javascript" src="static/configuration.mjs"></script> 
         <script src="https://unpkg.com/jquery@3.6.0"></script>
         <script src="https://unpkg.com/jquery@3.6.0/dist/jquery.js"></script>
         <script src="https://unpkg.com/jquery@3.6.0/dist/jquery.min.js"></script>
         <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js" integrity="sha256-eTyxS0rkjpLEo16uXTS0uVCS4815lc40K2iVpWDvdSY=" crossorigin="anonymous"></script>
-        <!--<script src="https://unpkg.com/pdf-lib@1.17.1"></script>-->
         <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.js"></script>
         <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
         <script src="https://unpkg.com/downloadjs@1.4.7"></script>
@@ -37,12 +34,7 @@
                 var d = new Date()
                 d.setDate(d.getDate() + (0+(7-d.getDay())) % 7);
                 console.log(d)
-                //var max = new Date(2021, 07 - 1, 20);
-                //if (d.getDate() > max.getDate()){
-                //    return max;
-                //}else {
                 return d;
-                //}
             }
             $(document).ready(function()
             {
@@ -65,10 +57,9 @@
     </head>
     <body>
         <div id="container">
-            <a href="https://www.wysiwygwebbuilder.com" target="_blank"><img src="../static/images/builtwithwwb16.png" alt="WYSIWYG Web Builder" style="position:absolute;left:254px;top:230px;margin: 0;border-width:0;z-index:250"></a>
             <div id="wb_Form2" style="position:absolute;left:56px;top:144px;width:858px;height:220px;z-index:276;">
                 <form name="WAVL_Advanced" id="Form2">
-                    <input type="button" id="Button4" name="Generate Scoresheets" value="Generate Scoresheets" style="position:absolute;left:450px;top:105px;width:243px;height:50px;z-index:89;background-color:#3370B7;" onclick="WAVL_ONLINE()">
+                    <input type="button" id="Button4" name="Generate Scoresheets" value="Generate Scoresheets" style="position:absolute;left:450px;top:85px;width:243px;height:50px;z-index:89;background-color:#3370B7;" onclick="WAVL_ONLINE()">
                     <div id="wb_Checkbox99">
                         <input type="checkbox" id="Checkbox99" name="Download Runsheet?" value="on" style="display:inline-block;position:absolute;left:450px;top:170px;z-index:89;cursor:pointer" title="Download runsheet for selected date and divisions?">
                         <label for="Checkbox99"></label>
@@ -77,8 +68,8 @@
                         </div>
                     </div>
                     <input id="DatePicker2-input" name="DatePicker2" style="display:none" type="text" value="">
-                    <div id="DatePicker2" style="position:absolute;left:69px;top:17px;width:222px;height:213px;z-index:90;"></div>
-                    <div id="wb_Text1" style="position:absolute;left:315px;top:17px;width:500px;height:20px;text-align:center;z-index:92;">
+                    <div id="DatePicker2" style="position:absolute;left:69px;top:12px;width:222px;height:213px;z-index:90;"></div>
+                    <div id="wb_Text1" style="position:absolute;left:315px;top:12px;width:500px;height:20px;text-align:center;z-index:92;">
                         <span style="color:#000000;font-family:Arial;font-size:27px;"><strong>Volleyball WA Scoresheet Generator</strong></span>
                     </div>
                     <table style="position:absolute;left:0px;top:326px;width:858px;height:811px;z-index:93;" id="Table1">
@@ -163,10 +154,6 @@
                         <td class="cell91" colspan="1" style="background:yellow;cursor:pointer;" onClick="window.open('../static/def_jl.pdf', '_blank', 'fullscreen=yes'); return false;">
                             <div style="text-align:center;font-size:14px">Junior League<br>Scoresheet</div>
                         </td>
-                        <!--<td class="cell91" colspan="1" style="background:purple">
-                            <div style="text-align:center;font-size:14px">2021 Venue Schedules</div>
-                        </td>-->
-
                     </tr>
                 </table>
             </div>

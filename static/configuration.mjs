@@ -278,122 +278,73 @@ const __CONFIG__ = {
             "short": "Div 6 M"
         }
     },
-    "jl": [{
+    "jl": {
+        "7/8 Female North": {
             "id": 117,
             "long": "7/8 Female North",
             "short": "7/8 F N"
         },
-        {
+        "7/8 Female South": {
             "id": 118,
             "long": "7/8 Female South",
             "short": "7/8 F S"
         },
-        {
+        "7/8 Male North": {
             "id": 110,
             "long": "7/8 Male North",
             "short": "7/8 M N"
         },
-        {
+        "7/8 Male South": {
             "id": 116,
             "long": "7/8 Male South",
             "short": "7/8 M S"
         },
-        {
+        "9/10 Female Pool 1": {
             "id": 122,
             "long": "9/10 Female Pool 1",
             "short": "9/10 F 1"
         },
-        {
+        "9/10 Female Pool 2": {
             "id": 125,
             "long": "9/10 Female Pool 2",
             "short": "9/10 F 2"
         },
-        {
+        "9/10 Female Pool 3": {
             "id": 124,
             "long": "9/10 Female Pool 3",
             "short": "9/10 F 3"
         },
-        {
+        "9/10 Male North": {
             "id": 121,
             "long": "9/10 Male North",
             "short": "9/10 M N"
         },
-        {
+        "9/10 Male South Pool 1": {
             "id": 119,
             "long": "9/10 Male South Pool 1",
             "short": "9/10 M S 1"
         },
-        {
+        "9/10 Male South Pool 2": {
             "id": 120,
             "long": "9/10 Male South Pool 2",
             "short": "9/10 M S 2"
         },
-        {
+        "11/12 Female": {
             "id": 128,
             "long": "11/12 Female",
             "short": "11/12 F"
         },
-        {
+        "11/12 Male North": {
             "id": 127,
             "long": "11/12 Male North",
             "short": "11/12 M N"
         },
-        {
+        "11/12 Male South": {
             "id": 126,
             "long": "11/12 Male South",
             "short": "11/12 M S"
         }
-    ]
-}
-
-
-const DIVISIONS = {
-    "State League Women": ["State League Women", "SL Women", "103"],
-    "State League Men": ["State League Men", "SL Men", "102"],
-    "State League Reserve Men": ["State League Reserve Men", "SLR Men", "104"],
-    "State League Reserve Women": ["State League Reserve Women", "SLR Women", "105"],
-
-    "Division 1 Men": ['Division 1 Men', 'Div 1 M', "106"],
-    "Division 1 Women": ['Division 1 Women', 'Div 1 W', "107"],
-    "Division 2 Men": ['Division 2 Men', 'Div 2 M', "108"],
-    "Division 2 Women": ['Division 2 Women', 'Div 2 W', "109"],
-    "Division 3 Men": ['Division 3 Men', 'Div 3 M', "115"],
-    "Division 3 Women": ['Division 3 Women', 'Div 3 W', "111"],
-    "Division 4 Men": ['Division 4 Men', 'Div 4 M', "129"],
-    "Division 4 Women": ['Division 4 Women', 'Div 4 W', "112"],
-    "Division 5 Men": ['Division 5 Men', 'Div 5 M', "130"],
-    "Division 6 Men": ['Division 6 Men', 'Div 6 M', "131"],
-
-    '7/8 Female North': ['7/8 Female North', '7/8 F N', '117'],
-    '7/8 Female South': ['7/8 Female South', '7/8 F S', '118'],
-    '9/10 Female Pool 1': ['9/10 Female Pool 1', '9/10 F 1', '122'],
-    '9/10 Female Pool 2': ['9/10 Female Pool 2', '9/10 F 2', '125'],
-    '9/10 Female Pool 3': ['9/10 Female Pool 3', '9/10 F 3', '124'],
-    '11/12 Female': ['11/12 Female', '11/12 F', '128'],
-    '11/12 Male North': ['11/12 Male North', '11/12 M N', '127'],
-    '11/12 Male South': ['11/12 Male South', '11/12 M S', '126'],
-    '9/10 Male North': ['9/10 Male North', '9/10 M N', '121'],
-    '9/10 Male South Pool 1': ['9/10 Male South Pool 1', '9/10 M S 1', '119'],
-    '9/10 Male South Pool 2': ['9/10 Male South Pool 2', '9/10 M S 2', '120'],
-    '7/8 Male North': ['7/8 Male North', '7/8 M N', '110'],
-    '7/8 Male South': ['7/8 Male South', '7/8 M S', '116']
-    
-    /*,
-
-    'Year 7/8 Female North': ['7/8 Female North', '7/8 F N', '117'],
-    'Year 7/8 Female South': ['7/8 Female South', '7/8 F S', '118'],
-    'Year 9/10 Female Pool 1': ['9/10 Female Pool 1', '9/10 F 1', '122'],
-    'Year 9/10 Female Pool 2': ['9/10 Female Pool 2', '9/10 F 2', '125'],
-    'Year 9/10 Female Pool 3': ['9/10 Female Pool 3', '9/10 F 3', '124'],
-    'Year 11/12 Female': ['11/12 Female', '11/12 F', '128'],
-    'Year 11/12 Male North': ['11/12 Male North', '11/12 M N', '127'],
-    'Year 11/12 Male South': ['11/12 Male South', '11/12 M S', '126'],
-    'Year 9/10 Male North': ['9/10 Male North', '9/10 M N', '121'],
-    'Year 9/10 Male South Pool 1': ['9/10 Male South Pool 1', '9/10 M S 1', '119'],
-    'Year 9/10 Male South Pool 2': ['9/10 Male South Pool 2', '9/10 M S 2', '120'],
-    'Year 7/8 Male North': ['7/8 Male North', '7/8 M N', '110'],
-    'Year 7/8 Male South': ['7/8 Male South', '7/8 M S', '116'],
-    */
+    }
 }
 
 const TEAM_ID = {
@@ -427,6 +378,7 @@ const TEAM_ID = {
     '31 Murdoch': ['31', 'Murdoch', '1039', 'Division 1 Men'],
     '33 VIRSA': ['33', 'VIRSA', '1034', 'Division 1 Men'],
     '34 United': ['34', 'United', '1041', 'Division 1 Men'],
+
     '42 Southern Cross': ['42', 'Southern Cross', '1054', 'Division 2 Men'],
     '43 UWA': ['43', 'UWA', '1055', 'Division 2 Men'],
     '44 ECU': ['44', 'ECU', '1056', 'Division 2 Men'],
@@ -437,6 +389,7 @@ const TEAM_ID = {
     '50 Northern Stars': ['50', 'Northern Stars', '1062', 'Division 2 Men'],
     '52 Reds Junior': ['52', 'Reds Junior', '1060', 'Division 2 Men'],
     '54 United': ['54', 'United', '1053', 'Division 2 Men'],
+
     '61 Fremantle': ['61', 'Fremantle', '1091', 'Division 3 Men'],
     '62 Southern Cross': ['62', 'Southern Cross', '1092', 'Division 3 Men'],
     '63 UWA': ['63', 'UWA', '1093', 'Division 3 Men'],
@@ -447,6 +400,7 @@ const TEAM_ID = {
     '70 Northern Stars': ['70', 'Northern Stars', '1100', 'Division 3 Men'],
     '71 Murdoch': ['71', 'Murdoch', '1097', 'Division 3 Men'],
     '72 Reds Junior': ['72', 'Reds Junior', '1099', 'Division 3 Men'],
+
     '81 Fremantle': ['81', 'Fremantle', '1260', 'Division 4 Men'],
     '82 Southern Cross': ['82', 'Southern Cross', '1261', 'Division 4 Men'],
     '83 UWA': ['83', 'UWA', '1262', 'Division 4 Men'],
@@ -457,12 +411,14 @@ const TEAM_ID = {
     '88 Rossmoyne': ['88', 'Rossmoyne', '1267', 'Division 4 Men'],
     '91 Murdoch': ['91', 'Murdoch', '1269', 'Division 4 Men'],
     '92 Reds Junior': ['92', 'Reds Junior', '1268', 'Division 4 Men'],
+
     '102 Southern Cross': ['102', 'Southern Cross', '1009', 'State League Women'],
     '103 UWA': ['103', 'UWA', '1010', 'State League Women'],
     '104 ECU': ['104', 'ECU', '1011', 'State League Women'],
     '105 Reds': ['105', 'Reds', '1012', 'State League Women'],
     '106 Balcatta': ['106', 'Balcatta', '1013', 'State League Women'],
     '108 Rossmoyne': ['108', 'Rossmoyne', '1014', 'State League Women'],
+
     '111 Fremantle': ['111', 'Fremantle', '1021', 'State League Reserve Women'],
     '112 Southern Cross': ['112', 'Southern Cross', '1016', 'State League Reserve Women'],
     '113 UWA': ['113', 'UWA', '1017', 'State League Reserve Women'],
@@ -471,6 +427,7 @@ const TEAM_ID = {
     '116 Balcatta': ['116', 'Balcatta', '1020', 'State League Reserve Women'],
     '118 Rossmoyne': ['118', 'Rossmoyne', '1022', 'State League Reserve Women'],
     '119 Busselton': ['119', 'Busselton', '1015', 'State League Reserve Women'],
+
     '121 Fremantle': ['121', 'Fremantle', '1043', 'Division 1 Women'],
     '122 Southern Cross': ['122', 'Southern Cross', '1044', 'Division 1 Women'],
     '123 UWA': ['123', 'UWA', '1045', 'Division 1 Women'],
@@ -481,6 +438,7 @@ const TEAM_ID = {
     '128 Rossmoyne': ['128', 'Rossmoyne', '1050', 'Division 1 Women'],
     '132 Reds Junior': ['132', 'Reds Junior', '1051', 'Division 1 Women'],
     '134 United': ['134', 'United', '1052', 'Division 1 Women'],
+
     '141 Fremantle': ['141', 'Fremantle', '1063', 'Division 2 Women'],
     '143 UWA': ['143', 'UWA', '1065', 'Division 2 Women'],
     '144 ECU': ['144', 'ECU', '1066', 'Division 2 Women'],
@@ -491,6 +449,7 @@ const TEAM_ID = {
     '151 Murdoch': ['151', 'Murdoch', '1069', 'Division 2 Women'],
     '152 Reds Junior': ['152', 'Reds Junior', '1071', 'Division 2 Women'],
     '154 United': ['154', 'United', '1064', 'Division 2 Women'],
+
     '161 Fremantle': ['161', 'Fremantle', '1073', 'Division 3 Women'],
     '162 Southern Cross': ['162', 'Southern Cross', '1074', 'Division 3 Women'],
     '163 UWA': ['163', 'UWA', '1075', 'Division 3 Women'],
@@ -501,6 +460,7 @@ const TEAM_ID = {
     '168 Rossmoyne': ['168', 'Rossmoyne', '1080', 'Division 3 Women'],
     '170 Northern Stars': ['170', 'Northern Stars', '1082', 'Division 3 Women'],
     '171 Murdoch': ['171', 'Murdoch', '1081', 'Division 3 Women'],
+
     '181 ECU Blue': ['181', 'ECU Blue', '1083', 'Division 4 Women'],
     '182 Southern Cross': ['182', 'Southern Cross', '1084', 'Division 4 Women'],
     '183 UWA': ['183', 'UWA', '1085', 'Division 4 Women'],
@@ -508,6 +468,7 @@ const TEAM_ID = {
     '185 Northern Stars Black': ['185', 'Northern Stars Black', '1087', 'Division 4 Women'],
     '186 Balcatta': ['186', 'Balcatta', '1088', 'Division 4 Women'],
     '187 Northern Stars Blue': ['187', 'Northern Stars Blue', '1089', 'Division 4 Women'],
+
     '201 ECU Blue': ['201', 'ECU Blue', '1281', 'Division 5 Men'],
     '202 Southern Cross': ['202', 'Southern Cross', '1282', 'Division 5 Men'],
     '203 UWA': ['203', 'UWA', '1283', 'Division 5 Men'],
@@ -518,6 +479,7 @@ const TEAM_ID = {
     '209 ECU White': ['209', 'ECU White', '1289', 'Division 5 Men'],
     '210 Northern Stars': ['210', 'Northern Stars', '1290', 'Division 5 Men'],
     '211 Murdoch': ['211', 'Murdoch', '1287', 'Division 5 Men'],
+    
     '221 Northern Stars Black': ['221', 'Northern Stars Black', '1270', 'Division 6 Men'],
     '222 Southern Cross Green': ['222', 'Southern Cross Green', '1271', 'Division 6 Men'],
     '223 UWA': ['223', 'UWA', '1272', 'Division 6 Men'],
