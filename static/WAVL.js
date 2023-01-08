@@ -277,19 +277,20 @@ function addTeamList(player_names_html, fixtures) {
         // Ensure that the fixture lines up with the player names. 
         // No need to check as the order the fixtures were added is the same order that the player HTML was added
         while (fixtures[j][9][0][0] != "D" && fixtures[j][9][0][0] != "S") {j = j + 1};
-        let selector = '[class^="team_roster_player wfid_temp"]';
         
         // Parse Team A
         var Aparser = new DOMParser();
 	    var Adoc = Aparser.parseFromString(player_names_html[i].request.responseText, "text/html");
-        var Aelements = Adoc.querySelectorAll(selector);
+        let Aselector = '[class^="team_roster_player wfid_temp"]';
+        var Aelements = Adoc.querySelectorAll(Aselector);
 	    const Anames = [...Aelements];
         let Aplayer_names = Anames.map((tmp => split_name(tmp.innerText.substring(2))));
 
         // Parse Team B
         var Bparser = new DOMParser();
 	    var Bdoc = Bparser.parseFromString(player_names_html[i+1].request.responseText, "text/html");
-        var Belements = Bdoc.querySelectorAll(selector);
+        let Bselector = '[class^="team_roster_player wfid_temp"]';
+        var Belements = Bdoc.querySelectorAll(Bselector);
 	    const Bnames = [...Belements];
         let Bplayer_names = Bnames.map((tmp => split_name(tmp.innerText.substring(2))));
 
@@ -308,7 +309,7 @@ function addTeamList(player_names_html, fixtures) {
  * @returns 
  */
 function sorting(a, b) {
-    console.log("sorting");
+    // console.log("sorting");
     if (a[15] === b[15]) {
         return 0;
     } else {
@@ -324,7 +325,7 @@ function sorting(a, b) {
  * @returns 
  */
 function time_sorting(a, b) {
-    console.log("time_sorting");
+    // console.log("time_sorting");
     if (a[16] === b[16]) {
         return 0;
     } else {
@@ -452,7 +453,6 @@ async function modifyPdf(fix, dates) {
             })
 
             // Team B Players
-            console.log(fixtures[i][18]);
             for (var k = 0; k < fixtures[i][18].length; k++) {
                 if (k < Math.ceil(fixtures[i][18].length / 2)) {
                     // first name, first column
@@ -932,13 +932,15 @@ function html_to_fixture(venues, leagues, date, all_html) {
                         const _team_b = cells.item(5).innerText;
 
                         // Try Catch exists for junior league and home rounds.
-                        try {
-                            _duty = cells.item(7).innerText.slice(5);
-                        } catch (e) {
-                            console.log(e)
-                            _duty = " ";
+                        if (match_division[0] == "D" || match_division[0] == "S") {
+                            try {
+                                _duty = cells.item(7).innerText.slice(5);
+                            } catch (e) {
+                                console.log(e);
+                                _duty = " ";
+                            }
                         }
-                        
+
                         // Update duty if using Previous Loser.
                         if (FINALS_DATES.includes(dt) && _duty.length < 4) {
                             _duty = "Previous Loser";
