@@ -3,6 +3,7 @@
  * @param {*} checked 
  */
 function select_all_venue(checked = true) {
+    console.log("select_all_venues");
     const cbs = document.querySelectorAll('input[name="Venues"]');
     cbs.forEach((cb) => {
         cb.checked = checked;
@@ -16,6 +17,7 @@ function select_all_venue(checked = true) {
  * @param {*} checked 
  */
 function deselect_all_venue(checked = false) {
+    console.log("deselect_all_venues");
     const cbs = document.querySelectorAll('input[name="Venues"]');
     cbs.forEach((cb) => {
         cb.checked = checked;
@@ -28,6 +30,7 @@ function deselect_all_venue(checked = false) {
  * @param {*} checked 
  */
 function select_all_wavl(checked = true) {
+    console.log("select_all_wavl");
     const cbs = document.querySelectorAll('input[name="WAVL_teams"]');
     cbs.forEach((cb) => {
         cb.checked = checked;
@@ -41,6 +44,7 @@ function select_all_wavl(checked = true) {
  * @param {*} checked 
  */
 function deselect_all_wavl(checked = false) {
+    console.log("deselect_all_wavl");
     const cbs = document.querySelectorAll('input[name="WAVL_teams"]');
     cbs.forEach((cb) => {
         cb.checked = checked;
@@ -53,6 +57,7 @@ function deselect_all_wavl(checked = false) {
  * @param {*} checked 
  */
 function select_all_wavjl(checked = true) {
+    console.log("select_all_wavjl");
     const cbs = document.querySelectorAll('input[name="WAVjL_teams"]');
     cbs.forEach((cb) => {
         cb.checked = checked;
@@ -66,6 +71,7 @@ function select_all_wavjl(checked = true) {
  * @param {*} checked 
  */
 function deselect_all_wavjl(checked = false) {
+    console.log("deselect_all_wavjl");
     const cbs = document.querySelectorAll('input[name="WAVjL_teams"]');
     cbs.forEach((cb) => {
         cb.checked = checked;
@@ -99,6 +105,7 @@ var dots = window.setInterval(function() {
  * Gets values from webpage and calls pdf_init.
  */
 function WAVL_ONLINE() {
+    console.log("WAVL_ONLINE");
     var venues = []
     var wavjl = []
     var wavl = []
@@ -141,6 +148,7 @@ function WAVL_ONLINE() {
  * @returns String[] [start_date, end_date, initial_date]
  */
 function getDates(){
+    console.log("getDates");
     let initial_date = $("#DatePicker2").datepicker("option", "dateFormat", "yy-mm-dd").val();
     var temp_end_date = $("#DatePicker2").datepicker("getDate");
     
@@ -174,6 +182,7 @@ function getDates(){
  * @param {String[]}    dates       Array of yy-mm-dd strings indicating start, end, and selected dates.
  */
 function pdf_init(venues, wavl, wavjl, dates) {
+    console.log("pdf_init");
     // Get config data from selected teams, and add to an array
     var leagues = [];
     var fixtures = [];
@@ -235,6 +244,7 @@ async function get_single_fixture(start_date, end_date) {
     axios;
     const head = 'https://cors-anywhere-og-v5kf.onrender.com/vwa.bracketpal.com/dailyform/range?start_date=';
     var url = head + start_date.toString() + "&end_date=" + end_date.toString();
+    console.log("get_single_fixture: " + url);
     return await axios.get(url);
 }
 
@@ -247,6 +257,7 @@ async function get_single_team_list_html(team_id) {
     axios;
     const head = 'https://cors-anywhere-og-v5kf.onrender.com/vwa.bracketpal.com/teaminfo/';
     var url = head + team_id.toString();
+    // console.log("get_single_fixture: " + url);
     return await axios.get(url);
 }
 
@@ -257,6 +268,7 @@ async function get_single_team_list_html(team_id) {
  * @returns {Fixtures[]} Updated array of fixtures
  */
 function addTeamList(player_names_html, fixtures) {
+    console.log("addTeamList");
     let j = 0;
 
     // Loop over each match (hence i+2)
@@ -296,6 +308,7 @@ function addTeamList(player_names_html, fixtures) {
  * @returns 
  */
 function sorting(a, b) {
+    console.log("sorting");
     if (a[15] === b[15]) {
         return 0;
     } else {
@@ -311,6 +324,7 @@ function sorting(a, b) {
  * @returns 
  */
 function time_sorting(a, b) {
+    console.log("time_sorting");
     if (a[16] === b[16]) {
         return 0;
     } else {
@@ -327,6 +341,7 @@ function time_sorting(a, b) {
  * @returns Array of PDF's (Base64Doc)
  */
 async function modifyPdf(fix, dates) {
+    console.log("modifyPdf");
     const {
         PDFDocument,
         StandardFonts,
@@ -776,6 +791,7 @@ async function modifyPdf(fix, dates) {
  * @returns 
  */
 async function mergePDFDocuments(documents) {
+    console.log("mergePDFDocuments");
     var mergedPdf = await PDFLib.PDFDocument.create();
     for (var i = 0; i < documents.length; i++) {
         var docone = await PDFLib.PDFDocument.load(await documents[i]);
@@ -789,11 +805,13 @@ async function mergePDFDocuments(documents) {
 }
 
 /**
+ * NOT USED
  * Get a div from an ID
  * @param {*} id 
  * @returns 
  */
 function div_from_id(id) {
+    console.log("div_from_id");
     let wavl_keys = Object.keys(__CONFIG__.wavl);
     let jl_keys = Object.keys(__CONFIG__.jl);
     for (var i = 0; i < wavl_keys.length; i++) {
@@ -815,6 +833,7 @@ function div_from_id(id) {
  * @returns [resultant, alias_layer]
  */
 function add_aliases(venues) {
+    console.log("add_aliases");
     let resultant = [];
     var low_venues = [];
     let alias_layer = {};
@@ -847,6 +866,7 @@ function add_aliases(venues) {
  * @returns Fixture[]
  */
 function html_to_fixture(venues, leagues, date, all_html) {
+    console.log("html_to_fixture");
     let fixtures_list = []
     let temporary = add_aliases(venues);
     let alias_layer = temporary[1];
@@ -999,6 +1019,7 @@ function html_to_fixture(venues, leagues, date, all_html) {
  * @returns 
  */
 function split_name(name){
+    // console.log("split_name");
     let myArray = name.split(" ");
     let comparator = 99999;
     let front = "";
@@ -1025,6 +1046,7 @@ function split_name(name){
  * @returns {Integer}   Width of text
  */
 function measureText(string, fontSize = 10) {
+    // console.log("measureText");
     const widths = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.1546875, 0.278125, 0.4, 0.721875, 0.5609375, 0.9609375, 0.7203125, 0.240625, 0.4, 0.4, 0.48125, 0.640625, 0.278125, 0.4, 0.278125, 0.4015625, 0.5609375, 0.55625, 0.5609375, 0.5609375, 0.640625, 0.5609375, 0.5609375, 0.5609375, 0.5609375, 0.5609375, 0.278125, 0.278125, 0.640625, 0.640625, 0.640625, 0.5609375, 1.1203125, 0.88125, 0.7203125, 0.8, 0.7234375, 0.7203125, 0.640625, 0.8, 0.7234375, 0.278125, 0.5, 0.8, 0.640625, 0.88125, 0.7234375, 0.8, 0.7203125, 0.8, 0.8, 0.7203125, 0.640625, 0.7234375, 0.8015625, 1.121875, 0.8015625, 0.8015625, 0.721875, 0.3203125, 0.48125, 0.3203125, 0.48125, 0.721875, 0.334375, 0.5609375, 0.640625, 0.5609375, 0.5609375, 0.5609375, 0.48125, 0.5609375, 0.5609375, 0.240625, 0.321875, 0.5609375, 0.240625, 0.88125, 0.5609375, 0.5609375, 0.640625, 0.5609375, 0.4, 0.5609375, 0.4015625, 0.5609375, 0.6421875, 0.88125, 0.6421875, 0.6421875, 0.6421875, 0.4, 0.2609375, 0.48125, 0.640625]
     const avg = 0.5823026315789476
     try {
@@ -1045,6 +1067,7 @@ function measureText(string, fontSize = 10) {
  * @returns {Integer}   Width of text
  */
 function measureBold(string, fontSize = 10) {
+    // console.log("measureBold");
     const widths = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.1265625, 0.334375, 0.409375, 0.6421875, 0.5609375, 0.88125, 0.8, 0.18125, 0.4, 0.4, 0.5, 0.721875, 0.25, 0.4, 0.25, 0.4015625, 0.5609375, 0.5, 0.5609375, 0.5, 0.5609375, 0.5, 0.5609375, 0.5609375, 0.5609375, 0.5609375, 0.278125, 0.3203125, 0.721875, 0.721875, 0.721875, 0.48125, 0.9609375, 0.88125, 0.8015625, 0.7203125, 0.88125, 0.721875, 0.721875, 0.8, 0.88125, 0.4, 0.5625, 0.88125, 0.721875, 1.0421875, 0.88125, 0.8, 0.721875, 0.8, 0.88125, 0.5609375, 0.640625, 0.88125, 0.88125, 1.040625, 0.88125, 0.8, 0.8015625, 0.4, 0.4015625, 0.334375, 0.6421875, 0.6421875, 0.334375, 0.5609375, 0.6421875, 0.48125, 0.5609375, 0.48125, 0.5609375, 0.5609375, 0.6421875, 0.3203125, 0.4390625, 0.6421875, 0.3203125, 0.9625, 0.6421875, 0.5609375, 0.6421875, 0.5609375, 0.48125, 0.4, 0.4015625, 0.6421875, 0.6421875, 0.88125, 0.6421875, 0.6421875, 0.5625, 0.48125, 0.2015625, 0.48125, 0.721875]
     const avg = 0.5999835526315791
     try {
@@ -1062,6 +1085,7 @@ function measureBold(string, fontSize = 10) {
  * Generate HTML table dynamically based on contents of __CONFIG__
  */
 function generate_Table() {
+    console.log("generate_Table");
     var table = document.getElementById("Table1")
     var venue_keys = Object.keys(__CONFIG__.venues);
     var wavl_keys = Object.keys(__CONFIG__.wavl)
