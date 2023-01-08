@@ -1026,10 +1026,13 @@ function split_name(name){
     let comparator = 99999;
     let front = "";
     let back = "";
-
+    console.log(myArray);
     for (let i = 0; i < myArray.length-1; i++) {
         let fr = myArray.slice(0, i+1).join(" ");
         let bk = myArray.slice(i+1).join(" ");
+        console.log(fr);
+        console.log(bk);
+        console.log("*");
         let diff = Math.abs(fr.length - bk.length);
 
         if (diff < comparator){
