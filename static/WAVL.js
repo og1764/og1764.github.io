@@ -284,7 +284,9 @@ function addTeamList(player_names_html, fixtures) {
         let Aselector = '[class^="team_roster_player wfid_temp"]';
         var Aelements = Adoc.querySelectorAll(Aselector);
 	    const Anames = [...Aelements];
-        let Aplayer_names = Anames.map((tmp => split_name(tmp.innerText.substring(2))));
+        console.log(Anames);
+        console.log(Aelements);
+        let Aplayer_names = Anames.map((tmp => split_name(tmp.innerText.trim())));
 
         // Parse Team B
         var Bparser = new DOMParser();
@@ -292,7 +294,9 @@ function addTeamList(player_names_html, fixtures) {
         let Bselector = '[class^="team_roster_player wfid_temp"]';
         var Belements = Bdoc.querySelectorAll(Bselector);
 	    const Bnames = [...Belements];
-        let Bplayer_names = Bnames.map((tmp => split_name(tmp.innerText.substring(2))));
+        console.log(Bnames);
+        console.log(Belements);
+        let Bplayer_names = Bnames.map((tmp => split_name(tmp.innerText.trim())));
 
         fixtures[j][17] = Aplayer_names;
         fixtures[j][18] = Bplayer_names;
@@ -1026,13 +1030,10 @@ function split_name(name){
     let comparator = 99999;
     let front = "";
     let back = "";
-    console.log(myArray);
+
     for (let i = 0; i < myArray.length-1; i++) {
         let fr = myArray.slice(0, i+1).join(" ");
         let bk = myArray.slice(i+1).join(" ");
-        console.log(fr);
-        console.log(bk);
-        console.log("*");
         let diff = Math.abs(fr.length - bk.length);
 
         if (diff < comparator){
