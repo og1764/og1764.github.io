@@ -174,6 +174,45 @@ function getDates(){
     return [start_date, end_date, initial_date]
 }
 
+async function getPlayerList() {
+    axios;
+    const head = 'https://cors-anywhere-og-v5kf.onrender.com/vwa.bracketpal.com/leaders/season/';
+    var url = head + SEASON_ID + "?csv=1";
+    console.log("get_player_list: " + url);
+    return await axios.get(url);
+}
+
+function parsePlayerList(players_list, upd_fixtures) {
+    let keys = [];
+    let dict = {};
+
+    let player_data = players_list[0].data.split("\n").map(function (line) {
+        return line.split(",");
+    });
+
+    for (i = 1; i < player_data.length; i++) {
+        let name = player_data[i][0];
+        let team_id = player_data[i][2].split(" ")[0];
+
+        if (!(keys.includes(team_id))) {
+            keys.push(team_id)
+            dict[team_id] = [split_name(name.trim())]
+        } else {
+            dict[team_id].push(split_name(name.trim()))
+        }
+    }
+
+    for (i = 0; i < upd_fixtures.length; i++) {
+        let team_a = upd_fixtures[i][6].split(" ")[0];
+        let team_b = upd_fixtures[i][7].split(" ")[0];
+        if (keys.includes(team_a) && keys.includes(team_b)) {
+            upd_fixtures[i][17] = dict[team_a];
+            upd_fixtures[i][18] = dict[team_b];
+        }
+    }
+    return upd_fixtures;
+}
+
 /**
  * "Parent" function that basically everything else flows through. 
  * @param {String[]}    venues      Array of selected venues
@@ -201,7 +240,7 @@ function pdf_init(venues, wavl, wavjl, dates) {
         var team_list = []
 
         var upd_fixtures = html_to_fixture(venues, leagues, dates[2], fix_val);
-        for (i = 0; i < upd_fixtures.length; i++){
+        /*for (i = 0; i < upd_fixtures.length; i++){
             if (upd_fixtures[i][9][0][0] == "D" || upd_fixtures[i][9][0][0] == "S"){
                 var a_team = TEAM_ID[upd_fixtures[i][6]][2];
                 var b_team = TEAM_ID[upd_fixtures[i][7]][2];
@@ -211,10 +250,14 @@ function pdf_init(venues, wavl, wavjl, dates) {
                 var upd_b = get_single_team_list_html(b_team);
                 team_list.push(upd_b);
             }
-        }
-
-        Promise.all(team_list).then(player_names => {
-            let finalised_fixtures = addTeamList(player_names, upd_fixtures);
+        }*/
+        var player_List = getPlayerList();
+        Promise.all([player_List]).then(players_list => {
+            console.log(players_list);
+            let finalised_fixtures = parsePlayerList(players_list, upd_fixtures);
+            console.log(finalised_fixtures);
+        //Promise.all(team_list).then(player_names => {
+        //    let finalised_fixtures = addTeamList(player_names, upd_fixtures);
             modifyPdf(finalised_fixtures, dates[2]).then(value => {
                 Promise.all(value).then(value_3 => {
                     mergePDFDocuments(value_3).then(value_2 => {
@@ -232,6 +275,7 @@ function pdf_init(venues, wavl, wavjl, dates) {
             })
         })
     })
+   // })
 }
 
 /**
@@ -259,6 +303,13 @@ async function get_single_team_list_html(team_id) {
     var url = head + team_id.toString();
     // console.log("get_single_fixture: " + url);
     return await axios.get(url);
+}
+
+
+
+function addNewTeamList() {
+    // Loop over fixtures
+    // 
 }
 
 /**
@@ -356,13 +407,18 @@ async function modifyPdf(fix, dates) {
     var total = new Array(fixtures.length);
 
     fixtures.sort(sorting);
-    
+    var WAVLurl = "https://og1764.github.io/static/def.pdf";
+    var JLurl = "https://og1764.github.io/static/def_jl.pdf";
+
+    const WAVLexistingPdfBytes = await fetch(WAVLurl).then(res => res.arrayBuffer());
+    const JLexistingPdfBytes = await fetch(JLurl).then(resp => resp.arrayBuffer());
+
     for (var i = 0; i < fixtures.length; i++) {
         // Load WAVL and Junior League scoresheets
         var WAVLurl = "https://og1764.github.io/static/def.pdf";
         var JLurl = "https://og1764.github.io/static/def_jl.pdf";
 
-        var WAVLexistingPdfBytes = await fetch(WAVLurl).then(res => res.arrayBuffer());
+        //var WAVLexistingPdfBytes = await fetch(WAVLurl).then(res => res.arrayBuffer());
 
         var WAVLpdfDoc = await PDFLib.PDFDocument.load(WAVLexistingPdfBytes);
         var WAVLhelveticaFont = await WAVLpdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
@@ -370,7 +426,7 @@ async function modifyPdf(fix, dates) {
         var WAVLpages = await WAVLpdfDoc.getPages();
         var WAVLfirstPage = await WAVLpages[0];
 
-        var JLexistingPdfBytes = await fetch(JLurl).then(resp => resp.arrayBuffer());
+        //var JLexistingPdfBytes = await fetch(JLurl).then(resp => resp.arrayBuffer());
 
         var JLpdfDoc = await PDFLib.PDFDocument.load(JLexistingPdfBytes);
         var JLhelveticaFont = await JLpdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
