@@ -81,6 +81,7 @@ function deselect_all_wavjl(checked = false) {
 
 /**
  * NOT USED
+ * 
  * Enable all WAVL buttons
 
 function enable_button() {
@@ -174,6 +175,10 @@ function getDates(){
     return [start_date, end_date, initial_date]
 }
 
+/**
+ * Axios request to get csv of all players.
+ * @returns CSV
+ */
 async function getPlayerList() {
     axios;
     const head = 'https://cors-anywhere-og-v5kf.onrender.com/vwa.bracketpal.com/leaders/season/';
@@ -182,20 +187,26 @@ async function getPlayerList() {
     return await axios.get(url);
 }
 
+/**
+ * Parses the Season Leaders webpage, sorts all players into their teams alphabetically, then updates the fixtures.
+ * @param {Array} players_list 
+ * @param {Fixture} upd_fixtures 
+ * @returns Updated Fixture with Team Lists
+ */
 function parsePlayerList(players_list, upd_fixtures) {
-    let keys = [];
     let dict = {};
 
+    // Split the CSV into an Array
     let player_data = players_list[0].data.split("\n").map(function (line) {
         return line.split(",");
     });
 
+    // Update Keys and Dict.
     for (i = 1; i < player_data.length; i++) {
         let name = player_data[i][0];
         let team_id = player_data[i][2].split(" ")[0];
 
-        if (!(keys.includes(team_id))) {
-            keys.push(team_id)
+        if (!(Object.keys(dict).includes(team_id))) {
             dict[team_id] = [split_name(name.trim())]
         } else {
             dict[team_id].push(split_name(name.trim()))
@@ -205,7 +216,7 @@ function parsePlayerList(players_list, upd_fixtures) {
     for (i = 0; i < upd_fixtures.length; i++) {
         let team_a = upd_fixtures[i][6].split(" ")[0];
         let team_b = upd_fixtures[i][7].split(" ")[0];
-        if (keys.includes(team_a) && keys.includes(team_b)) {
+        if (Object.keys(dict).includes(team_a) && Object.keys(dict).includes(team_b)) {
             upd_fixtures[i][17] = dict[team_a];
             upd_fixtures[i][18] = dict[team_b];
         }
@@ -240,24 +251,9 @@ function pdf_init(venues, wavl, wavjl, dates) {
         var team_list = []
 
         var upd_fixtures = html_to_fixture(venues, leagues, dates[2], fix_val);
-        /*for (i = 0; i < upd_fixtures.length; i++){
-            if (upd_fixtures[i][9][0][0] == "D" || upd_fixtures[i][9][0][0] == "S"){
-                var a_team = TEAM_ID[upd_fixtures[i][6]][2];
-                var b_team = TEAM_ID[upd_fixtures[i][7]][2];
-                
-                var upd_a = get_single_team_list_html(a_team);
-                team_list.push(upd_a);
-                var upd_b = get_single_team_list_html(b_team);
-                team_list.push(upd_b);
-            }
-        }*/
         var player_List = getPlayerList();
         Promise.all([player_List]).then(players_list => {
-            console.log(players_list);
             let finalised_fixtures = parsePlayerList(players_list, upd_fixtures);
-            console.log(finalised_fixtures);
-        //Promise.all(team_list).then(player_names => {
-        //    let finalised_fixtures = addTeamList(player_names, upd_fixtures);
             modifyPdf(finalised_fixtures, dates[2]).then(value => {
                 Promise.all(value).then(value_3 => {
                     mergePDFDocuments(value_3).then(value_2 => {
@@ -275,7 +271,6 @@ function pdf_init(venues, wavl, wavjl, dates) {
             })
         })
     })
-   // })
 }
 
 /**
@@ -293,6 +288,8 @@ async function get_single_fixture(start_date, end_date) {
 }
 
 /**
+ * NOT USED
+ * 
  * Axios request to get single team list.
  * @param {Integer} team_id Team ID
  * @returns 
@@ -305,14 +302,9 @@ async function get_single_team_list_html(team_id) {
     return await axios.get(url);
 }
 
-
-
-function addNewTeamList() {
-    // Loop over fixtures
-    // 
-}
-
 /**
+ * NOT USED
+ * 
  * Parse Team List HTML and add to relevant fixture. 
  * @param {HTML[]} player_names_html 
  * @param {Fixtures[]} fixtures 
@@ -866,6 +858,7 @@ async function mergePDFDocuments(documents) {
 
 /**
  * NOT USED
+ * 
  * Get a div from an ID
  * @param {*} id 
  * @returns 
