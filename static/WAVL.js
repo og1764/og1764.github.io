@@ -101,11 +101,6 @@ var dots = window.setInterval(function() {
 }, 1000);
 
 function csvToArray(str, delimiter = ",") {
-    console.log(str);
-    // slice from start of text to the first \n index
-    // use split to create an array from string by delimiter
-    const headers = str.slice(0, str.indexOf("\n")).split(delimiter);
-  
     // slice from \n index + 1 to the end of the text
     // use split to create an array of each csv value row
     const rows = str.slice(str.indexOf("\n") + 1).split("\n");
@@ -115,24 +110,26 @@ function csvToArray(str, delimiter = ",") {
 
     for (let i = 0; i < rows.length; i++){
         let temp_row = rows[i].split(delimiter);
+        // Ignore "commented" out rows.
         if ((temp_row[0][0] == "!" && temp_row[0][1] == "!") || temp_row.length < 2){
             console.log(temp_row);
         } else {
+            // Do some data manipulation to ensure it's how we want it.
             temp_row[9] = temp_row[9].split("||");
             temp_row[10] = temp_row[10].padStart(2, "0");
             temp_row[11] = temp_row[11].padStart(2, "0");
             temp_row[13] = temp_row[13].padStart(2, "0");
             temp_row[14] = temp_row[14].padStart(2, "0");
+
+            // Parse names (if any are there)
             temp_row[17] = temp_row[17].split("^^");
-            temp_row[18] = temp_row[18].split("^^");
-            for(let j = 0; j < temp_row[17].length; j++){
-                temp_row[17][j] = temp_row[17][j].split("||");
-            }
-            for(let j = 0; j < temp_row[18].length; j++){
-                temp_row[18][j] = temp_row[18][j].split("||");
-            }
+            for(let j = 0; j < temp_row[17].length; j++) { temp_row[17][j] = temp_row[17][j].split("||"); }
             if (temp_row[17].length < 3){temp_row[17] = [[" "," "]]}
+            
+            temp_row[18] = temp_row[18].split("^^");
+            for(let j = 0; j < temp_row[18].length; j++) { temp_row[18][j] = temp_row[18][j].split("||"); }
             if (temp_row[18].length < 3){temp_row[18] = [[" "," "]]}
+
             return_array.push(temp_row);
             console.log(rows[i]);
         }
@@ -180,23 +177,18 @@ function WAVL_ONLINE() {
     document.getElementById("csvUpload").disabled = true;
 
     let dates = getDates()
+    
+    // If a CSV file has been uploaded, do that.
     if (document.getElementById("csvUpload").value != "") {
         let uploaded_fixtures = [];
-        console.log("Uploaded");
-        console.log(document.getElementById("csvUpload"));
-        console.log(document.getElementById("csvUpload").files[0]);
-        let fixtures_from_csv = []
         const reader = new FileReader();
+        
+        // Parse CSV Upload
         reader.readAsText(document.getElementById("csvUpload").files[0])
-
         reader.onload = function (e) {
             const text = e.target.result;
             uploaded_fixtures = csvToArray(text);
-            console.log(JSON.stringify(uploaded_fixtures));
-            console.log(uploaded_fixtures);
-        
-
-            // Parse CSV Upload
+            
             // Call modifyPdf
             modifyPdf(uploaded_fixtures, dates[2]).then(value => {
                 Promise.all(value).then(value_3 => {
