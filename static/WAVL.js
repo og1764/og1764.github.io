@@ -100,46 +100,7 @@ var dots = window.setInterval(function() {
         wait.value = "Please Wait";
 }, 1000);
 
-function csvToArray(str, delimiter = ",") {
-    console.log(str);
-    // slice from start of text to the first \n index
-    // use split to create an array from string by delimiter
-    const headers = str.slice(0, str.indexOf("\n")).split(delimiter);
-  
-    // slice from \n index + 1 to the end of the text
-    // use split to create an array of each csv value row
-    const rows = str.slice(str.indexOf("\n") + 1).split("\n");
-    
-    console.log(rows);
-    let return_array = [];
 
-    for (let i = 0; i < rows.length; i++){
-        let temp_row = rows[i].split(delimiter);
-        if ((temp_row[0][0] == "!" && temp_row[0][1] == "!") || temp_row.length < 2){
-            console.log(temp_row);
-        } else {
-            temp_row[9] = temp_row[9].split("||");
-            temp_row[10] = temp_row[10].padStart(2, "0");
-            temp_row[11] = temp_row[11].padStart(2, "0");
-            temp_row[13] = temp_row[13].padStart(2, "0");
-            temp_row[14] = temp_row[14].padStart(2, "0");
-            temp_row[17] = temp_row[17].split("^^");
-            temp_row[18] = temp_row[18].split("^^");
-            for(let j = 0; j < temp_row[17].length; j++){
-                temp_row[17][j] = temp_row[17][j].split("||");
-            }
-            for(let j = 0; j < temp_row[18].length; j++){
-                temp_row[18][j] = temp_row[18][j].split("||");
-            }
-            if (temp_row[17].length < 3){temp_row[17] = [[" "," "]]}
-            if (temp_row[18].length < 3){temp_row[18] = [[" "," "]]}
-            return_array.push(temp_row);
-            console.log(rows[i]);
-        }
-    }
-    console.log(return_array);
-    return return_array;
-  }
 
 /**
  * Gets values from webpage and calls pdf_init.
@@ -177,49 +138,10 @@ function WAVL_ONLINE() {
     document.getElementById("Button4").style.backgroundColor = "gold";
     document.getElementById("Button4").style.color = "black";
     document.getElementById("Button4").disabled = true;
-    document.getElementById("csvUpload").disabled = true;
 
     let dates = getDates()
-    if (document.getElementById("csvUpload").value != "") {
-        let uploaded_fixtures = [];
-        console.log("Uploaded");
-        console.log(document.getElementById("csvUpload"));
-        console.log(document.getElementById("csvUpload").files[0]);
-        let fixtures_from_csv = []
-        const reader = new FileReader();
-        reader.readAsText(document.getElementById("csvUpload").files[0])
 
-        reader.onload = function (e) {
-            const text = e.target.result;
-            uploaded_fixtures = csvToArray(text);
-            console.log(JSON.stringify(uploaded_fixtures));
-            console.log(uploaded_fixtures);
-        
-
-            // Parse CSV Upload
-            // Call modifyPdf
-            modifyPdf(uploaded_fixtures, dates[2]).then(value => {
-                Promise.all(value).then(value_3 => {
-                    mergePDFDocuments(value_3).then(value_2 => {
-                        let filename = "Scoresheets " + dates[2].toString() + ".pdf"
-                        
-                        download(value_2, filename, "application/pdf");
-                        
-                        window.clearInterval(dots);
-                        document.getElementById("Button4").value = "Generate Scoresheets";
-                        document.getElementById("Button4").style.backgroundColor = "#3370B7";
-                        document.getElementById("Button4").style.color = "#FFFFFF"
-                        document.getElementById("Button4").disabled = false;
-                        document.getElementById("csvUpload").disabled = false;
-                        document.getElementById("csvUpload").value = "";
-                    })
-                })
-            })
-        };
-    } else {
-        pdf_init(venues, wavl, wavjl, dates);
-    }
-    
+    pdf_init(venues, wavl, wavjl, dates)
 }
 
 /**
@@ -344,8 +266,6 @@ function pdf_init(venues, wavl, wavjl, dates) {
                         document.getElementById("Button4").style.backgroundColor = "#3370B7";
                         document.getElementById("Button4").style.color = "#FFFFFF"
                         document.getElementById("Button4").disabled = false;
-                        document.getElementById("csvUpload").disabled = false;
-                        document.getElementById("csvUpload").value = "";
                     })
                 })
             })
@@ -470,7 +390,6 @@ function time_sorting(a, b) {
  */
 async function modifyPdf(fix, dates) {
     console.log("modifyPdf");
-    console.log(fix);
     const {
         PDFDocument,
         StandardFonts,
@@ -557,27 +476,25 @@ async function modifyPdf(fix, dates) {
             }
 
             // Team A, Second column numbers
-            if (fixtures[i][17].length > 6) {
-                let line_y_a = 472-Math.floor(17*Math.ceil(fixtures[i][17].length /2)-6);
-                if (fixtures[i][17].length > 18) {
-                    line_y_a = 274;
-                }
-                await WAVLfirstPage.drawLine({
-                    start: { x: 539, y: 478 },
-                    end: { x: 539, y: line_y_a },
-                    thickness: 0.5,
-                    color: rgb(0,0,0),
-                    opacity: 1
-                })
-                
-                await WAVLfirstPage.drawLine({
-                    start: { x: 519, y: 478 },
-                    end: { x: 519, y: line_y_a },
-                    thickness: 0.5,
-                    color: rgb(0,0,0),
-                    opacity: 1
-                })
+            let line_y_a = 472-Math.floor(17*Math.ceil(fixtures[i][17].length /2)-6);
+            if (fixtures[i][17].length > 18) {
+                line_y_a = 274;
             }
+            await WAVLfirstPage.drawLine({
+                start: { x: 539, y: 478 },
+                end: { x: 539, y: line_y_a },
+                thickness: 0.5,
+                color: rgb(0,0,0),
+                opacity: 1
+            })
+            
+            await WAVLfirstPage.drawLine({
+                start: { x: 519, y: 478 },
+                end: { x: 519, y: line_y_a },
+                thickness: 0.5,
+                color: rgb(0,0,0),
+                opacity: 1
+            })
 
             // Team B Team List
             await WAVLfirstPage.drawText(fixtures[i][7], {
@@ -624,29 +541,27 @@ async function modifyPdf(fix, dates) {
                 }
             }
             
-            if (fixtures[i][17].length > 6) {
-                // Team B, second column numbers
-                let line_y_b = 472-Math.floor(17*Math.ceil(fixtures[i][18].length /2)-6);
-                if (fixtures[i][18].length > 18) {
-                    // If 2 rows or less remaining, just draw the lines to the bottom of the player list.
-                    line_y_b = 274;
-                }
-                await WAVLfirstPage.drawLine({
-                    start: { x: 743, y: 478 },
-                    end: { x: 743, y: line_y_b },
-                    thickness: 0.5,
-                    color: rgb(0,0,0),
-                    opacity: 1
-                })
-                
-                await WAVLfirstPage.drawLine({
-                    start: { x: 723, y: 478 },
-                    end: { x: 723, y: line_y_b },
-                    thickness: 0.5,
-                    color: rgb(0,0,0),
-                    opacity: 1
-                })
+            // Team B, second column numbers
+            let line_y_b = 472-Math.floor(17*Math.ceil(fixtures[i][18].length /2)-6);
+            if (fixtures[i][18].length > 18) {
+                // If 2 rows or less remaining, just draw the lines to the bottom of the player list.
+                line_y_b = 274;
             }
+            await WAVLfirstPage.drawLine({
+                start: { x: 743, y: 478 },
+                end: { x: 743, y: line_y_b },
+                thickness: 0.5,
+                color: rgb(0,0,0),
+                opacity: 1
+            })
+            
+            await WAVLfirstPage.drawLine({
+                start: { x: 723, y: 478 },
+                end: { x: 723, y: line_y_b },
+                thickness: 0.5,
+                color: rgb(0,0,0),
+                opacity: 1
+            })
 
             // Venue 0
             await WAVLfirstPage.drawText(fixtures[i][1], {
@@ -705,618 +620,474 @@ async function modifyPdf(fix, dates) {
                         size: 13,
                         font: WAVLhelveticaBold
                     })
-                }
-            } catch (e) {
-                // catch - continue
-                console.log(e);
-            }
-
-            // Add a leading space to the day if required.
-            var dd = parseInt(fixtures[i][10]).toString();
-            if (dd.length == 1) {
-                dd = " " + parseInt(fixtures[i][10]).toString()
-            }
-
-            // Date (day dd)
-            await WAVLfirstPage.drawText(dd, {
-                x: parseInt((596 - measureBold(dd, 13) - measureBold(dd, 13)).toString()),
-                y: 557,
-                size: 13,
-                font: WAVLhelveticaBold
-            })
-
-            // Date (month mm)
-            await WAVLfirstPage.drawText(parseInt(fixtures[i][11]).toString(), {
-                x: parseInt((613 - measureBold(fixtures[i][11], 13)).toString()),
-                y: 557,
-                size: 13,
-                font: WAVLhelveticaBold
-            })
-
-            // Date (year yy)
-            await WAVLfirstPage.drawText(fixtures[i][12].slice(2, 4), {
-                x: 625,
-                y: 557,
-                size: 13,
-                font: WAVLhelveticaBold
-            })
-
-            // Division (short)
-            await WAVLfirstPage.drawText(fixtures[i][9][1], {
-                x: parseInt((773 - measureBold(fixtures[i][9][1], 13)).toString()),
-                y: 557.5,
-                size: 13,
-                font: WAVLhelveticaBold
-            })
-
-            // Duty team
-            await WAVLfirstPage.drawText(fixtures[i][8], {
-                x: parseInt((710 - measureText(fixtures[i][8], 14)).toString()),
-                y: 528,
-                size: 14,
-                font: WAVLhelveticaFont
-            })
-
-            // Team Names
-            if (fixtures[i][6].length > 18 || fixtures[i][7].length > 18) {
-                // Reduce text size if too long.
-                await WAVLfirstPage.drawText(fixtures[i][6], {
-                    x: parseInt((320 - measureText(fixtures[i][6], 10)).toString()),
-                    y: 527,
-                    size: 10,
-                    font: WAVLhelveticaFont
-                })
-                await WAVLfirstPage.drawText(fixtures[i][7], {
-                    x: parseInt((460 - measureText(fixtures[i][7], 10)).toString()),
-                    y: 527,
-                    size: 10,
-                    font: WAVLhelveticaFont
-                })
-            } else {
-                WAVLpdfDoc.TextAlignment = 1;
-                await WAVLfirstPage.drawText(fixtures[i][6], {
-                    x: parseInt((320 - measureText(fixtures[i][6], 14)).toString()),
-                    y: 527,
-                    size: 14,
-                    font: WAVLhelveticaFont
-                })
-                await WAVLfirstPage.drawText(fixtures[i][7], {
-                    x: parseInt((460 - measureText(fixtures[i][7], 14)).toString()),
-                    y: 527,
-                    size: 14,
-                    font: WAVLhelveticaFont
-                })
-            }
-            var saved = await WAVLpdfDoc.saveAsBase64();
-        } else {
-            // Junior League
-            
-            // Venue (full)
-            await JLfirstPage.drawText(fixtures[i][4], {
-                x: parseInt((180 - measureText(fixtures[i][4], 13)).toString()),
-                y: 504,
-                size: 13,
-                font: JLhelveticaFont
-            })
-
-            // Court number
-            await JLfirstPage.drawText(fixtures[i][5], {
-                x: parseInt((562 - measureText(fixtures[i][5], 13)).toString()),
-                y: 504,
-                size: 13,
-                font: JLhelveticaFont
-            })
-
-            try {
-                // Time (hh:mm)
-                let time = parseInt(fixtures[i][13]).toString() + ":" + fixtures[1][14];
-                if (parseInt(fixtures[i][13]).toString().length == 1) {
-                    time = " " + time;
-                }
-                await JLfirstPage.drawText(time, {
-                    x: 442,
-                    y: 504,
-                    size: 13,
-                    font: JLhelveticaFont
-                })
-            } catch (e) {
-                console.log(e)
-            }
-
-            try {
-                // Date (dd/mm/yyyy)
-                let dt = parseInt(fixtures[i][10]).toString() + "/" + parseInt(fixtures[i][11]).toString() + "/" + fixtures[i][12]
-                await JLfirstPage.drawText(dt, {
-                    x: 315,
-                    y: 504,
-                    size: 13,
-                    font: JLhelveticaFont
-                })
-            } catch (e) {
-                console.log(e)
-            }
-            
-            // Division (Long)
-            await JLfirstPage.drawText(fixtures[i][9][0], {
-                x: parseInt((720 - measureText(fixtures[i][9][0], 13)).toString()),
-                y: 504,
-                size: 13,
-                font: JLhelveticaFont
-            })
-
-            // Team Names
-            if (fixtures[i][6].length > 25 || fixtures[i][7].length > 25) {
-                // Reduce text size if too long.
-                await JLfirstPage.drawText(fixtures[i][6], {
-                    x: parseInt((250 - measureText(fixtures[i][6], 10)).toString()),
-                    y: 472,
-                    size: 10,
-                    font: JLhelveticaFont
-                })
-                await JLfirstPage.drawText(fixtures[i][7], {
-                    x: parseInt((660 - measureText(fixtures[i][7], 10)).toString()),
-                    y: 472,
-                    size: 10,
-                    font: JLhelveticaFont
-                })
-            } else {
-                JLpdfDoc.TextAlignment = 1;
-                await JLfirstPage.drawText(fixtures[i][6], {
-                    x: parseInt((250 - measureText(fixtures[i][6], 14)).toString()),
-                    y: 472,
-                    size: 14,
-                    font: JLhelveticaFont
-                })
-                await JLfirstPage.drawText(fixtures[i][7], {
-                    x: parseInt((660 - measureText(fixtures[i][7], 14)).toString()),
-                    y: 472,
-                    size: 14,
-                    font: JLhelveticaFont
-                })
-            }
-            var saved = await JLpdfDoc.saveAsBase64();
-        }
-        total[i] = saved;
-    }
-
-    // If CSV is to be downloaded
-    if (document.getElementById("Checkbox99").checked) {
-        var csv = [
-            ["WAVL 2022", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-            ["Date", "Venue", "Time", "Div", "Court", "Team A", "Team B", "Duty Team", "Time", "Sets", "Referee 1st", "Qualifications", "Referee 2nd", "Qualifications", "Assessor"]
-        ];
-        fixtures.sort(time_sorting);
-        for (var i = 0; i < fixtures.length; i++) {
-            // Don't include junior league games in spreadsheet
-            if (fixtures[i][9][0][0] == "D" || fixtures[i][9][0][0] == "S"){
-                let date = fixtures[i][10] + "/" + fixtures[i][11] + "/" + fixtures[i][12];
-                let full_time = fixtures[i][13] + ":" + fixtures[i][14];
-                let crt = fixtures[i][5];
-                
-                if (!(crt)) {
-                    crt = "";
-                } else {
-                    crt = crt.trim();
-                }
-                
-                // Add data to CSV
-                csv.push([date, fixtures[i][4], full_time, fixtures[i][9][1], crt, fixtures[i][6], fixtures[i][7], fixtures[i][8], "", "", "", "", "", "", ""]);
-            }
-        }
-
-        try {
-            // Download CSV
-            let csvContent = "data:text/csv;charset=utf-8," + csv.map(e => e.join(",")).join("\n");
-            var encodedUri = encodeURI(csvContent);
-            var link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            let filename = "Runsheet" + dates + ".csv";
-            link.setAttribute("download", filename);
-            document.body.appendChild(link); // Required for File Download
-
-            link.click();
-        } catch (e) {
-            console.log(e)
-        }
-    }
-    return await total;
-}
-
-/**
- * Merge modified PDF's into one single PDF.
- * @param {*} documents 
- * @returns 
- */
-async function mergePDFDocuments(documents) {
-    console.log("mergePDFDocuments");
-    var mergedPdf = await PDFLib.PDFDocument.create();
-    for (var i = 0; i < documents.length; i++) {
-        var docone = await PDFLib.PDFDocument.load(await documents[i]);
-        var copiedPagesone = await mergedPdf.copyPages(docone, docone.getPageIndices());
-        for (var j = 0; j < docone.getPageIndices().length; j++) {
-            mergedPdf.addPage(await copiedPagesone[j]);
-        }
-    }
-    var saved = await mergedPdf.save();
-    return await saved;
-}
-
-/**
- * NOT USED
- * 
- * Get a div from an ID
- * @param {*} id 
- * @returns 
- */
-function div_from_id(id) {
-    console.log("div_from_id");
-    let wavl_keys = Object.keys(__CONFIG__.wavl);
-    let jl_keys = Object.keys(__CONFIG__.jl);
-    for (var i = 0; i < wavl_keys.length; i++) {
-        if (__CONFIG__.wavl[wavl_keys[i]].id == id) {
-            return [__CONFIG__.wavl[wavl_keys[i]].long, __CONFIG__.wavl[wavl_keys[i]].short, __CONFIG__.wavl[wavl_keys[i]].id]
-        }
-    }
-    for (var i = 0; i < __CONFIG__.jl.length; i++) {
-        if (__CONFIG__.jl[jl_keys[i]].id == id) {
-            return [__CONFIG__.jl[jl_keys[i]].long, __CONFIG__.jl[jl_keys[i]].short, __CONFIG__.jl[jl_keys[i]].id]
-        }
-    }
-    return false
-}
-
-/**
- * Add aliases to the venue array.
- * @param {*} venues 
- * @returns [resultant, alias_layer]
- */
-function add_aliases(venues) {
-    console.log("add_aliases");
-    let resultant = [];
-    var low_venues = [];
-    let alias_layer = {};
-    let all_venues = Object.keys(__CONFIG__.venues);
-
-    for (var j = 0; j < venues.length; j++) {
-        low_venues.push(venues[j].toLowerCase())
-    }
-
-    for (var i = 0; i < all_venues.length; i++) {
-        if (low_venues.includes(__CONFIG__.venues[all_venues[i]].name.toLowerCase())) {
-            resultant.push(__CONFIG__.venues[all_venues[i]].name);
-            for (var k = 0; k < __CONFIG__.venues[all_venues[i]].alias.length; k++) {
-                var _alias = __CONFIG__.venues[all_venues[i]].alias[k];
-                resultant.push(_alias)
-                alias_layer[_alias] = __CONFIG__.venues[[all_venues[i]]].name;
-            }
-            alias_layer[__CONFIG__.venues[[all_venues[i]]].name] = __CONFIG__.venues[[all_venues[i]]].name;
-        }
-    }
-    return [resultant, alias_layer];
-}
-
-/**
- * Parse HTML and return an array of Fixtures
- * @param {*} venues 
- * @param {*} leagues 
- * @param {*} date 
- * @param {*} all_html 
- * @returns Fixture[]
- */
-function html_to_fixture(venues, leagues, date, all_html) {
-    console.log("html_to_fixture");
-    let fixtures_list = []
-    let temporary = add_aliases(venues);
-    let alias_layer = temporary[1];
-    let venue_usage = temporary[0];
-    const NamesArr = leagues.flat();
-    
-    for (let x = 0; x < all_html.length; x++) {
-        let parser = new DOMParser();
-        let htmlDoc = parser.parseFromString(all_html[x].request.responseText, 'text/html');
-        let all_tables = htmlDoc.getElementsByTagName("table")
-        let numFix = all_tables.length;
-
-        for (let y = 0; y < numFix; y = y + 3) {
-            let meta = y + 1;
-            let data = y + 2;
-            
-            let meta_table = all_tables[meta];
-            let data_table = all_tables[data];
-
-            let dt = meta_table.rows.item(1).cells.item(0).innerText;
-            let match_division = meta_table.rows.item(1).cells.item(2).innerText;
-            
-            if (!(NamesArr.includes(match_division))) {
-                // If division is not selected, then break the for loop. No need to continue parsing data.
-                console.log(match_division);
-                console.log(NamesArr);
-                continue;
-            }
-
-            if ((!(dt === date)) && (!(document.getElementById("Checkbox99").checked))){
-                // Ensure you aren't picking dates from the future
-                console.log("BREAK DUE TO DATE DIFFERENCE");
-                console.log(dt);
-                continue;
-            }
-
-            try {
-                let rowLength = data_table.rows.length;
-                for (let i = 1; i < rowLength; i++) {
-                    let cells = data_table.rows.item(i).cells;
-                    let venue = cells.item(1).innerText;
-                    let venue_split = venue.split(" Ct")
-                    let zero_venue_split = venue_split[0].replaceAll(" Ct", "");
-
-                    if (venue_usage.includes(zero_venue_split)) {
-                        let _court = "";
-                        let _duty = " ";
-                        let _time_hr = " ";
-                        let _time_min = " ";
-                        let _division = [];
-
-                        try {
-                            _court = cells.item(1).innerText.split("Ct")[1];
-                        } catch (e) {
-                            _court = "";
-                        }
-
-                        if (_court == null) {
-                            _court = "";
-                        }
-
-                        const _team_a = cells.item(2).innerText;
-                        const _team_b = cells.item(5).innerText;
-
-                        // Try Catch exists for junior league and home rounds.
-                        if (match_division[0] == "D" || match_division[0] == "S") {
-                            try {
-                                _duty = cells.item(7).innerText.slice(5);
-                            } catch (e) {
-                                console.log(e);
-                                _duty = " ";
-                            }
-                        }
-
-                        // Update duty if using Previous Loser.
-                        if (FINALS_DATES.includes(dt) && _duty.length < 4) {
-                            _duty = "Previous Loser";
-                        }
-
-                        if (match_division[0] == "D" || match_division[0] == "S") {
-                            _division = [
-                                __CONFIG__.wavl[match_division].long,
-                                __CONFIG__.wavl[match_division].short,
-                                __CONFIG__.wavl[match_division].id
-                            ];
-                        } else {
-                            _division = [
-                                __CONFIG__.jl[match_division].long,
-                                __CONFIG__.jl[match_division].short,
-                                __CONFIG__.jl[match_division].id
-                            ];
-                        }
-
-                        let _date = dt.split('-');
-                        let _date_dd = _date[2].padStart(2, "0");
-                        let _date_mm = _date[1].padStart(2, "0");
-                        let _date_yyyy = _date[0];
-                        
-                        // Check if time exists. Some home rounds (Busselton) don't put times on Bracketpal.
-                        try {
-                            let time = cells.item(0).innerText.split(":")
-                            _time_hr = time[0].padStart(2, "0");
-                            _time_min = time[1].padStart(2, "0");
-                        } catch (e) {
-                            console.log(e);
-                            _time_hr = " ";
-                            _time_min = " ";
-                        }
-
-                        let venue_realname = alias_layer[zero_venue_split];
-
-                        const _venue_0 = __CONFIG__.venues[venue_realname].top;
-                        const _venue_1 = __CONFIG__.venues[venue_realname].mid;
-                        const _venue_2 = __CONFIG__.venues[venue_realname].bot;
-
-                        let _venue_full = __CONFIG__.venues[venue_realname].name;
-                        let _sorting = _date_yyyy + " " + _date_mm + " " + _date_dd + " " + _venue_full + " " + _court + " " + _time_hr
-                        let _time_sorting = _date_yyyy + " " + _date_mm + " " + _date_dd + " " + _venue_full + " " + _time_hr + " " + _court;
-
-                        fixtures_list.push([zero_venue_split, _venue_0, _venue_1, _venue_2, _venue_full, _court,
-                            _team_a, _team_b, _duty, _division, _date_dd, _date_mm, _date_yyyy, _time_hr, _time_min, 
-                            _sorting, _time_sorting, [], []
-                        ])
-                    } else {
-                        // Venue either not in list OR is a bye.
-                        try {
-                            if (Number.isInteger(parseInt(zero_venue_split.substring(0, 2).trim()))) {
-                                console.log("BYE: " + zero_venue_split);
-                            } else {
-                                console.log("UNUSED VENUE\n***")
-                                console.log(zero_venue_split)
-                                console.log("***")
-                            }
-                        } catch (e) {
-                            console.log("UNUSED VENUE\n***")
-                            console.log(zero_venue_split)
-                            console.log("***")
-                        }
-                    }
-                }
-            } catch (e) {
-                console.log(e)
-            }
-        }
-    }
-    return fixtures_list
-}
-
-/**
- * Find the centre most space, and split a name into two based on that space.
- * @param {String} name 
- * @returns 
- */
-function split_name(name){
-    // console.log("split_name");
-    let myArray = name.split(" ");
-    let comparator = 99999;
-    let front = "";
-    let back = "";
-
-    for (let i = 0; i < myArray.length-1; i++) {
-        let fr = myArray.slice(0, i+1).join(" ");
-        let bk = myArray.slice(i+1).join(" ");
-        let diff = Math.abs(fr.length - bk.length);
-
-        if (diff < comparator){
-            front = fr;
-            back = bk;
-            comparator = diff;
-        }
-    }
-    return [front, back];
-}
-
-/**
- * Find offset for centre of string
- * @param   {String}    string 
- * @param   {Integer}   fontSize Default = 10
- * @returns {Integer}   Width of text
- */
-function measureText(string, fontSize = 10) {
-    // console.log("measureText");
-    const widths = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.1546875, 0.278125, 0.4, 0.721875, 0.5609375, 0.9609375, 0.7203125, 0.240625, 0.4, 0.4, 0.48125, 0.640625, 0.278125, 0.4, 0.278125, 0.4015625, 0.5609375, 0.55625, 0.5609375, 0.5609375, 0.640625, 0.5609375, 0.5609375, 0.5609375, 0.5609375, 0.5609375, 0.278125, 0.278125, 0.640625, 0.640625, 0.640625, 0.5609375, 1.1203125, 0.88125, 0.7203125, 0.8, 0.7234375, 0.7203125, 0.640625, 0.8, 0.7234375, 0.278125, 0.5, 0.8, 0.640625, 0.88125, 0.7234375, 0.8, 0.7203125, 0.8, 0.8, 0.7203125, 0.640625, 0.7234375, 0.8015625, 1.121875, 0.8015625, 0.8015625, 0.721875, 0.3203125, 0.48125, 0.3203125, 0.48125, 0.721875, 0.334375, 0.5609375, 0.640625, 0.5609375, 0.5609375, 0.5609375, 0.48125, 0.5609375, 0.5609375, 0.240625, 0.321875, 0.5609375, 0.240625, 0.88125, 0.5609375, 0.5609375, 0.640625, 0.5609375, 0.4, 0.5609375, 0.4015625, 0.5609375, 0.6421875, 0.88125, 0.6421875, 0.6421875, 0.6421875, 0.4, 0.2609375, 0.48125, 0.640625]
-    const avg = 0.5823026315789476
-    try {
-        var tmp = string
-            .split('')
-            .map(c => c.charCodeAt(0) < widths.length ? widths[c.charCodeAt(0)] : avg)
-            .reduce((cur, acc) => acc + cur) * fontSize
-        return tmp / 2;
-    } catch {
-        return 0
-    }
-}
-
-/**
- * Find offset for centre of Bold string.
- * @param   {String}    string 
- * @param   {Integer}   fontSize Default = 10
- * @returns {Integer}   Width of text
- */
-function measureBold(string, fontSize = 10) {
-    // console.log("measureBold");
-    const widths = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.1265625, 0.334375, 0.409375, 0.6421875, 0.5609375, 0.88125, 0.8, 0.18125, 0.4, 0.4, 0.5, 0.721875, 0.25, 0.4, 0.25, 0.4015625, 0.5609375, 0.5, 0.5609375, 0.5, 0.5609375, 0.5, 0.5609375, 0.5609375, 0.5609375, 0.5609375, 0.278125, 0.3203125, 0.721875, 0.721875, 0.721875, 0.48125, 0.9609375, 0.88125, 0.8015625, 0.7203125, 0.88125, 0.721875, 0.721875, 0.8, 0.88125, 0.4, 0.5625, 0.88125, 0.721875, 1.0421875, 0.88125, 0.8, 0.721875, 0.8, 0.88125, 0.5609375, 0.640625, 0.88125, 0.88125, 1.040625, 0.88125, 0.8, 0.8015625, 0.4, 0.4015625, 0.334375, 0.6421875, 0.6421875, 0.334375, 0.5609375, 0.6421875, 0.48125, 0.5609375, 0.48125, 0.5609375, 0.5609375, 0.6421875, 0.3203125, 0.4390625, 0.6421875, 0.3203125, 0.9625, 0.6421875, 0.5609375, 0.6421875, 0.5609375, 0.48125, 0.4, 0.4015625, 0.6421875, 0.6421875, 0.88125, 0.6421875, 0.6421875, 0.5625, 0.48125, 0.2015625, 0.48125, 0.721875]
-    const avg = 0.5999835526315791
-    try {
-        var tmp = string
-            .split('')
-            .map(c => c.charCodeAt(0) < widths.length ? widths[c.charCodeAt(0)] : avg)
-            .reduce((cur, acc) => acc + cur) * fontSize
-        return tmp / 2;
-    } catch {
-        return 0
-    }
-}
-
-/**
- * Generate HTML table dynamically based on contents of __CONFIG__
- */
-function generate_Table() {
-    console.log("generate_Table");
-    var table = document.getElementById("Table1")
-    var venue_keys = Object.keys(__CONFIG__.venues);
-    var wavl_keys = Object.keys(__CONFIG__.wavl)
-    var jl_keys = Object.keys(__CONFIG__.jl)
-
-    for (var i = 0; i < Math.max(venue_keys.length, wavl_keys.length, jl_keys.length); i++) {
-        var row = table.insertRow(-1);
-        var cell0 = row.insertCell(0);
-        var cell1 = row.insertCell(1);
-        var cell2 = row.insertCell(2);
-        var cell3 = row.insertCell(3);
-        var cell4 = row.insertCell(4);
-        var cell5 = row.insertCell(5);
-        var cell6 = row.insertCell(6);
-        var cell7 = row.insertCell(7);
-        var cell8 = row.insertCell(8);
-        var cell9 = row.insertCell(9);
-
-        // venue
-        cell0.classList.add("cell12");
-        cell0.innerHTML = '<p style="font-size:8px;line-height:9.5px;">&nbsp;</p>'
-
-        try {
-            var venue = __CONFIG__.venues[venue_keys[i]];
-            cell1.classList.add("cell2")
-            cell1.innerHTML = '<div id="venue_' + i.toString() + '" style="display:inline-block;width:16px;height:20px;z-index:56;">' +
-                '<input type="checkbox" id="checkvenue_' + i.toString() + '" name="Venues" value="on" checked="" style="display:inline-block;opacity:0;" title="' + venue.name + '">' +
-                '<label for="checkvenue_' + i.toString() + '"></label>' +
-                '</div>'
-
-            cell2.classList.add("cell9")
-            cell2.innerHTML = '<div id="wb_Text8">' +
-                '<span style="color:#000000;font-family:Arial;font-size:16px;">' + venue.name + '</span>' +
-                '</div>'
-        } catch (e) {
-            cell1.classList.add("cell10")
-            cell1.innerHTML = '<p style="font-size:8px;line-height:9.5px;">&nbsp;</p>'
-            cell2.classList.add("cell11")
-            cell2.innerHTML = '<p style="font-size:8px;line-height:9.5px;">&nbsp;</p>'
-        }
-
-        // WAVL Division
-        cell3.classList.add("cell1")
-        cell3.innerHTML = '<p style="font-size:8px;line-height:9.5px;">&nbsp;</p>'
-
-        try {
-            var wavl = __CONFIG__.wavl[wavl_keys[i]];
-            cell4.classList.add("cell2")
-            cell4.innerHTML = '<div id="wavl_' + i.toString() + '" style="display:inline-block;width:16px;height:20px;z-index:58;">' +
-                '<input type="checkbox" id="checkwavl_' + i.toString() + '" name="WAVL_teams" value="on" checked="" style="display:inline-block;opacity:0;" title="' + wavl.long + '">' +
-                '<label for="checkwavl_' + i.toString() + '"></label>' +
-                '</div>'
-
-            cell5.classList.add("cell9")
-            cell5.innerHTML = '<div id="wb_Text32">' +
-                '<span style="color:#000000;font-family:Arial;font-size:16px;">' + wavl.long + '</span>' +
-                '</div>'
-        } catch (e) {
-            cell4.classList.add("cell10")
-            cell4.innerHTML = '<p style="font-size:8px;line-height:9.5px;">&nbsp;</p>'
-            cell5.classList.add("cell11")
-            cell5.innerHTML = '<p style="font-size:8px;line-height:9.5px;">&nbsp;</p>'
-        }
-
-        // Junior League Division
-        cell6.classList.add("cell1")
-        cell6.innerHTML = '<p style="font-size:8px;line-height:9.5px;">&nbsp;</p>'
-
-        try {
-            var jl = __CONFIG__.jl[jl_keys[i]];
-            cell7.classList.add("cell2")
-            cell7.innerHTML = '<div id="wavjl_' + i.toString() + '" style="display:inline-block;width:16px;height:20px;z-index:60;">' +
-                '<input type="checkbox" id="checkwavjl_' + i.toString() + '" name="WAVjL_teams" value="on" checked="" style="display:inline-block;opacity:0;" title="' + jl.long + '">' +
-                '<label for="checkwavjl_' + i.toString() + '"></label>' +
-                '</div>'
-
-            cell8.classList.add("cell9")
-            cell8.innerHTML = '<div id="wb_Text49">' +
-                '<span style="color:#000000;font-family:Arial;font-size:16px;">' + jl.long + '</span>' +
-                '</div>'
-        } catch (e) {
-            cell7.classList.add("cell10")
-            cell7.innerHTML = '<p style="font-size:8px;line-height:9.5px;">&nbsp;</p>'
-            cell8.classList.add("cell11")
-            cell8.innerHTML = '<p style="font-size:8px;line-height:9.5px;">&nbsp;</p>'
-
-        }
-    }
-    var fin_row = table.insertRow(-1);
-    var fin_cell = fin_row.insertCell(0);
-    fin_cell.classList.add("cell99")
-}
-
-generate_Table()
+                  }
+              }catch (e){console.log(e);}
+              // catch - continue
+              var dd = " ";
+              if (parseInt(fixtures[i][10]).toString().length == 1) {
+                  dd = " " + parseInt(fixtures[i][10]).toString()
+              }else{dd = parseInt(fixtures[i][10]).toString()}
+  
+              await WAVLfirstPage.drawText(dd, {
+                  x: parseInt((596 - measureBold(dd,13) - measureBold(dd,13)).toString()),
+                  y: 557,
+                  size: 13,
+                  font: WAVLhelveticaBold
+              })
+              await WAVLfirstPage.drawText(parseInt(fixtures[i][11]).toString(), {
+                  x: parseInt((613 - measureBold(fixtures[i][11],13)).toString()),
+                  y: 557,
+                  size: 13,
+                  font: WAVLhelveticaBold
+              })
+              await WAVLfirstPage.drawText(fixtures[i][12].slice(2,4), {
+                  x: 625,
+                  y: 557,
+                  size: 13,
+                  font: WAVLhelveticaBold
+              })
+              await WAVLfirstPage.drawText(fixtures[i][9][1], {
+                  x: parseInt((773 - measureBold(fixtures[i][9][1],13)).toString()),
+                  y: 557.5,
+                  size: 13,
+                  font: WAVLhelveticaBold
+              })
+              await WAVLfirstPage.drawText(fixtures[i][8], {
+                  x: parseInt((710 - measureText(fixtures[i][8],14)).toString()),
+                  y: 528,
+                  size: 14,
+                  font: WAVLhelveticaFont
+              })
+              // if length > 18
+              if(fixtures[i][6].length > 18 || fixtures[i][7].length > 18) {
+                  await WAVLfirstPage.drawText(fixtures[i][6], {
+                      x: parseInt((320 - measureText(fixtures[i][6],10)).toString()),
+                      y: 527,
+                      size: 10,
+                      font: WAVLhelveticaFont
+                  })
+                  await WAVLfirstPage.drawText(fixtures[i][7], {
+                      x: parseInt((460 - measureText(fixtures[i][7],10)).toString()),
+                      y: 527,
+                      size: 10,
+                      font: WAVLhelveticaFont
+                  })
+              }else {
+                  WAVLpdfDoc.TextAlignment = 1;
+                  await WAVLfirstPage.drawText(fixtures[i][6], {
+                      x: parseInt((320 - measureText(fixtures[i][6],14)).toString()),
+                      y: 527,
+                      size: 14,
+                      font: WAVLhelveticaFont
+                  })
+                  await WAVLfirstPage.drawText(fixtures[i][7], {
+                      x: parseInt((460 - measureText(fixtures[i][7],14)).toString()),
+                      y: 527,
+                      size: 14,
+                      font: WAVLhelveticaFont
+                  })
+              }
+              var saved = await WAVLpdfDoc.saveAsBase64();
+          }else{
+              // Junior League
+              // full venue
+              await JLfirstPage.drawText(fixtures[i][0], {
+                  x: parseInt((180 - measureText(fixtures[i][0],13)).toString()),
+                  y: 504,
+                  size: 13,
+                  font: JLhelveticaFont
+              })
+              // court
+              await JLfirstPage.drawText(fixtures[i][5], {
+                  x: parseInt((562 - measureText(fixtures[i][5],13)).toString()),
+                  y: 504,
+                  size: 13,
+                  font: JLhelveticaFont
+              })
+              try{
+                  // time
+                  let time = " "
+                  if (parseInt(fixtures[i][13]).toString().length == 1) {
+                      time = " " + parseInt(fixtures[i][13]).toString() + ":" + fixtures[1][14];
+                  }else{time = parseInt(fixtures[i][13]).toString() + ":" + fixtures[1][14];}
+                  await JLfirstPage.drawText(time, {
+                      x: 442,
+                      y: 504,
+                      size: 13,
+                      font: JLhelveticaFont
+                  })
+              } catch (e) {console.log(e)}
+              try{
+                  // date
+                  let dt = " ";
+                  dt = parseInt(fixtures[i][10]).toString() + "/" + parseInt(fixtures[i][11]).toString() + "/" + fixtures[i][12]
+                  await JLfirstPage.drawText(dt, {
+                      x: 315,
+                      y: 504,
+                      size: 13,
+                      font: JLhelveticaFont
+                  })
+              } catch (e) {console.log(e)}
+              // division
+              await JLfirstPage.drawText(fixtures[i][9][0], {
+                  x: parseInt((720 - measureText(fixtures[i][9][0],13)).toString()),
+                  y: 504,
+                  size: 13,
+                  font: JLhelveticaFont
+              })
+              // if length > 25
+              if(fixtures[i][6].length > 25 || fixtures[i][7].length > 25) {
+                  await JLfirstPage.drawText(fixtures[i][6], {
+                      x: parseInt((250 - measureText(fixtures[i][6],10)).toString()),
+                      y: 472,
+                      size: 10,
+                      font: JLhelveticaFont
+                  })
+                  await JLfirstPage.drawText(fixtures[i][7], {
+                      x: parseInt((660 - measureText(fixtures[i][7],10)).toString()),
+                      y: 472,
+                      size: 10,
+                      font: JLhelveticaFont
+                  })
+              }else {
+                  JLpdfDoc.TextAlignment = 1;
+                  await JLfirstPage.drawText(fixtures[i][6], {
+                      x: parseInt((250 - measureText(fixtures[i][6],14)).toString()),
+                      y: 472,
+                      size: 14,
+                      font: JLhelveticaFont
+                  })
+                  await JLfirstPage.drawText(fixtures[i][7], {
+                      x: parseInt((660 - measureText(fixtures[i][7],14)).toString()),
+                      y: 472,
+                      size: 14,
+                      font: JLhelveticaFont
+                  })
+              }
+          var saved = await JLpdfDoc.saveAsBase64();
+          }
+          total[i] = saved;
+      }
+      //download(pdfBytes, "pdf-lib_creation_example.pdf", "application/pdf");
+      console.log(total);
+      return await total;
+  
+  }
+  
+  async function mergePDFDocuments(documents) {
+      console.log(documents);
+      var mergedPdf = await PDFLib.PDFDocument.create();
+      for(var i = 0; i < documents.length; i++) {
+          console.log(i)
+          var docone = await PDFLib.PDFDocument.load(await documents[i]);
+          //var copiedPagesone = await mergedPdf.copyPages(docone, [0, 1]);
+          //await mergedPdf.addPage(await copiedPagesone[0]);
+          //await mergedPdf.addPage(await copiedPagesone[1]);
+          var copiedPagesone = await mergedPdf.copyPages(docone, docone.getPageIndices());
+          for(var j = 0; j < docone.getPageIndices().length; j++){
+              mergedPdf.addPage(await copiedPagesone[j]);
+          }
+      }
+      var saved = await mergedPdf.save();
+  
+      return await saved;
+  
+      //download(await mergedPdf, "pdf-lib_creation_example.pdf", "application/pdf");
+  }
+  
+  async function merge_PDF(existing) {
+      const mergedPdf = await PDFLib.PDFDocument.create();
+      console.log(await existing)
+      for (var i = 0; i < await existing.length; i++) {
+          var doc = await PDFLib.PDFDocument.load(await existing[1]);
+          var copiedPages = await mergedPdf.copyPages(doc, doc.getPageIndices());
+          copiedPages.forEach((page) => mergedPdf.addPage(page));
+      }
+  
+      return await mergedPdf.save();
+  }
+  
+  
+  function get_URLS(leagues, date){
+      var all_urls = []
+      for(var i = 0; i < leagues.length; i++){
+          var url = head + leagues[k][2] + "/" + date.toString();
+          all_urls.push(url)
+      }
+      return all_urls
+  }
+  
+  function div_from_id(id){
+      for(var i = 0; i < __CONFIG__.wavl.length; i++){
+          if(__CONFIG__.wavl[i].id == id){
+              return [__CONFIG__.wavl[i].long,__CONFIG__.wavl[i].short,__CONFIG__.wavl[i].id]
+          }
+      }
+      for(var i = 0; i < __CONFIG__.jl.length; i++){
+          if(__CONFIG__.jl[i].id == id) {
+              return [__CONFIG__.jl[i].long, __CONFIG__.jl[i].short, __CONFIG__.jl[i].id]
+          }
+      }
+      return false
+  }
+  
+  function add_aliases(venues){
+      var resultant = [];
+      var low_venues = [];
+      for(var j = 0; j < venues.length; j++){low_venues.push(venues[j].toLowerCase())}
+  
+      console.log(low_venues)
+      for(var i = 0; i < __CONFIG__.venues.length; i++){
+          console.log(__CONFIG__.venues[i].name.toLowerCase())
+          if(low_venues.includes(__CONFIG__.venues[i].name.toLowerCase())){
+              resultant.push(__CONFIG__.venues[i].name);
+              for(var k = 0; k < __CONFIG__.venues[i].alias.length; k++){
+                  var _alias = __CONFIG__.venues[i].alias[k];
+                  resultant.push(_alias)
+              }
+          }
+      }
+      return resultant;
+  }
+  
+  function html_to_fixture(venues, leagues, date, all_html) {
+      let fixtures_list = []
+      console.log(leagues);
+      console.log(all_html);
+      let venue_usage = add_aliases(venues);
+      console.log(venue_usage)
+      console.log("HERE HERE HERE")
+      for(let x = 0; x < all_html.length; x++) {
+          let parser = new DOMParser();
+          let htmlDoc = parser.parseFromString(all_html[x].data, 'text/html');
+          console.log(all_html[x].request.responseURL)
+          try {
+              let div_table = htmlDoc.getElementsByTagName("table")[1]
+              console.log("***")
+              console.log(div_table.rows.item(1).cells.item(2).innerText)
+              let temp_div = DIVISIONS[div_table.rows.item(1).cells.item(2).innerText]
+              console.log(temp_div)
+              let table = htmlDoc.getElementsByTagName("table")[2]
+              let rowLength = table.rows.length;
+              for (let i = 1; i < rowLength; i++) {
+                  let cells = table.rows.item(i).cells;
+                  let venue = cells.item(1).innerText;
+                  console.log(venue);
+                  let venue_split = venue.split(" Ct")
+                  let zero_venue_split = venue_split[0].replaceAll(" Ct", "");
+                  console.log(venue_usage);
+                  console.log(zero_venue_split);
+                  if (venue_usage.includes(zero_venue_split)) {
+                      let _court = cells.item(1).innerText.split("Ct")[1];
+                      const _team_a = cells.item(2).innerText;
+                      const _team_b = cells.item(5).innerText;
+                      console.log(_team_a);
+                      console.log(x)
+                      let _duty = " ";
+                      let _time_hr = " ";
+                      let _time_min = " ";
+                      try {
+                          _duty = cells.item(7).innerText.slice(5);
+                      } catch (e) {
+                          console.log(e)
+                          _duty = " ";
+                      }
+                      //var division = leagues[j];
+                      let url = all_html[x].request.responseURL;
+                      let split_url = url.split('/');
+                      let _division = temp_div;
+                      console.log(temp_div)
+                      //let _division = __CONFIG__
+                      //console.log(_division)
+                      let _date = date.split('-');
+                      let _date_dd = _date[2];
+                      let _date_mm = _date[1];
+                      let _date_yyyy = _date[0]
+                      try {
+                          let time = cells.item(0).innerText.split(":")
+                          _time_hr = time[0].padStart(2, "0");
+                          _time_min = time[1];
+                      } catch (e) {
+                          console.log(e);
+                          _time_hr = " ";
+                          _time_min = " ";
+                      }
+                      let _tmp_venue = VENUE_SPLIT[zero_venue_split.toLowerCase()].split("*");
+                      const _venue_0 = _tmp_venue[0]
+                      const _venue_1 = _tmp_venue[1]
+                      const _venue_2 = _tmp_venue[2]
+                      let _venue_full = VENUE_SPLIT[zero_venue_split.toLowerCase()].replaceAll("*", " ").trimLeft();
+                      let _sorting = _venue_full + " " + _court + " " + _time_hr
+                      /*fix['venue'] = zero_venue_split;
+                      fix['venue_0'] = _venue_0
+                      fix['venue_1'] = _venue_1
+                      fix['venue_2'] = _venue_2
+                      fix['venue_full'] = _venue_full
+                      fix['court'] = _court
+                      fix['team_a'] = _team_a
+                      fix['team_b'] = _team_b
+                      fix['duty'] = _duty
+                      fix['division'] = _division
+                      fix['date_dd'] = _date_dd
+                      fix['date_mm'] = _date_mm
+                      fix['date_yyyy'] = _date_yyyy
+                      fix['time_hr'] = _time_hr
+                      fix['time_min'] = _time_min
+                      fix['sorting'] = _sorting
+  */
+                      //console.log(zero_venue_split)
+                      //console.log(_venue_0)
+                      //console.log(_venue_1)
+                      //console.log(_venue_2)
+                      //console.log(_team_a)
+                      //console.log(_team_b)
+                      //console.log(_duty)
+  
+                      //const fix = new Fixture(zero_venue_split, _venue_0, _venue_1, _venue_2, _venue_full, _court,
+                      //    _team_a, _team_b, _duty, _division, _date_dd, _date_mm, _date_yyyy, _time_hr, _time_min, _sorting)
+                      //console.log(fix)
+                      fixtures_list.push([zero_venue_split, _venue_0, _venue_1, _venue_2, _venue_full, _court,
+                          _team_a, _team_b, _duty, _division, _date_dd, _date_mm, _date_yyyy, _time_hr, _time_min, _sorting])
+                      console.log(fixtures_list)
+  
+                  } else {
+                      console.log("UNUSED VENUE")
+                      console.log(zero_venue_split)
+                  }
+  
+              }
+          } catch (e) {
+              console.log(e)
+          }
+      }
+      //console.log(fixtures_list);
+      return fixtures_list
+  }
+  
+  function measureText(string, fontSize = 10) {
+      const widths = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.1546875,0.278125,0.4,0.721875,0.5609375,0.9609375,0.7203125,0.240625,0.4,0.4,0.48125,0.640625,0.278125,0.4,0.278125,0.4015625,0.5609375,0.55625,0.5609375,0.5609375,0.640625,0.5609375,0.5609375,0.5609375,0.5609375,0.5609375,0.278125,0.278125,0.640625,0.640625,0.640625,0.5609375,1.1203125,0.88125,0.7203125,0.8,0.7234375,0.7203125,0.640625,0.8,0.7234375,0.278125,0.5,0.8,0.640625,0.88125,0.7234375,0.8,0.7203125,0.8,0.8,0.7203125,0.640625,0.7234375,0.8015625,1.121875,0.8015625,0.8015625,0.721875,0.3203125,0.48125,0.3203125,0.48125,0.721875,0.334375,0.5609375,0.640625,0.5609375,0.5609375,0.5609375,0.48125,0.5609375,0.5609375,0.240625,0.321875,0.5609375,0.240625,0.88125,0.5609375,0.5609375,0.640625,0.5609375,0.4,0.5609375,0.4015625,0.5609375,0.6421875,0.88125,0.6421875,0.6421875,0.6421875,0.4,0.2609375,0.48125,0.640625]
+      const avg = 0.5823026315789476
+      try {
+          var tmp = string
+              .split('')
+              .map(c => c.charCodeAt(0) < widths.length ? widths[c.charCodeAt(0)] : avg)
+              .reduce((cur, acc) => acc + cur) * fontSize
+          return tmp / 2;
+      }catch{return 0}
+  }
+  
+  function measureBold(string, fontSize = 10) {
+      const widths = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.1265625,0.334375,0.409375,0.6421875,0.5609375,0.88125,0.8,0.18125,0.4,0.4,0.5,0.721875,0.25,0.4,0.25,0.4015625,0.5609375,0.5,0.5609375,0.5,0.5609375,0.5,0.5609375,0.5609375,0.5609375,0.5609375,0.278125,0.3203125,0.721875,0.721875,0.721875,0.48125,0.9609375,0.88125,0.8015625,0.7203125,0.88125,0.721875,0.721875,0.8,0.88125,0.4,0.5625,0.88125,0.721875,1.0421875,0.88125,0.8,0.721875,0.8,0.88125,0.5609375,0.640625,0.88125,0.88125,1.040625,0.88125,0.8,0.8015625,0.4,0.4015625,0.334375,0.6421875,0.6421875,0.334375,0.5609375,0.6421875,0.48125,0.5609375,0.48125,0.5609375,0.5609375,0.6421875,0.3203125,0.4390625,0.6421875,0.3203125,0.9625,0.6421875,0.5609375,0.6421875,0.5609375,0.48125,0.4,0.4015625,0.6421875,0.6421875,0.88125,0.6421875,0.6421875,0.5625,0.48125,0.2015625,0.48125,0.721875]
+      const avg = 0.5999835526315791
+      try {
+          var tmp = string
+              .split('')
+              .map(c => c.charCodeAt(0) < widths.length ? widths[c.charCodeAt(0)] : avg)
+              .reduce((cur, acc) => acc + cur) * fontSize
+          return tmp / 2;
+      }catch{return 0}
+  }
+  
+  function generate_Table(){
+      var venue_list = [];
+      var wavl_list = [];
+      var jl_list = [];
+  
+      var table = document.getElementById("Table1")
+  
+      //console.log(__CONFIG__.venues.length)
+      //console.log(__CONFIG__.wavl.length)
+      //console.log(__CONFIG__.jl.length)
+      //console.log(__CONFIG__.jl[3].name)
+      for(var i = 0; i < Math.max(__CONFIG__.venues.length, __CONFIG__.wavl.length, __CONFIG__.jl.length); i++){
+          var row = table.insertRow(-1);
+          var cell0 = row.insertCell(0);
+          var cell1 = row.insertCell(1);
+          var cell2 = row.insertCell(2);
+          var cell3 = row.insertCell(3);
+          var cell4 = row.insertCell(4);
+          var cell5 = row.insertCell(5);
+          var cell6 = row.insertCell(6);
+          var cell7 = row.insertCell(7);
+          var cell8 = row.insertCell(8);
+          var cell9 = row.insertCell(9);
+  
+          // venue
+          cell0.classList.add("cell12");
+          cell0.innerHTML = '<p style="font-size:8px;line-height:9.5px;">&nbsp;</p>'
+  
+          try {
+              var venue = __CONFIG__.venues[i];
+              cell1.classList.add("cell2")
+              cell1.innerHTML = '<div id="venue_' + i.toString() + '" style="display:inline-block;width:16px;height:20px;z-index:56;">' +
+                  '<input type="checkbox" id="checkvenue_'+ i.toString() + '" name="Venues" value="on" checked="" style="display:inline-block;opacity:0;" title="'+ venue.name +'">' +
+                  '<label for="checkvenue_'+ i.toString() + '"></label>' +
+                  '</div>'
+  
+              cell2.classList.add("cell9")
+              cell2.innerHTML = '<div id="wb_Text8">' +
+                  '<span style="color:#000000;font-family:Arial;font-size:16px;">' + venue.name + '</span>' +
+                  '</div>'
+          } catch (e) {
+              //console.log(e)
+              cell1.classList.add("cell10")
+              cell1.innerHTML = '<p style="font-size:8px;line-height:9.5px;">&nbsp;</p>'
+              cell2.classList.add("cell11")
+              cell2.innerHTML = '<p style="font-size:8px;line-height:9.5px;">&nbsp;</p>'
+          }
+  
+          cell3.classList.add("cell1")
+          cell3.innerHTML = '<p style="font-size:8px;line-height:9.5px;">&nbsp;</p>'
+  
+          try{
+              var wavl = __CONFIG__.wavl[i];
+              cell4.classList.add("cell2")
+              cell4.innerHTML = '<div id="wavl_' + i.toString() + '" style="display:inline-block;width:16px;height:20px;z-index:58;">' +
+                  '<input type="checkbox" id="checkwavl_' + i.toString() + '" name="WAVL_teams" value="on" checked="" style="display:inline-block;opacity:0;" title="' + wavl.long + '">' +
+                  '<label for="checkwavl_' + i.toString() + '"></label>' +
+                  '</div>'
+  
+              cell5.classList.add("cell9")
+              cell5.innerHTML = '<div id="wb_Text32">' +
+                  '<span style="color:#000000;font-family:Arial;font-size:16px;">' + wavl.long + '</span>' +
+                  '</div>'
+          } catch (e) {
+              //console.log(e)
+              //console.log(i)
+              cell4.classList.add("cell10")
+              cell4.innerHTML = '<p style="font-size:8px;line-height:9.5px;">&nbsp;</p>'
+              cell5.classList.add("cell11")
+              cell5.innerHTML = '<p style="font-size:8px;line-height:9.5px;">&nbsp;</p>'
+          }
+  
+          cell6.classList.add("cell1")
+          cell6.innerHTML = '<p style="font-size:8px;line-height:9.5px;">&nbsp;</p>'
+  
+          try{
+              var jl = __CONFIG__.jl[i]
+              cell7.classList.add("cell2")
+              cell7.innerHTML = '<div id="wavjl_' + i.toString() + '" style="display:inline-block;width:16px;height:20px;z-index:60;">' +
+                  '<input type="checkbox" id="checkwavjl_' + i.toString() + '" name="WAVjL_teams" value="on" checked="" style="display:inline-block;opacity:0;" title="' + jl.long + '">' +
+                  '<label for="checkwavjl_' + i.toString() + '"></label>' +
+                  '</div>'
+  
+              cell8.classList.add("cell9")
+              cell8.innerHTML = '<div id="wb_Text49">' +
+                  '<span style="color:#000000;font-family:Arial;font-size:16px;">' + jl.long + '</span>' +
+                  '</div>'
+          } catch (e) {
+              //console.log(e)
+              //console.log(i)
+              cell7.classList.add("cell10")
+              cell7.innerHTML = '<p style="font-size:8px;line-height:9.5px;">&nbsp;</p>'
+              cell8.classList.add("cell11")
+              cell8.innerHTML = '<p style="font-size:8px;line-height:9.5px;">&nbsp;</p>'
+  
+          }
+      }
+      var fin_row = table.insertRow(-1);
+      var fin_cell = fin_row.insertCell(0);
+      fin_cell.classList.add("cell99")
+  }
+  
+  generate_Table()

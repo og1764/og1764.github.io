@@ -32,7 +32,7 @@ div#container
    width: 16px;
    height: 16px;
    left: 450px;
-   top: 130px;
+   top: 170px;
 }
 #Checkbox99 label
 {
@@ -41,7 +41,7 @@ div#container
    margin: 0;
    z-index: 1;
    left: 450px;
-   top: 130px;
+   top: 170px;
 }
 
 #wb_Checkbox99
@@ -83,7 +83,7 @@ div#container
    width: 16px;
    height: 16px;
    left: 450px;
-   top: 130px;
+   top: 170px;
    background-color: #FFFFFF;
    border: 1px solid #CCCCCC;
    border-radius: 4px;
@@ -95,7 +95,7 @@ div#container
    width: 16px;
    height: 16px;
    left: 450px;
-   top: 130px;
+   top: 170px;
    padding: 0;
    text-align: center;
    line-height: 16px;
@@ -138,6 +138,7 @@ div#container
    margin: 0;
    opacity: 1;
    z-index: 1;
+   cursor: pointer;
 }
 #Table1 div[id^='venue'] label
 {
@@ -188,7 +189,10 @@ div#container
    outline: thin dotted;
 }
 
-
+#cell91
+{
+   cursor: pointer;
+}
 
 #Table1 div[id^='wavl']
 {
@@ -209,6 +213,7 @@ div#container
    margin: 0;
    opacity: 1;
    z-index: 1;
+   cursor: pointer;
 }
 #Table1 div[id^='wavl'] label
 {
@@ -280,6 +285,7 @@ div#container
    margin: 0;
    opacity: 1;
    z-index: 1;
+   cursor: pointer;
 }
 #Table1 div[id^='wavjl'] label
 {
@@ -433,6 +439,7 @@ input:focus, textarea:focus, select:focus
    text-align: center;
    -webkit-appearance: none;
    margin: 0;
+   cursor: pointer;
 }
 #Button1:disabled,
 #Button1[disabled]{
@@ -3521,6 +3528,7 @@ input:focus, textarea:focus, select:focus
    height: 16px;
    left: 0;
    top: 0;
+   cursor: pointer;
 }
 #wb_Checkbox32 label
 {
@@ -3637,6 +3645,7 @@ input:focus, textarea:focus, select:focus
    height: 16px;
    left: 0;
    top: 0;
+   cursor: pointer;
 }
 #wb_Checkbox33 label
 {
@@ -3749,6 +3758,7 @@ input:focus, textarea:focus, select:focus
    height: 16px;
    left: 0;
    top: 0;
+   cursor: pointer;
 }
 #wb_Checkbox34 label
 {
