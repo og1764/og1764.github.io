@@ -120,6 +120,10 @@ function csvToArray(str, delimiter = ",") {
             temp_row[11] = temp_row[11].padStart(2, "0");
             temp_row[13] = temp_row[13].padStart(2, "0");
             temp_row[14] = temp_row[14].padStart(2, "0");
+            
+            // Manually do sorting so it's not entered incorrectly
+            temp_row[15] = [temp_row[12],temp_row[11], temp_row[10], temp_row[0], temp_row[5], temp_row[13]].join(" ")
+            temp_row[16] = [temp_row[12],temp_row[11], temp_row[10], temp_row[0], temp_row[13], temp_row[5]].join(" ")
 
             // Parse names (if any are there)
             temp_row[17] = temp_row[17].split("^^");
