@@ -1,6 +1,6 @@
 const FINALS_DATES = ["2022-09-04","2022-09-11","2022-09-18"];
 
-// This is used to get a list of all players. eg: https://vwa.bracketpal.com/leaders/season/25 
+// This is used to get a list of all players. eg: https://vwa.bracketpal.com/leaders/season/25
 const SEASON_ID = "25";
 
 const __CONFIG__ = {
