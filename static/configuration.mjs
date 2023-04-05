@@ -1,7 +1,7 @@
 const FINALS_DATES = ["2022-09-04","2022-09-11","2022-09-18"];
 
-// This is used to get a list of all players. eg: https://vwa.bracketpal.com/leaders/season/25
-const SEASON_ID = "25";
+// This is used to get a list of all players. eg: https://vwa.bracketpal.com/leaders/season/27
+const SEASON_ID = "27";
 
 const __CONFIG__ = {
     "venues": {
@@ -10,7 +10,7 @@ const __CONFIG__ = {
             "top": "",
             "mid": "Aquinas",
             "bot": "College",
-            "alias": ["Aquinas College"]
+            "alias": ["Aquinas College", "Aquinas Col."]
         },
         "Ballajura": {
             "name": "Ballajura",
@@ -52,14 +52,14 @@ const __CONFIG__ = {
             "top": "Geographe",
             "mid": "Leisure",
             "bot": "Centre",
-            "alias": ["Geographe", "Geographe Leisure", "Geographe Lei. Centr", "Geographe Lei. Cntr"]
+            "alias": ["Geographe", "Geographe Leisure", "Geographe Lei. Centr", "Geographe Lei. Cntr", "Geographe L. Ctr"]
         },
         "Gold Netball Centre": {
             "name": "Gold Netball Centre",
             "top": "Gold",
             "mid": "Netball",
             "bot": "Centre",
-            "alias": []
+            "alias": ["Gold Netball"]
         },
         "Greenwood College": {
             "name": "Greenwood College",
@@ -81,6 +81,13 @@ const __CONFIG__ = {
             "mid": "Recreation",
             "bot": "Centre",
             "alias": ["Halls Head Rec Centr", "Halls Head Rec"]
+        },
+        "Hartfield Park": {
+            "name": "Hartfield Park",
+            "top": "",
+            "mid": "Hartfield",
+            "bot": "Park",
+            "alias": ["Hartfield"]
         },
         "HBF Stadium Claremont": {
             "name": "HBF Stadium Claremont",
@@ -108,6 +115,13 @@ const __CONFIG__ = {
             "top": "",
             "mid": "",
             "bot": "Loftus",
+            "alias": []
+        },
+        "Lords": {
+            "name": "Lords",
+            "top": "",
+            "mid": "",
+            "bot": "Lords",
             "alias": []
         },
         "Mandurah ARC": {
@@ -207,16 +221,30 @@ const __CONFIG__ = {
             "mid": "",
             "bot": "Warwick",
             "alias": ["Warwick Stadium", "Warwick Stad."]
+        },
+        "TBC": {
+            "name": "TBC",
+            "top": "",
+            "mid": "",
+            "bot": "",
+            "alias": []
+        },
+        "Home Round": {
+            "name": "Home Round",
+            "top": "",
+            "mid": "",
+            "bot": "",
+            "alias": []
         }
     },
     "wavl": {
-        "State League Women": {
-            "id": 103,
+        "State League Women": { // Updated
+            "id": 134,
             "long": "State League Women",
             "short": "SL Women"
         },
-        "State League Men": {
-            "id": 102,
+        "State League Men": { // Updated
+            "id": 132,
             "long": "State League Men",
             "short": "SL Men"
         },
@@ -351,15 +379,15 @@ const __CONFIG__ = {
 }
 
 const TEAM_ID = {
-    '1 Fremantle': ['1', 'Fremantle', '1001', 'State League Men'],
-    '2 Southern Cross': ['2', 'Southern Cross', '1002', 'State League Men'],
-    '3 UWA': ['3', 'UWA', '1003', 'State League Men'],
-    '4 ECU': ['4', 'ECU', '1004', 'State League Men'],
-    '5 Reds': ['5', 'Reds', '1005', 'State League Men'],
-    '6 Balcatta': ['6', 'Balcatta', '1006', 'State League Men'],
-    '8 Rossmoyne': ['8', 'Rossmoyne', '1007', 'State League Men'],
-    '10 Northern Stars': ['10', 'Northern Stars', '1008', 'State League Men'],
+    // Updated
+    '1 UWA': ['1', 'UWA', '1293', 'State League Men'],
+    '2 Northern Stars': ['2', 'Northern Stars', '1294', 'State League Men'],
+    '4 Reds': ['4', 'Reds', '1295', 'State League Men'],
+    '5 Balcatta': ['5', 'Balcatta', '1296', 'State League Men'],
+    '6 Rossmoyne': ['6', 'Rossmoyne', '1297', 'State League Men'],
+    '7 ECU': ['7', 'ECU', '1298', 'State League Men'],
     
+    // Not Updated
     '11 Fremantle': ['11', 'Fremantle', '1023', 'State League Reserve Men'],
     '12 Southern Cross': ['12', 'Southern Cross', '1024', 'State League Reserve Men'],
     '13 UWA': ['13', 'UWA', '1025', 'State League Reserve Men'],
@@ -414,14 +442,16 @@ const TEAM_ID = {
     '88 Rossmoyne': ['88', 'Rossmoyne', '1267', 'Division 4 Men'],
     '91 Murdoch': ['91', 'Murdoch', '1269', 'Division 4 Men'],
     '92 Reds Junior': ['92', 'Reds Junior', '1268', 'Division 4 Men'],
-
-    '102 Southern Cross': ['102', 'Southern Cross', '1009', 'State League Women'],
-    '103 UWA': ['103', 'UWA', '1010', 'State League Women'],
-    '104 ECU': ['104', 'ECU', '1011', 'State League Women'],
-    '105 Reds': ['105', 'Reds', '1012', 'State League Women'],
-    '106 Balcatta': ['106', 'Balcatta', '1013', 'State League Women'],
-    '108 Rossmoyne': ['108', 'Rossmoyne', '1014', 'State League Women'],
-
+    
+    // Updated
+    '101 UWA': ['101', 'UWA', '1309', 'State League Women'],
+    '103 Southern Cross': ['103', 'Southern Cross', '1310', 'State League Women'],
+    '104 Reds': ['104', 'Reds', '1311', 'State League Women'],
+    '105 Balcatta': ['105', 'Balcatta', '1312', 'State League Women'],
+    '106 Rossmoyne': ['106', 'Rossmoyne', '1313', 'State League Women'],
+    '107 ECU': ['107', 'ECU', '1314', 'State League Women'],
+    
+    // Not Updated
     '111 Fremantle': ['111', 'Fremantle', '1021', 'State League Reserve Women'],
     '112 Southern Cross': ['112', 'Southern Cross', '1016', 'State League Reserve Women'],
     '113 UWA': ['113', 'UWA', '1017', 'State League Reserve Women'],
