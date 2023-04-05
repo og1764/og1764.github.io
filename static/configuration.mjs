@@ -303,10 +303,25 @@ const __CONFIG__ = {
             "long": "Division 5 Men",
             "short": "Div 5 M"
         },
+        "Division 5 Women": {
+            "id": 112,
+            "long": "Division 5 Women",
+            "short": "Div 5 W"
+        },
         "Division 6 Men": {
             "id": 131,
             "long": "Division 6 Men",
             "short": "Div 6 M"
+        },
+        "Division 7 Men": {
+            "id": 131,
+            "long": "Division 7 Men",
+            "short": "Div 7 M"
+        },
+        "Division 8 Men": {
+            "id": 131,
+            "long": "Division 8 Men",
+            "short": "Div 8 M"
         }
     },
     "jl": {
