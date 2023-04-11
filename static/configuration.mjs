@@ -393,26 +393,46 @@ const __CONFIG__ = {
     }
 }
 
-const TEAM_ID = {
+const __PRESIDENTS__ = {
+    "Apex": " ",
+    "Balcatta": "Layne van Smaalen",
+    "ECU": "Dylan Wood",
+    "Fremantle": " ",
+    "Mandurah": " ",
+    "Murdoch": "Justine Ross",
+    "Northern Stars": "Peter Woodthorpe",
+    "Northshore": " ",
+    "Perth Scorpions": " ",
+    "Reds Junior": "Logan Vanderweide",
+    "Reds": "Anthony Meo",
+    "Rossmoyne" : " ",
+    "Southern Cross Masters": " ",
+    "Southern Cross": " ",
+    "United": " ",
+    "UWA": "Kieren Underwood",
+    "VIRSA": " "
+}
+
+const __TEAMS__ = {
     // Updated
-    '1 UWA': ['1', 'UWA', '1293', 'State League Men'],
-    '2 Northern Stars': ['2', 'Northern Stars', '1294', 'State League Men'],
-    '4 Reds': ['4', 'Reds', '1295', 'State League Men'],
-    '5 Balcatta': ['5', 'Balcatta', '1296', 'State League Men'],
-    '6 Rossmoyne': ['6', 'Rossmoyne', '1297', 'State League Men'],
-    '7 ECU': ['7', 'ECU', '1298', 'State League Men'],
+    '1 UWA': ['1', 'UWA', '1293', 'State League Men', ' '],
+    '2 Northern Stars': ['2', 'Northern Stars', '1294', 'State League Men', 'Peter Woodthorpe'],
+    '4 Reds': ['4', 'Reds', '1295', 'State League Men', 'Anthony Meo'],
+    '5 Balcatta': ['5', 'Balcatta', '1296', 'State League Men', 'Layne van Smaalen'],
+    '6 Rossmoyne': ['6', 'Rossmoyne', '1297', 'State League Men', ' '],
+    '7 ECU': ['7', 'ECU', '1298', 'State League Men', 'Dylan Wood'],
     
     // Not Updated
-    '11 Fremantle': ['11', 'Fremantle', '1023', 'State League Reserve Men'],
-    '12 Southern Cross': ['12', 'Southern Cross', '1024', 'State League Reserve Men'],
-    '13 UWA': ['13', 'UWA', '1025', 'State League Reserve Men'],
-    '14 ECU': ['14', 'ECU', '1026', 'State League Reserve Men'],
-    '15 Reds': ['15', 'Reds', '1027', 'State League Reserve Men'],
-    '16 Balcatta': ['16', 'Balcatta', '1028', 'State League Reserve Men'],
-    '17 Mandurah': ['17', 'Mandurah', '1029', 'State League Reserve Men'],
-    '18 Rossmoyne': ['18', 'Rossmoyne', '1030', 'State League Reserve Men'],
-    '19 Busselton': ['19', 'Busselton', '1031', 'State League Reserve Men'],
-    '20 Northern Stars': ['20', 'Northern Stars', '1032', 'State League Reserve Men'],
+    '11 Fremantle': ['11', 'Fremantle', '1023', 'State League Reserve Men', ' '],
+    '12 Southern Cross': ['12', 'Southern Cross', '1024', 'State League Reserve Men', ' '],
+    '13 UWA': ['13', 'UWA', '1025', 'State League Reserve Men', ' '],
+    '14 ECU': ['14', 'ECU', '1026', 'State League Reserve Men', ' '],
+    '15 Reds': ['15', 'Reds', '1027', 'State League Reserve Men', ' '],
+    '16 Balcatta': ['16', 'Balcatta', '1028', 'State League Reserve Men', 'Layne van Smaalen'],
+    '17 Mandurah': ['17', 'Mandurah', '1029', 'State League Reserve Men', ' '],
+    '18 Rossmoyne': ['18', 'Rossmoyne', '1030', 'State League Reserve Men', ' '],
+    '19 Busselton': ['19', 'Busselton', '1031', 'State League Reserve Men', ' '],
+    '20 Northern Stars': ['20', 'Northern Stars', '1032', 'State League Reserve Men', 'Peter Woodthorpe'],
 
     '21 Fremantle': ['21', 'Fremantle', '1033', 'Division 1 Men'],
     '23 UWA': ['23', 'UWA', '1035', 'Division 1 Men'],
@@ -459,22 +479,22 @@ const TEAM_ID = {
     '92 Reds Junior': ['92', 'Reds Junior', '1268', 'Division 4 Men'],
     
     // Updated
-    '101 UWA': ['101', 'UWA', '1309', 'State League Women'],
-    '103 Southern Cross': ['103', 'Southern Cross', '1310', 'State League Women'],
-    '104 Reds': ['104', 'Reds', '1311', 'State League Women'],
-    '105 Balcatta': ['105', 'Balcatta', '1312', 'State League Women'],
-    '106 Rossmoyne': ['106', 'Rossmoyne', '1313', 'State League Women'],
-    '107 ECU': ['107', 'ECU', '1314', 'State League Women'],
+    '101 UWA': ['101', 'UWA', '1309', 'State League Women', ' '],
+    '103 Southern Cross': ['103', 'Southern Cross', '1310', 'State League Women', ' '],
+    '104 Reds': ['104', 'Reds', '1311', 'State League Women', 'Anthony Meo'],
+    '105 Balcatta': ['105', 'Balcatta', '1312', 'State League Women', ' '],
+    '106 Rossmoyne': ['106', 'Rossmoyne', '1313', 'State League Women', 'Layne van Smaalen'],
+    '107 ECU': ['107', 'ECU', '1314', 'State League Women', ' '],
     
     // Not Updated
-    '111 Fremantle': ['111', 'Fremantle', '1021', 'State League Reserve Women'],
-    '112 Southern Cross': ['112', 'Southern Cross', '1016', 'State League Reserve Women'],
-    '113 UWA': ['113', 'UWA', '1017', 'State League Reserve Women'],
-    '114 ECU': ['114', 'ECU', '1018', 'State League Reserve Women'],
-    '115 Reds': ['115', 'Reds', '1019', 'State League Reserve Women'],
-    '116 Balcatta': ['116', 'Balcatta', '1020', 'State League Reserve Women'],
-    '118 Rossmoyne': ['118', 'Rossmoyne', '1022', 'State League Reserve Women'],
-    '119 Busselton': ['119', 'Busselton', '1015', 'State League Reserve Women'],
+    '111 Fremantle': ['111', 'Fremantle', '1021', 'State League Reserve Women', ' '],
+    '112 Southern Cross': ['112', 'Southern Cross', '1016', 'State League Reserve Women', ' '],
+    '113 UWA': ['113', 'UWA', '1017', 'State League Reserve Women', ' '],
+    '114 ECU': ['114', 'ECU', '1018', 'State League Reserve Women', ' '],
+    '115 Reds': ['115', 'Reds', '1019', 'State League Reserve Women', ' '],
+    '116 Balcatta': ['116', 'Balcatta', '1020', 'State League Reserve Women', ' '],
+    '118 Rossmoyne': ['118', 'Rossmoyne', '1022', 'State League Reserve Women', ' '],
+    '119 Busselton': ['119', 'Busselton', '1015', 'State League Reserve Women', ' '],
 
     '121 Fremantle': ['121', 'Fremantle', '1043', 'Division 1 Women'],
     '122 Southern Cross': ['122', 'Southern Cross', '1044', 'Division 1 Women'],
