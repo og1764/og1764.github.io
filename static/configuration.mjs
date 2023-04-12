@@ -1,7 +1,7 @@
 const FINALS_DATES = ["2022-09-04","2022-09-11","2022-09-18"];
 
 // This is used to get a list of all players. eg: https://vwa.bracketpal.com/leaders/season/27
-const SEASON_ID = "25";
+const SEASON_ID = "27";
 
 const __CONFIG__ = {
     "venues": {
@@ -394,7 +394,7 @@ const __CONFIG__ = {
 }
 
 const __PRESIDENTS__ = {
-    "Apex": " ",
+    "Apex": "Eugene Lee",
     "Balcatta": "Layne van Smaalen",
     "ECU": "Dylan Wood",
     "Fremantle": " ",
@@ -402,15 +402,15 @@ const __PRESIDENTS__ = {
     "Murdoch": "Justine Ross",
     "Northern Stars": "Peter Woodthorpe",
     "Northshore": " ",
-    "Perth Scorpions": " ",
+    "Perth Scorpions": "Shaun Barnett",
     "Reds Junior": "Logan Vanderweide",
     "Reds": "Anthony Meo",
-    "Rossmoyne" : " ",
+    "Rossmoyne" : "Matthew Waddington",
     "Southern Cross Masters": " ",
-    "Southern Cross": " ",
-    "United": " ",
+    "Southern Cross": "Codi Versteeg",
+    "United": "Tani Bernados",
     "UWA": "Kieren Underwood",
-    "VIRSA": " "
+    "VIRSA": "Paramdeep Gill"
 }
 
 const __TEAMS__ = {
