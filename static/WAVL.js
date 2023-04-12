@@ -484,6 +484,17 @@ async function modifyPdf(fix, dates) {
     const JLexistingPdfBytes = await fetch(JLurl).then(resp => resp.arrayBuffer());
     const newWAVLexistingPdfBytes = await fetch(newWAVLurl).then(res => res.arrayBuffer());
 
+    // Used for new venues - converts all aliases back to main name.
+    var __venues__ = {};
+    var ven_keys = Object.keys(__CONFIG__.venues);
+    for (var i = 0; i < ven_keys.length; i++){
+        __venues__[__CONFIG__.venues[ven_keys[i]].name] = __CONFIG__.venues[ven_keys[i]].name
+        var tmp = __CONFIG__.venues[ven_keys[i]].alias
+        for (var j = 0; j < tmp.length; j++){
+            __venues__[__CONFIG__.venues[ven_keys[i]].alias[j]] = __CONFIG__.venues[ven_keys[i]].name
+        }
+    }
+
     for (var i = 0; i < fixtures.length; i++) {
         // Load WAVL and Junior League scoresheets
         var WAVLurl = "https://og1764.github.io/static/def.pdf";
@@ -936,8 +947,8 @@ async function modifyPdf(fix, dates) {
             }
 
             // Venue 0
-            await newWAVLfirstPage.drawText(fixtures[i][0], {
-                x: parseInt((265 - measureText(fixtures[i][0], 10)).toString()),
+            await newWAVLfirstPage.drawText(__venues__[fixtures[i][0]], {
+                x: parseInt((265 - measureText(__venues__[fixtures[i][0]], 10)).toString()),
                 y: 763,
                 size: 10,
                 font: newWAVLhelveticaFont
