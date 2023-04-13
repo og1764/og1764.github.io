@@ -809,7 +809,7 @@ async function modifyPdf(fix, dates) {
             // Team A Team List
             await newWAVLfirstPage.drawText(fixtures[i][6], {
                 x: 300,
-                y: 739,
+                y: 744, //739
                 size: 12,
                 font: newWAVLhelveticaFont
             })
@@ -979,7 +979,7 @@ async function modifyPdf(fix, dates) {
                 // Court Number
                 await newWAVLfirstPage.drawText(fixtures[i][5], {
                     x: parseInt((385 - measureBold(fixtures[i][5], 13).toString()).toString()),
-                    y: 763,
+                    y: 767,//763
                     size: 13,
                     font: newWAVLhelveticaBold
                 })
@@ -999,7 +999,7 @@ async function modifyPdf(fix, dates) {
                     // Time (hh:mm)
                     await newWAVLfirstPage.drawText(time, {
                         x: parseInt((455 - measureBold(time, 13)).toString()),
-                        y: 763,
+                        y: 769,//763
                         size: 13,
                         font: newWAVLhelveticaBold
                     })
@@ -1029,7 +1029,7 @@ async function modifyPdf(fix, dates) {
 
             await newWAVLfirstPage.drawText(ddmmyy, {
                 x: parseInt((546 - measureBold(ddmmyy, 13)).toString()),
-                y: 763,
+                y: 767,//763
                 size: 13,
                 font: newWAVLhelveticaBold
             })
