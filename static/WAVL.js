@@ -809,7 +809,7 @@ async function modifyPdf(fix, dates) {
             // Team A Team List
             await newWAVLfirstPage.drawText(fixtures[i][6], {
                 x: 300,
-                y: 744, //739
+                y: 745, //739
                 size: 12,
                 font: newWAVLhelveticaFont
             })
@@ -820,7 +820,7 @@ async function modifyPdf(fix, dates) {
                     // first name, first column
                     await newWAVLfirstPage.drawText(fixtures[i][17][k][0].toUpperCase(), {
                         x: 275,
-                        y: 711.5-Math.floor((15.75*k)),
+                        y: 717.5-Math.floor((15.75*k)),
                         size: 6,
                         font: newWAVLhelveticaFont
                     })
@@ -828,7 +828,7 @@ async function modifyPdf(fix, dates) {
                     // surname, first column
                     await newWAVLfirstPage.drawText(fixtures[i][17][k][1].toUpperCase(), {
                         x: 275,
-                        y: 711.5-Math.floor((15.75*k+7.0)),
+                        y: 717.5-Math.floor((15.75*k+7.0)),
                         size: 6,
                         font: newWAVLhelveticaFont
                     })
@@ -836,7 +836,7 @@ async function modifyPdf(fix, dates) {
                     // first name, second column
                     await newWAVLfirstPage.drawText(fixtures[i][17][k][0].toUpperCase(), {
                         x: 350,
-                        y: 711.5-Math.floor((15.75*(k-Math.ceil(fixtures[i][17].length / 2)))),
+                        y: 717.5-Math.floor((15.75*(k-Math.ceil(fixtures[i][17].length / 2)))),
                         size: 6,
                         font: newWAVLhelveticaFont
                     })
@@ -844,7 +844,7 @@ async function modifyPdf(fix, dates) {
                     // surname, second column
                     await newWAVLfirstPage.drawText(fixtures[i][17][k][1].toUpperCase(), {
                         x: 350,
-                        y: 711.5-Math.floor((15.75*(k-Math.ceil(fixtures[i][17].length / 2))+7.0)),
+                        y: 717.5-Math.floor((15.75*(k-Math.ceil(fixtures[i][17].length / 2))+7.0)),
                         size: 6,
                         font: newWAVLhelveticaFont
                     })
@@ -854,13 +854,13 @@ async function modifyPdf(fix, dates) {
 
             // Team A, Second column numbers
             if (fixtures[i][17].length > 6) {
-                let line_y_a = 713-Math.floor(15.75*Math.ceil(fixtures[i][17].length /2) - 5);
+                let line_y_a = 719-Math.floor(15.75*Math.ceil(fixtures[i][17].length /2) - 5);
                 if (fixtures[i][17].length > 18) {
                     line_y_a = 540;
                 }
                 console.log(line_y_a);
                 await newWAVLfirstPage.drawLine({
-                    start: { x: 330, y: 717.5 },
+                    start: { x: 330, y: 723.5 },
                     end: { x: 330, y: line_y_a },
                     thickness: 0.5,
                     color: rgb(0,0,0),
@@ -868,7 +868,7 @@ async function modifyPdf(fix, dates) {
                 })
                 
                 await newWAVLfirstPage.drawLine({
-                    start: { x: 345, y: 717.5 },
+                    start: { x: 345, y: 723.5 },
                     end: { x: 345, y: line_y_a },
                     thickness: 0.5,
                     color: rgb(0,0,0),
@@ -879,7 +879,7 @@ async function modifyPdf(fix, dates) {
             // Team B Team List
             await newWAVLfirstPage.drawText(fixtures[i][7], {
                 x: 460,
-                y: 739,
+                y: 745,
                 size: 12,
                 font: newWAVLhelveticaFont
             })
@@ -890,7 +890,7 @@ async function modifyPdf(fix, dates) {
                     // first name, first column
                     await newWAVLfirstPage.drawText(fixtures[i][18][k][0].toUpperCase(), {
                         x: 440,
-                        y: 711.5-Math.floor((15.75*k)),
+                        y: 717.5-Math.floor((15.75*k)),
                         size: 6,
                         font: newWAVLhelveticaFont
                     })
@@ -898,7 +898,7 @@ async function modifyPdf(fix, dates) {
                     // surname, first column
                     await newWAVLfirstPage.drawText(fixtures[i][18][k][1].toUpperCase(), {
                         x: 440,
-                        y: 711.5-Math.floor((15.75*k+7.0)),
+                        y: 717.5-Math.floor((15.75*k+7.0)),
                         size: 6,
                         font: newWAVLhelveticaFont
                     })
@@ -906,7 +906,7 @@ async function modifyPdf(fix, dates) {
                     // first name, second column
                     await newWAVLfirstPage.drawText(fixtures[i][18][k][0].toUpperCase(), {
                         x: 520,
-                        y: 711.5-Math.floor((15.75*(k-Math.ceil(fixtures[i][18].length / 2)))),
+                        y: 717.5-Math.floor((15.75*(k-Math.ceil(fixtures[i][18].length / 2)))),
                         size: 6,
                         font: newWAVLhelveticaFont
                     })
@@ -914,7 +914,7 @@ async function modifyPdf(fix, dates) {
                     // surname, second column
                     await newWAVLfirstPage.drawText(fixtures[i][18][k][1].toUpperCase(), {
                         x: 520,
-                        y: 711.5-Math.floor((15.75*(k-Math.ceil(fixtures[i][18].length / 2))+7.0)),
+                        y: 717.5-Math.floor((15.75*(k-Math.ceil(fixtures[i][18].length / 2))+7.0)),
                         size: 6,
                         font: newWAVLhelveticaFont
                     })
@@ -923,14 +923,14 @@ async function modifyPdf(fix, dates) {
             
             if (fixtures[i][18].length > 6) {
                 // Team B, second column numbers
-                let line_y_b = 713-Math.floor(15.75*Math.ceil(fixtures[i][18].length /2) - 5);
+                let line_y_b = 719-Math.floor(15.75*Math.ceil(fixtures[i][18].length /2) - 5);
                 console.log(line_y_b);
                 if (fixtures[i][18].length > 18) {
                     // If 2 rows or less remaining, just draw the lines to the bottom of the player list.
                     line_y_b = 540;
                 }
                 await newWAVLfirstPage.drawLine({
-                    start: { x: 515, y: 717.5 },
+                    start: { x: 515, y: 723.5 },
                     end: { x: 515, y: line_y_b },
                     thickness: 0.5,
                     color: rgb(0,0,0),
@@ -938,7 +938,7 @@ async function modifyPdf(fix, dates) {
                 })
                 
                 await newWAVLfirstPage.drawLine({
-                    start: { x: 500, y: 717.5  },
+                    start: { x: 500, y: 723.5  },
                     end: { x: 500, y: line_y_b },
                     thickness: 0.5,
                     color: rgb(0,0,0),
@@ -949,7 +949,7 @@ async function modifyPdf(fix, dates) {
             // Venue 0
             await newWAVLfirstPage.drawText(__venues__[fixtures[i][0]], {
                 x: parseInt((265 - measureText(__venues__[fixtures[i][0]], 10)).toString()),
-                y: 763,
+                y: 769,
                 size: 10,
                 font: newWAVLhelveticaFont
             })
@@ -979,7 +979,7 @@ async function modifyPdf(fix, dates) {
                 // Court Number
                 await newWAVLfirstPage.drawText(fixtures[i][5], {
                     x: parseInt((385 - measureBold(fixtures[i][5], 13).toString()).toString()),
-                    y: 767,//763
+                    y: 769,//763
                     size: 13,
                     font: newWAVLhelveticaBold
                 })
@@ -1029,7 +1029,7 @@ async function modifyPdf(fix, dates) {
 
             await newWAVLfirstPage.drawText(ddmmyy, {
                 x: parseInt((546 - measureBold(ddmmyy, 13)).toString()),
-                y: 767,//763
+                y: 769,//763
                 size: 13,
                 font: newWAVLhelveticaBold
             })
@@ -1060,7 +1060,7 @@ async function modifyPdf(fix, dates) {
             // Division (short)
             await newWAVLfirstPage.drawText(fixtures[i][9][1], {
                 x: parseInt((528 - measureBold(fixtures[i][9][1], 13)).toString()),
-                y: 780,
+                y: 786,
                 size: 13,
                 font: newWAVLhelveticaBold
             })
@@ -1068,7 +1068,7 @@ async function modifyPdf(fix, dates) {
             // Duty team
             await newWAVLfirstPage.drawText(fixtures[i][8], {
                 x: parseInt((320 - measureText(fixtures[i][8], 14)).toString()),
-                y: 780,
+                y: 786,
                 size: 14,
                 font: newWAVLhelveticaFont
             })
@@ -1081,13 +1081,13 @@ async function modifyPdf(fix, dates) {
             let b_pres = __PRESIDENTS__[fixtures[i][7].substring(fixtures[i][6].indexOf(' ') + 1)];
             await newWAVLfirstPage.drawText(a_pres, {
                 x: parseInt((325 - measureText(a_pres, 10)).toString()),
-                y: 457,
+                y: 463,
                 size: 10,
                 font: newWAVLhelveticaFont
             })
             await newWAVLfirstPage.drawText(b_pres, {
                 x: parseInt((520 - measureText(b_pres, 10)).toString()),
-                y: 457,
+                y: 463,
                 size: 10,
                 font: newWAVLhelveticaFont
             })
@@ -1097,13 +1097,13 @@ async function modifyPdf(fix, dates) {
                 // Reduce text size if too long.
                 await newWAVLfirstPage.drawText(fixtures[i][6], {
                     x: parseInt((260 - measureText(fixtures[i][6], 10)).toString()),
-                    y: 800,
+                    y: 806,
                     size: 10,
                     font: newWAVLhelveticaBold
                 })
                 await newWAVLfirstPage.drawText(fixtures[i][7], {
                     x: parseInt((480 - measureText(fixtures[i][7], 10)).toString()),
-                    y: 800,
+                    y: 806,
                     size: 10,
                     font: newWAVLhelveticaBold
                 })
@@ -1111,13 +1111,13 @@ async function modifyPdf(fix, dates) {
                 newWAVLpdfDoc.TextAlignment = 1;
                 await newWAVLfirstPage.drawText(fixtures[i][6], {
                     x: parseInt((260 - measureText(fixtures[i][6], 14)).toString()),
-                    y: 800,
+                    y: 806,
                     size: 14,
                     font: newWAVLhelveticaBold
                 })
                 await newWAVLfirstPage.drawText(fixtures[i][7], {
                     x: parseInt((480 - measureText(fixtures[i][7], 14)).toString()),
-                    y: 800,
+                    y: 806,
                     size: 14,
                     font: newWAVLhelveticaBold
                 })
