@@ -397,20 +397,20 @@ const __PRESIDENTS__ = {
     "Apex": "Eugene Lee",
     "Balcatta": "Layne van Smaalen",
     "ECU": "Dylan Wood",
-    "Fremantle": " ",
-    "Mandurah": " ",
+    "Fremantle": "Kevin Gravestock",
+    "Mandurah": "Charlie Grigio",
     "Murdoch": "Justine Ross",
     "Northern Stars": "Peter Woodthorpe",
-    "Northshore": " ",
+    "Northshore": "Jo-Han Bay",
     "Perth Scorpions": "Shaun Barnett",
     "Reds Junior": "Logan Vanderweide",
     "Reds": "Anthony Meo",
-    "Rossmoyne" : "Matthew Waddington",
-    "Southern Cross Masters": " ",
-    "Southern Cross": "Codi Versteeg",
+    "Rossmoyne" : "Matt Waddington",
+    "Southern Cross Masters": "Nicholas Crawford",
+    "Southern Cross": "Codi Versteeg / Remi Cousin",
     "United": "Tani Bernados",
     "UWA": "Kieren Underwood",
-    "VIRSA": "Paramdeep Gill"
+    "VIRSA": "Harpreet Dhillon"
 }
 
 const __TEAMS__ = {
