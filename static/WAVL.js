@@ -1077,8 +1077,11 @@ async function modifyPdf(fix, dates) {
             //let a_pres = __TEAMS__[fixtures[i][6][4]] giving Undefined for some reason
             //let b_pres = __TEAMS__[fixtures[i][7][4]]
             //console.log(a_pres);
+		console.log(fixtures[i][6].substring(fixtures[i][6].indexOf(' ') + 1));
+		console.log(fixtures[i][7].substring(fixtures[i][7].indexOf(' ') + 1));
+		console.log(__PRESIDENTS__);
             let a_pres = __PRESIDENTS__[fixtures[i][6].substring(fixtures[i][6].indexOf(' ') + 1)];
-            let b_pres = __PRESIDENTS__[fixtures[i][7].substring(fixtures[i][6].indexOf(' ') + 1)];
+            let b_pres = __PRESIDENTS__[fixtures[i][7].substring(fixtures[i][7].indexOf(' ') + 1)];
             await newWAVLfirstPage.drawText(a_pres, {
                 x: parseInt((325 - measureText(a_pres, 10)).toString()),
                 y: 463,
