@@ -396,6 +396,7 @@ const __CONFIG__ = {
 const __PRESIDENTS__ = {
     "Apex": "Eugene Lee",
     "Balcatta": "Layne van Smaalen",
+    "Busselton": "David Boyle".
     "ECU": "Dylan Wood",
     "Fremantle": "Kevin Gravestock",
     "Mandurah": "Charlie Grigio",
