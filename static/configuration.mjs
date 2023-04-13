@@ -248,13 +248,13 @@ const __CONFIG__ = {
             "long": "State League Men",
             "short": "SL Men"
         },
-        "State League Reserve Women": {
-            "id": 104,
+        "State League Reserve Women": { // Updated
+            "id": 135,
             "long": "State League Reserve Women",
             "short": "SLR Women"
         },
-        "State League Reserve Men": {
-            "id": 105,
+        "State League Reserve Men": { // Updated
+            "id": 133,
             "long": "State League Reserve Men",
             "short": "SLR Men"
         },
@@ -422,18 +422,19 @@ const __TEAMS__ = {
     '6 Rossmoyne': ['6', 'Rossmoyne', '1297', 'State League Men', ' '],
     '7 ECU': ['7', 'ECU', '1298', 'State League Men', 'Dylan Wood'],
     
+    // Updated
+    '11 UWA': ['11', 'UWA', '1299', 'State League Reserve Men', ' '],
+    '12 Northern Stars': ['12', 'Northern Stars', '1300', 'State League Reserve Men', ' '],
+    '13 Southern Cross': ['13', 'Southern Cross', '1301', 'State League Reserve Men', ' '],
+    '14 Reds': ['14', 'Reds', '1302', 'State League Reserve Men', ' '],
+    '15 Balcatta': ['15', 'Balcatta', '1303', 'State League Reserve Men', ' '],
+    '16 Rossmoyne': ['16', 'Rossmoyne', '1304', 'State League Reserve Men', 'Layne van Smaalen'],
+    '17 ECU': ['17', 'ECU', '1305', 'State League Reserve Men', ' '],
+    '18 Busselton': ['18', 'Busselton', '1306', 'State League Reserve Men', ' '],
+    '19 Fremantle': ['19', 'Fremantle', '1307', 'State League Reserve Men', ' '],
+    '26 Apex': ['26', 'Apex', '1308', 'State League Reserve Men', 'Peter Woodthorpe'],
+    
     // Not Updated
-    '11 Fremantle': ['11', 'Fremantle', '1023', 'State League Reserve Men', ' '],
-    '12 Southern Cross': ['12', 'Southern Cross', '1024', 'State League Reserve Men', ' '],
-    '13 UWA': ['13', 'UWA', '1025', 'State League Reserve Men', ' '],
-    '14 ECU': ['14', 'ECU', '1026', 'State League Reserve Men', ' '],
-    '15 Reds': ['15', 'Reds', '1027', 'State League Reserve Men', ' '],
-    '16 Balcatta': ['16', 'Balcatta', '1028', 'State League Reserve Men', 'Layne van Smaalen'],
-    '17 Mandurah': ['17', 'Mandurah', '1029', 'State League Reserve Men', ' '],
-    '18 Rossmoyne': ['18', 'Rossmoyne', '1030', 'State League Reserve Men', ' '],
-    '19 Busselton': ['19', 'Busselton', '1031', 'State League Reserve Men', ' '],
-    '20 Northern Stars': ['20', 'Northern Stars', '1032', 'State League Reserve Men', 'Peter Woodthorpe'],
-
     '21 Fremantle': ['21', 'Fremantle', '1033', 'Division 1 Men'],
     '23 UWA': ['23', 'UWA', '1035', 'Division 1 Men'],
     '24 ECU': ['24', 'ECU', '1036', 'Division 1 Men'],
@@ -486,16 +487,19 @@ const __TEAMS__ = {
     '106 Rossmoyne': ['106', 'Rossmoyne', '1313', 'State League Women', 'Layne van Smaalen'],
     '107 ECU': ['107', 'ECU', '1314', 'State League Women', ' '],
     
+    // Updated
+    '111 UWA': ['111', 'UWA', '1315', 'State League Reserve Women', ' '],
+    '113 Southern Cross': ['113', 'Southern Cross', '1317', 'State League Reserve Women', ' '],
+    '114 Reds': ['114', 'Reds', '1318', 'State League Reserve Women', ' '],
+    '115 Balcatta': ['115', 'Balcatta', '1319', 'State League Reserve Women', ' '],
+    '116 Rossmoyne': ['116', 'Rossmoyne', '1320', 'State League Reserve Women', ' '],
+    '117 ECU': ['117', 'ECU', '1321', 'State League Reserve Women', ' '],
+    '118 Busselton': ['118', 'Busselton', '1322', 'State League Reserve Women', ' '],
+    '119 Fremantle': ['119', 'Fremantle', '1323', 'State League Reserve Women', ' '],
+    '123 United': ['123', 'United', '1316', 'State League Reserve Women', ' '],
+    '126 Apex': ['126', 'Apex', '1324', 'State League Reserve Women', ' '],
+    
     // Not Updated
-    '111 Fremantle': ['111', 'Fremantle', '1021', 'State League Reserve Women', ' '],
-    '112 Southern Cross': ['112', 'Southern Cross', '1016', 'State League Reserve Women', ' '],
-    '113 UWA': ['113', 'UWA', '1017', 'State League Reserve Women', ' '],
-    '114 ECU': ['114', 'ECU', '1018', 'State League Reserve Women', ' '],
-    '115 Reds': ['115', 'Reds', '1019', 'State League Reserve Women', ' '],
-    '116 Balcatta': ['116', 'Balcatta', '1020', 'State League Reserve Women', ' '],
-    '118 Rossmoyne': ['118', 'Rossmoyne', '1022', 'State League Reserve Women', ' '],
-    '119 Busselton': ['119', 'Busselton', '1015', 'State League Reserve Women', ' '],
-
     '121 Fremantle': ['121', 'Fremantle', '1043', 'Division 1 Women'],
     '122 Southern Cross': ['122', 'Southern Cross', '1044', 'Division 1 Women'],
     '123 UWA': ['123', 'UWA', '1045', 'Division 1 Women'],
