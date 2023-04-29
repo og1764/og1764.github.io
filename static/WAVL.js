@@ -478,11 +478,14 @@ async function modifyPdf(fix, dates) {
     fixtures.sort(sorting);
     var WAVLurl = "https://og1764.github.io/static/def.pdf";
     var JLurl = "https://og1764.github.io/static/def_jl.pdf";
-    var newWAVLurl = "https://og1764.github.io/static/new_def.pdf"
+    var newWAVLurl = "https://og1764.github.io/static/new_def.pdf";
+    var extraWAVLurl = "https://og1764.github.io/static/extra_def.pdf";
+    //var extraWAVLurl = "./static/extra_def.pdf"
 
     const WAVLexistingPdfBytes = await fetch(WAVLurl).then(res => res.arrayBuffer());
     const JLexistingPdfBytes = await fetch(JLurl).then(resp => resp.arrayBuffer());
     const newWAVLexistingPdfBytes = await fetch(newWAVLurl).then(res => res.arrayBuffer());
+    const extraWAVLexistingPdfBytes = await fetch(extraWAVLurl).then(res => res.arrayBuffer());
 
     // Used for new venues - converts all aliases back to main name.
     var __venues__ = {};
@@ -499,7 +502,8 @@ async function modifyPdf(fix, dates) {
         // Load WAVL and Junior League scoresheets
         var WAVLurl = "https://og1764.github.io/static/def.pdf";
         var JLurl = "https://og1764.github.io/static/def_jl.pdf";
-        var newWAVLurl = "https://og1764.github.io/static/new_def.pdf"
+        var newWAVLurl = "https://og1764.github.io/static/new_def.pdf";
+        var extraWAVLurl = "https://og1764.github.io/static/extra_def.pdf";
 
         //var WAVLexistingPdfBytes = await fetch(WAVLurl).then(res => res.arrayBuffer());
 
@@ -509,11 +513,19 @@ async function modifyPdf(fix, dates) {
         var WAVLpages = await WAVLpdfDoc.getPages();
         var WAVLfirstPage = await WAVLpages[0];
 
-        var newWAVLpdfDoc = await PDFLib.PDFDocument.load(newWAVLexistingPdfBytes);
+        //var newWAVLpdfDoc = await PDFLib.PDFDocument.load(newWAVLexistingPdfBytes);
+        var newWAVLpdfDoc = await PDFLib.PDFDocument.load(extraWAVLexistingPdfBytes);
         var newWAVLhelveticaFont = await newWAVLpdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
         var newWAVLhelveticaBold = await newWAVLpdfDoc.embedFont(PDFLib.StandardFonts.HelveticaBold);
         var newWAVLpages = await newWAVLpdfDoc.getPages();
         var newWAVLfirstPage = await newWAVLpages[0];
+
+        var extraWAVLpdfDoc = await PDFLib.PDFDocument.load(extraWAVLexistingPdfBytes);
+        var extraWAVLhelveticaFont = await extraWAVLpdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
+        var extraWAVLhelveticaBold = await extraWAVLpdfDoc.embedFont(PDFLib.StandardFonts.HelveticaBold);
+        var extraWAVLpages = await extraWAVLpdfDoc.getPages();
+        var extraWAVLfirstPage = await extraWAVLpages[0];
+
 
         //var JLexistingPdfBytes = await fetch(JLurl).then(resp => resp.arrayBuffer());
 
