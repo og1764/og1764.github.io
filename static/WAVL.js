@@ -513,8 +513,7 @@ async function modifyPdf(fix, dates) {
         var WAVLpages = await WAVLpdfDoc.getPages();
         var WAVLfirstPage = await WAVLpages[0];
 
-        //var newWAVLpdfDoc = await PDFLib.PDFDocument.load(newWAVLexistingPdfBytes);
-        var newWAVLpdfDoc = await PDFLib.PDFDocument.load(extraWAVLexistingPdfBytes);
+        var newWAVLpdfDoc = await PDFLib.PDFDocument.load(newWAVLexistingPdfBytes);
         var newWAVLhelveticaFont = await newWAVLpdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
         var newWAVLhelveticaBold = await newWAVLpdfDoc.embedFont(PDFLib.StandardFonts.HelveticaBold);
         var newWAVLpages = await newWAVLpdfDoc.getPages();
@@ -818,327 +817,578 @@ async function modifyPdf(fix, dates) {
             }
             var saved = await WAVLpdfDoc.saveAsBase64();
         } else if (fixtures[i][9][0][0] == "S") {
-            // Team A Team List
-            await newWAVLfirstPage.drawText(fixtures[i][6], {
-                x: 300,
-                y: 745, //739
-                size: 12,
-                font: newWAVLhelveticaFont
-            })
-
-            // Team A Players
-            for (var k = 0; k < fixtures[i][17].length; k++) {
-                if (k < Math.ceil(fixtures[i][17].length / 2)) {
-                    // first name, first column
-                    await newWAVLfirstPage.drawText(fixtures[i][17][k][0].toUpperCase(), {
-                        x: 275,
-                        y: 717.5-Math.floor((15.75*k)),
-                        size: 6,
-                        font: newWAVLhelveticaFont
-                    })
-
-                    // surname, first column
-                    await newWAVLfirstPage.drawText(fixtures[i][17][k][1].toUpperCase(), {
-                        x: 275,
-                        y: 717.5-Math.floor((15.75*k+7.0)),
-                        size: 6,
-                        font: newWAVLhelveticaFont
-                    })
-                } else {
-                    // first name, second column
-                    await newWAVLfirstPage.drawText(fixtures[i][17][k][0].toUpperCase(), {
-                        x: 350,
-                        y: 717.5-Math.floor((15.75*(k-Math.ceil(fixtures[i][17].length / 2)))),
-                        size: 6,
-                        font: newWAVLhelveticaFont
-                    })
-
-                    // surname, second column
-                    await newWAVLfirstPage.drawText(fixtures[i][17][k][1].toUpperCase(), {
-                        x: 350,
-                        y: 717.5-Math.floor((15.75*(k-Math.ceil(fixtures[i][17].length / 2))+7.0)),
-                        size: 6,
-                        font: newWAVLhelveticaFont
-                    })
-                }
-                
-            }
-
-            // Team A, Second column numbers
-            if (fixtures[i][17].length > 6) {
-                let line_y_a = 719-Math.floor(15.75*Math.ceil(fixtures[i][17].length /2) - 5);
-                if (fixtures[i][17].length > 18) {
-                    line_y_a = 540;
-                }
-                console.log(line_y_a);
-                await newWAVLfirstPage.drawLine({
-                    start: { x: 330, y: 723.5 },
-                    end: { x: 330, y: line_y_a },
-                    thickness: 0.5,
-                    color: rgb(0,0,0),
-                    opacity: 1
+            if (fixtures[i][17].length > 18 || fixtures[i][18].length > 18){
+                // Team A Team List
+                await extraWAVLfirstPage.drawText(fixtures[i][6], {
+                    x: 300,
+                    y: 744, //739
+                    size: 12,
+                    font: extraWAVLhelveticaFont
                 })
-                
-                await newWAVLfirstPage.drawLine({
-                    start: { x: 345, y: 723.5 },
-                    end: { x: 345, y: line_y_a },
-                    thickness: 0.5,
-                    color: rgb(0,0,0),
-                    opacity: 1
-                })
-            }
 
-            // Team B Team List
-            await newWAVLfirstPage.drawText(fixtures[i][7], {
-                x: 460,
-                y: 745,
-                size: 12,
-                font: newWAVLhelveticaFont
-            })
+                // Team A Players
+                for (var k = 0; k < fixtures[i][17].length; k++) {
+                    if (k < Math.ceil(fixtures[i][17].length / 2)) {
+                        // first name, first column
+                        await extraWAVLfirstPage.drawText(fixtures[i][17][k][0].toUpperCase(), {
+                            x: 275.5,
+                            y: 733.5-((12.8*k)),
+                            size: 6,
+                            font: extraWAVLhelveticaFont
+                        })
 
-            // Team B Players
-            for (var k = 0; k < fixtures[i][18].length; k++) {
-                if (k < Math.ceil(fixtures[i][18].length / 2)) {
-                    // first name, first column
-                    await newWAVLfirstPage.drawText(fixtures[i][18][k][0].toUpperCase(), {
-                        x: 440,
-                        y: 717.5-Math.floor((15.75*k)),
-                        size: 6,
-                        font: newWAVLhelveticaFont
-                    })
-
-                    // surname, first column
-                    await newWAVLfirstPage.drawText(fixtures[i][18][k][1].toUpperCase(), {
-                        x: 440,
-                        y: 717.5-Math.floor((15.75*k+7.0)),
-                        size: 6,
-                        font: newWAVLhelveticaFont
-                    })
-                } else {
-                    // first name, second column
-                    await newWAVLfirstPage.drawText(fixtures[i][18][k][0].toUpperCase(), {
-                        x: 520,
-                        y: 717.5-Math.floor((15.75*(k-Math.ceil(fixtures[i][18].length / 2)))),
-                        size: 6,
-                        font: newWAVLhelveticaFont
-                    })
-
-                    // surname, second column
-                    await newWAVLfirstPage.drawText(fixtures[i][18][k][1].toUpperCase(), {
-                        x: 520,
-                        y: 717.5-Math.floor((15.75*(k-Math.ceil(fixtures[i][18].length / 2))+7.0)),
-                        size: 6,
-                        font: newWAVLhelveticaFont
-                    })
-                }
-            }
-            
-            if (fixtures[i][18].length > 6) {
-                // Team B, second column numbers
-                let line_y_b = 719-Math.floor(15.75*Math.ceil(fixtures[i][18].length /2) - 5);
-                console.log(line_y_b);
-                if (fixtures[i][18].length > 18) {
-                    // If 2 rows or less remaining, just draw the lines to the bottom of the player list.
-                    line_y_b = 540;
-                }
-                await newWAVLfirstPage.drawLine({
-                    start: { x: 515, y: 723.5 },
-                    end: { x: 515, y: line_y_b },
-                    thickness: 0.5,
-                    color: rgb(0,0,0),
-                    opacity: 1
-                })
-                
-                await newWAVLfirstPage.drawLine({
-                    start: { x: 500, y: 723.5  },
-                    end: { x: 500, y: line_y_b },
-                    thickness: 0.5,
-                    color: rgb(0,0,0),
-                    opacity: 1
-                })
-            }
-
-            // Venue 0
-            await newWAVLfirstPage.drawText(__venues__[fixtures[i][0]], {
-                x: parseInt((265 - measureText(__venues__[fixtures[i][0]], 10)).toString()),
-                y: 769,
-                size: 10,
-                font: newWAVLhelveticaFont
-            })
-
-            /*await newWAVLfirstPage.drawText(fixtures[i][1], {
-                x: parseInt((310 - measureText(fixtures[i][1], 10)).toString()),
-                y: 575,
-                size: 10,
-                font: newWAVLhelveticaFont
-            })
-            // Venue 1
-            await newWAVLfirstPage.drawText(fixtures[i][2], {
-                x: parseInt((310 - measureText(fixtures[i][2], 10)).toString()),
-                y: 566,
-                size: 10,
-                font: newWAVLhelveticaFont
-            })
-            // Venue 2
-            await newWAVLfirstPage.drawText(fixtures[i][3], {
-                x: parseInt((310 - measureText(fixtures[i][3], 10)).toString()),
-                y: 557,
-                size: 10,
-                font: newWAVLhelveticaFont
-            })*/
-
-            try {
-                // Court Number
-                await newWAVLfirstPage.drawText(fixtures[i][5], {
-                    x: parseInt((385 - measureBold(fixtures[i][5], 13).toString()).toString()),
-                    y: 769,//763
-                    size: 13,
-                    font: newWAVLhelveticaBold
-                })
-            } catch (e) {
-                console.log(e);
-            }
-            try {
-                var time = " ";
-                if (fixtures[i][13].toString().toLowerCase().substring(0, 3) != "tbc" && fixtures[i][14].toString().toLowerCase().substring(0, 3) != "tbc") {
-                    time = fixtures[i][13].toString() + ":" + fixtures[i][14].toString()
-                    /*if (parseInt(fixtures[i][13]).toString().length == 1) {
-                        hour = fixtures[i][13].toString() + ":" + fixtures[i][14].toString()
+                        // surname, first column
+                        await extraWAVLfirstPage.drawText(fixtures[i][17][k][1].toUpperCase(), {
+                            x: 275.5,
+                            y: 733.5-((12.8*k+6.0)),
+                            size: 6,
+                            font: extraWAVLhelveticaFont
+                        })
                     } else {
-                        hour = parseInt(fixtures[i][13]).toString() + ":" + parseInt(fixtures[i][14]).toString()
-                    }*/
+                        // first name, second column
+                        await extraWAVLfirstPage.drawText(fixtures[i][17][k][0].toUpperCase(), {
+                            x: 347,
+                            y: 733.5-((12.8*(k-Math.ceil(fixtures[i][17].length / 2)))),
+                            size: 6,
+                            font: extraWAVLhelveticaFont
+                        })
 
-                    // Time (hh:mm)
-                    await newWAVLfirstPage.drawText(time, {
-                        x: parseInt((455 - measureBold(time, 13)).toString()),
+                        // surname, second column
+                        await extraWAVLfirstPage.drawText(fixtures[i][17][k][1].toUpperCase(), {
+                            x: 347,
+                            y: 733.5-((12.8*(k-Math.ceil(fixtures[i][17].length / 2))+6.0)),
+                            size: 6,
+                            font: extraWAVLhelveticaFont
+                        })
+                    }
+                    
+                }
+
+                // Team A, Second column numbers
+                if (fixtures[i][17].length > 6) {
+                    let line_y_a = 739-(12.8*Math.ceil(fixtures[i][17].length /2));
+                    console.log(line_y_a);
+                    await extraWAVLfirstPage.drawLine({
+                        start: { x: 330, y: 738.6 },
+                        end: { x: 330, y: line_y_a },
+                        thickness: 0.5,
+                        color: rgb(0,0,0),
+                        opacity: 1
+                    })
+                    
+                    await extraWAVLfirstPage.drawLine({
+                        start: { x: 345, y: 738.6 },
+                        end: { x: 345, y: line_y_a },
+                        thickness: 0.5,
+                        color: rgb(0,0,0),
+                        opacity: 1
+                    })
+                }
+
+                // Team B Team List
+                await extraWAVLfirstPage.drawText(fixtures[i][7], {
+                    x: 460,
+                    y: 744,
+                    size: 12,
+                    font: extraWAVLhelveticaFont
+                })
+
+                // Team B Players
+                for (var k = 0; k < fixtures[i][18].length; k++) {
+                    if (k < Math.ceil(fixtures[i][18].length / 2)) {
+                        // first name, first column
+                        await extraWAVLfirstPage.drawText(fixtures[i][18][k][0].toUpperCase(), {
+                            x: 440,
+                            y: 733.5-((12.8*k)),
+                            size: 6,
+                            font: extraWAVLhelveticaFont
+                        })
+
+                        // surname, first column
+                        await extraWAVLfirstPage.drawText(fixtures[i][18][k][1].toUpperCase(), {
+                            x: 440,
+                            y: 733.5-((12.8*k+6.0)),
+                            size: 6,
+                            font: extraWAVLhelveticaFont
+                        })
+                    } else {
+                        // first name, second column
+                        await extraWAVLfirstPage.drawText(fixtures[i][18][k][0].toUpperCase(), {
+                            x: 517,
+                            y: 733.5-((12.8*(k-Math.ceil(fixtures[i][18].length / 2)))),
+                            size: 6,
+                            font: extraWAVLhelveticaFont
+                        })
+
+                        // surname, second column
+                        await extraWAVLfirstPage.drawText(fixtures[i][18][k][1].toUpperCase(), {
+                            x: 517,
+                            y: 733.5-((12.8*(k-Math.ceil(fixtures[i][18].length / 2))+6.0)),
+                            size: 6,
+                            font: extraWAVLhelveticaFont
+                        })
+                    }
+                }
+                
+                if (fixtures[i][18].length > 6) {
+                    // Team B, second column numbers
+                    let line_y_b = 739-(12.8*Math.ceil(fixtures[i][18].length /2));
+                    console.log(line_y_b);
+
+                    await extraWAVLfirstPage.drawLine({
+                        start: { x: 515, y: 738.6 },
+                        end: { x: 515, y: line_y_b },
+                        thickness: 0.5,
+                        color: rgb(0,0,0),
+                        opacity: 1
+                    })
+                    
+                    await extraWAVLfirstPage.drawLine({
+                        start: { x: 500, y: 738.6 },
+                        end: { x: 500, y: line_y_b },
+                        thickness: 0.5,
+                        color: rgb(0,0,0),
+                        opacity: 1
+                    })
+                }
+
+                // Venue 0
+                await extraWAVLfirstPage.drawText(__venues__[fixtures[i][0]], {
+                    x: parseInt((265 - measureText(__venues__[fixtures[i][0]], 10)).toString()),
+                    y: 781,
+                    size: 10,
+                    font: extraWAVLhelveticaFont
+                })
+
+                try {
+                    // Court Number
+                    await extraWAVLfirstPage.drawText(fixtures[i][5], {
+                        x: parseInt((385 - measureBold(fixtures[i][5], 13).toString()).toString()),
+                        y: 781,
+                        size: 13,
+                        font: extraWAVLhelveticaBold
+                    })
+                } catch (e) {
+                    console.log(e);
+                }
+                try {
+                    var time = " ";
+                    if (fixtures[i][13].toString().toLowerCase().substring(0, 3) != "tbc" && fixtures[i][14].toString().toLowerCase().substring(0, 3) != "tbc") {
+                        time = fixtures[i][13].toString() + ":" + fixtures[i][14].toString()
+
+                        // Time (hh:mm)
+                        await extraWAVLfirstPage.drawText(time, {
+                            x: parseInt((455 - measureBold(time, 13)).toString()),
+                            y: 781,
+                            size: 13,
+                            font: extraWAVLhelveticaBold
+                        })
+                    }
+                } catch (e) {
+                    // catch - continue
+                    console.log(e);
+                }
+
+                // Add a leading space to the day if required.
+                var ddmmyy = fixtures[i][10].toString() + "/" + fixtures[i][11].toString() + "/" + fixtures[i][12].slice(2,4).toString()
+
+                await extraWAVLfirstPage.drawText(ddmmyy, {
+                    x: parseInt((546 - measureBold(ddmmyy, 13)).toString()),
+                    y: 781,
+                    size: 13,
+                    font: extraWAVLhelveticaBold
+                })
+
+                // Division (short)
+                await extraWAVLfirstPage.drawText(fixtures[i][9][1], {
+                    x: parseInt((528 - measureBold(fixtures[i][9][1], 13)).toString()),
+                    y: 797,
+                    size: 13,
+                    font: extraWAVLhelveticaBold
+                })
+
+                // Duty team
+                //await extraWAVLfirstPage.drawText(fixtures[i][8], {
+                await extraWAVLfirstPage.drawText("xXxXxXxXxX", {
+                    x: parseInt((320 - measureText(fixtures[i][8], 14)).toString()),
+                    y: 797,
+                    size: 14,
+                    font: extraWAVLhelveticaFont
+                })
+
+                // Club President
+                //let a_pres = __TEAMS__[fixtures[i][6][4]] giving Undefined for some reason
+                //let b_pres = __TEAMS__[fixtures[i][7][4]]
+                //console.log(a_pres);
+                console.log(fixtures[i][6].substring(fixtures[i][6].indexOf(' ') + 1));
+                console.log(fixtures[i][7].substring(fixtures[i][7].indexOf(' ') + 1));
+                console.log(__PRESIDENTS__);
+                let a_pres = __PRESIDENTS__[fixtures[i][6].substring(fixtures[i][6].indexOf(' ') + 1)];
+                let b_pres = __PRESIDENTS__[fixtures[i][7].substring(fixtures[i][7].indexOf(' ') + 1)];
+                await extraWAVLfirstPage.drawText(a_pres, {
+                    x: parseInt((325 - measureText(a_pres, 10)).toString()),
+                    y: 462,
+                    size: 10,
+                    font: extraWAVLhelveticaFont
+                })
+                await extraWAVLfirstPage.drawText(b_pres, {
+                    x: parseInt((520 - measureText(b_pres, 10)).toString()),
+                    y: 462,
+                    size: 10,
+                    font: extraWAVLhelveticaFont
+                })
+
+                // Team Names
+                if (fixtures[i][6].length > 18 || fixtures[i][7].length > 18) {
+                    // Reduce text size if too long.
+                    await extraWAVLfirstPage.drawText(fixtures[i][6], {
+                        x: parseInt((260 - measureText(fixtures[i][6], 10)).toString()),
+                        y: 813.5,
+                        size: 10,
+                        font: extraWAVLhelveticaBold
+                    })
+                    await extraWAVLfirstPage.drawText(fixtures[i][7], {
+                        x: parseInt((480 - measureText(fixtures[i][7], 10)).toString()),
+                        y: 813.5,
+                        size: 10,
+                        font: extraWAVLhelveticaBold
+                    })
+                } else {
+                    extraWAVLpdfDoc.TextAlignment = 1;
+                    await extraWAVLfirstPage.drawText(fixtures[i][6], {
+                        x: parseInt((260 - measureText(fixtures[i][6], 14)).toString()),
+                        y: 813.5,
+                        size: 14,
+                        font: extraWAVLhelveticaBold
+                    })
+                    await extraWAVLfirstPage.drawText(fixtures[i][7], {
+                        x: parseInt((480 - measureText(fixtures[i][7], 14)).toString()),
+                        y: 813.5,
+                        size: 14,
+                        font: extraWAVLhelveticaBold
+                    })
+                }
+
+                var saved = await extraWAVLpdfDoc.saveAsBase64();
+                
+            } else {
+                // Team A Team List
+                await newWAVLfirstPage.drawText(fixtures[i][6], {
+                    x: 300,
+                    y: 745, //739
+                    size: 12,
+                    font: newWAVLhelveticaFont
+                })
+
+                // Team A Players
+                for (var k = 0; k < fixtures[i][17].length; k++) {
+                    if (k < Math.ceil(fixtures[i][17].length / 2)) {
+                        // first name, first column
+                        await newWAVLfirstPage.drawText(fixtures[i][17][k][0].toUpperCase(), {
+                            x: 275,
+                            y: 717.5-((15.75*k)),
+                            size: 6,
+                            font: newWAVLhelveticaFont
+                        })
+
+                        // surname, first column
+                        await newWAVLfirstPage.drawText(fixtures[i][17][k][1].toUpperCase(), {
+                            x: 275,
+                            y: 717.5-((15.75*k+7.0)),
+                            size: 6,
+                            font: newWAVLhelveticaFont
+                        })
+                    } else {
+                        // first name, second column
+                        await newWAVLfirstPage.drawText(fixtures[i][17][k][0].toUpperCase(), {
+                            x: 347,
+                            y: 717.5-((15.75*(k-Math.ceil(fixtures[i][17].length / 2)))),
+                            size: 6,
+                            font: newWAVLhelveticaFont
+                        })
+
+                        // surname, second column
+                        await newWAVLfirstPage.drawText(fixtures[i][17][k][1].toUpperCase(), {
+                            x: 347,
+                            y: 717.5-((15.75*(k-Math.ceil(fixtures[i][17].length / 2))+7.0)),
+                            size: 6,
+                            font: newWAVLhelveticaFont
+                        })
+                    }
+                    
+                }
+
+                // Team A, Second column numbers
+                if (fixtures[i][17].length > 6) {
+                    let line_y_a = 719-(15.75*Math.ceil(fixtures[i][17].length /2) - 5);
+
+                    console.log(line_y_a);
+                    await newWAVLfirstPage.drawLine({
+                        start: { x: 330, y: 723.5 },
+                        end: { x: 330, y: line_y_a },
+                        thickness: 0.5,
+                        color: rgb(0,0,0),
+                        opacity: 1
+                    })
+                    
+                    await newWAVLfirstPage.drawLine({
+                        start: { x: 345, y: 723.5 },
+                        end: { x: 345, y: line_y_a },
+                        thickness: 0.5,
+                        color: rgb(0,0,0),
+                        opacity: 1
+                    })
+                }
+
+                // Team B Team List
+                await newWAVLfirstPage.drawText(fixtures[i][7], {
+                    x: 460,
+                    y: 745,
+                    size: 12,
+                    font: newWAVLhelveticaFont
+                })
+
+                // Team B Players
+                for (var k = 0; k < fixtures[i][18].length; k++) {
+                    if (k < Math.ceil(fixtures[i][18].length / 2)) {
+                        // first name, first column
+                        await newWAVLfirstPage.drawText(fixtures[i][18][k][0].toUpperCase(), {
+                            x: 440,
+                            y: 717.5-((15.75*k)),
+                            size: 6,
+                            font: newWAVLhelveticaFont
+                        })
+
+                        // surname, first column
+                        await newWAVLfirstPage.drawText(fixtures[i][18][k][1].toUpperCase(), {
+                            x: 440,
+                            y: 717.5-((15.75*k+7.0)),
+                            size: 6,
+                            font: newWAVLhelveticaFont
+                        })
+                    } else {
+                        // first name, second column
+                        await newWAVLfirstPage.drawText(fixtures[i][18][k][0].toUpperCase(), {
+                            x: 517,
+                            y: 717.5-((15.75*(k-Math.ceil(fixtures[i][18].length / 2)))),
+                            size: 6,
+                            font: newWAVLhelveticaFont
+                        })
+
+                        // surname, second column
+                        await newWAVLfirstPage.drawText(fixtures[i][18][k][1].toUpperCase(), {
+                            x: 517,
+                            y: 717.5-((15.75*(k-Math.ceil(fixtures[i][18].length / 2))+7.0)),
+                            size: 6,
+                            font: newWAVLhelveticaFont
+                        })
+                    }
+                }
+                
+                if (fixtures[i][18].length > 6) {
+                    // Team B, second column numbers
+                    let line_y_b = 719-(15.75*Math.ceil(fixtures[i][18].length /2) - 5);
+                    console.log(line_y_b);
+
+                    await newWAVLfirstPage.drawLine({
+                        start: { x: 515, y: 723.5 },
+                        end: { x: 515, y: line_y_b },
+                        thickness: 0.5,
+                        color: rgb(0,0,0),
+                        opacity: 1
+                    })
+                    
+                    await newWAVLfirstPage.drawLine({
+                        start: { x: 500, y: 723.5  },
+                        end: { x: 500, y: line_y_b },
+                        thickness: 0.5,
+                        color: rgb(0,0,0),
+                        opacity: 1
+                    })
+                }
+
+                // Venue 0
+                await newWAVLfirstPage.drawText(__venues__[fixtures[i][0]], {
+                    x: parseInt((265 - measureText(__venues__[fixtures[i][0]], 10)).toString()),
+                    y: 769,
+                    size: 10,
+                    font: newWAVLhelveticaFont
+                })
+
+                /*await newWAVLfirstPage.drawText(fixtures[i][1], {
+                    x: parseInt((310 - measureText(fixtures[i][1], 10)).toString()),
+                    y: 575,
+                    size: 10,
+                    font: newWAVLhelveticaFont
+                })
+                // Venue 1
+                await newWAVLfirstPage.drawText(fixtures[i][2], {
+                    x: parseInt((310 - measureText(fixtures[i][2], 10)).toString()),
+                    y: 566,
+                    size: 10,
+                    font: newWAVLhelveticaFont
+                })
+                // Venue 2
+                await newWAVLfirstPage.drawText(fixtures[i][3], {
+                    x: parseInt((310 - measureText(fixtures[i][3], 10)).toString()),
+                    y: 557,
+                    size: 10,
+                    font: newWAVLhelveticaFont
+                })*/
+
+                try {
+                    // Court Number
+                    await newWAVLfirstPage.drawText(fixtures[i][5], {
+                        x: parseInt((385 - measureBold(fixtures[i][5], 13).toString()).toString()),
                         y: 769,//763
                         size: 13,
                         font: newWAVLhelveticaBold
                     })
+                } catch (e) {
+                    console.log(e);
+                }
+                try {
+                    var time = " ";
+                    if (fixtures[i][13].toString().toLowerCase().substring(0, 3) != "tbc" && fixtures[i][14].toString().toLowerCase().substring(0, 3) != "tbc") {
+                        time = fixtures[i][13].toString() + ":" + fixtures[i][14].toString()
+                        /*if (parseInt(fixtures[i][13]).toString().length == 1) {
+                            hour = fixtures[i][13].toString() + ":" + fixtures[i][14].toString()
+                        } else {
+                            hour = parseInt(fixtures[i][13]).toString() + ":" + parseInt(fixtures[i][14]).toString()
+                        }*/
 
-                    // Time (minute mm)
-                    /*
-                    await newWAVLfirstPage.drawText(fixtures[i][14], {
-                        x: 500,
-                        y: 557,
-                        size: 13,
+                        // Time (hh:mm)
+                        await newWAVLfirstPage.drawText(time, {
+                            x: parseInt((455 - measureBold(time, 13)).toString()),
+                            y: 769,//763
+                            size: 13,
+                            font: newWAVLhelveticaBold
+                        })
+
+                        // Time (minute mm)
+                        /*
+                        await newWAVLfirstPage.drawText(fixtures[i][14], {
+                            x: 500,
+                            y: 557,
+                            size: 13,
+                            font: newWAVLhelveticaBold
+                        })
+                        */
+                        }
+                } catch (e) {
+                    // catch - continue
+                    console.log(e);
+                }
+
+                // Add a leading space to the day if required.
+                var ddmmyy = fixtures[i][10].toString() + "/" + fixtures[i][11].toString() + "/" + fixtures[i][12].slice(2,4).toString()
+                /*if (dd.length == 1) {
+                    dd = " " + parseInt(fixtures[i][10]).toString() + "/" + parseInt(fixtures[i][11]).toString() + "/" + parseInt(fixtures[i][12]).toString()
+                } else {
+                    dd = parseInt(fixtures[i][10]).toString() + "/" + parseInt(fixtures[i][11]).toString() + "/" + parseInt(fixtures[i][12]).toString()
+                }*/
+
+                await newWAVLfirstPage.drawText(ddmmyy, {
+                    x: parseInt((546 - measureBold(ddmmyy, 13)).toString()),
+                    y: 769,//763
+                    size: 13,
+                    font: newWAVLhelveticaBold
+                })
+                // Date (day dd)
+                /*await newWAVLfirstPage.drawText(dd, {
+                    x: parseInt((596 - measureBold(dd, 13) - measureBold(dd, 13)).toString()),
+                    y: 557,
+                    size: 13,
+                    font: newWAVLhelveticaBold
+                })
+
+                // Date (month mm)
+                await newWAVLfirstPage.drawText(parseInt(fixtures[i][11]).toString(), {
+                    x: parseInt((613 - measureBold(fixtures[i][11], 13)).toString()),
+                    y: 557,
+                    size: 13,
+                    font: newWAVLhelveticaBold
+                })
+
+                // Date (year yy)
+                await newWAVLfirstPage.drawText(fixtures[i][12].slice(2, 4), {
+                    x: 625,
+                    y: 557,
+                    size: 13,
+                    font: newWAVLhelveticaBold
+                })*/
+
+                // Division (short)
+                await newWAVLfirstPage.drawText(fixtures[i][9][1], {
+                    x: parseInt((528 - measureBold(fixtures[i][9][1], 13)).toString()),
+                    y: 786,
+                    size: 13,
+                    font: newWAVLhelveticaBold
+                })
+
+                // Duty team
+                await newWAVLfirstPage.drawText(fixtures[i][8], {
+                    x: parseInt((320 - measureText(fixtures[i][8], 14)).toString()),
+                    y: 786,
+                    size: 14,
+                    font: newWAVLhelveticaFont
+                })
+
+                // Club President
+                //let a_pres = __TEAMS__[fixtures[i][6][4]] giving Undefined for some reason
+                //let b_pres = __TEAMS__[fixtures[i][7][4]]
+                //console.log(a_pres);
+                console.log(fixtures[i][6].substring(fixtures[i][6].indexOf(' ') + 1));
+                console.log(fixtures[i][7].substring(fixtures[i][7].indexOf(' ') + 1));
+                console.log(__PRESIDENTS__);
+                let a_pres = __PRESIDENTS__[fixtures[i][6].substring(fixtures[i][6].indexOf(' ') + 1)];
+                let b_pres = __PRESIDENTS__[fixtures[i][7].substring(fixtures[i][7].indexOf(' ') + 1)];
+                await newWAVLfirstPage.drawText(a_pres, {
+                    x: parseInt((325 - measureText(a_pres, 10)).toString()),
+                    y: 462,
+                    size: 10,
+                    font: newWAVLhelveticaFont
+                })
+                await newWAVLfirstPage.drawText(b_pres, {
+                    x: parseInt((520 - measureText(b_pres, 10)).toString()),
+                    y: 462,
+                    size: 10,
+                    font: newWAVLhelveticaFont
+                })
+
+                // Team Names
+                if (fixtures[i][6].length > 18 || fixtures[i][7].length > 18) {
+                    // Reduce text size if too long.
+                    await newWAVLfirstPage.drawText(fixtures[i][6], {
+                        x: parseInt((260 - measureText(fixtures[i][6], 10)).toString()),
+                        y: 806,
+                        size: 10,
                         font: newWAVLhelveticaBold
                     })
-                    */
+                    await newWAVLfirstPage.drawText(fixtures[i][7], {
+                        x: parseInt((480 - measureText(fixtures[i][7], 10)).toString()),
+                        y: 806,
+                        size: 10,
+                        font: newWAVLhelveticaBold
+                    })
+                } else {
+                    newWAVLpdfDoc.TextAlignment = 1;
+                    await newWAVLfirstPage.drawText(fixtures[i][6], {
+                        x: parseInt((260 - measureText(fixtures[i][6], 14)).toString()),
+                        y: 806,
+                        size: 14,
+                        font: newWAVLhelveticaBold
+                    })
+                    await newWAVLfirstPage.drawText(fixtures[i][7], {
+                        x: parseInt((480 - measureText(fixtures[i][7], 14)).toString()),
+                        y: 806,
+                        size: 14,
+                        font: newWAVLhelveticaBold
+                    })
                 }
-            } catch (e) {
-                // catch - continue
-                console.log(e);
+
+                var saved = await newWAVLpdfDoc.saveAsBase64();
             }
-
-            // Add a leading space to the day if required.
-            var ddmmyy = fixtures[i][10].toString() + "/" + fixtures[i][11].toString() + "/" + fixtures[i][12].slice(2,4).toString()
-            /*if (dd.length == 1) {
-                dd = " " + parseInt(fixtures[i][10]).toString() + "/" + parseInt(fixtures[i][11]).toString() + "/" + parseInt(fixtures[i][12]).toString()
-            } else {
-                dd = parseInt(fixtures[i][10]).toString() + "/" + parseInt(fixtures[i][11]).toString() + "/" + parseInt(fixtures[i][12]).toString()
-            }*/
-
-            await newWAVLfirstPage.drawText(ddmmyy, {
-                x: parseInt((546 - measureBold(ddmmyy, 13)).toString()),
-                y: 769,//763
-                size: 13,
-                font: newWAVLhelveticaBold
-            })
-            // Date (day dd)
-            /*await newWAVLfirstPage.drawText(dd, {
-                x: parseInt((596 - measureBold(dd, 13) - measureBold(dd, 13)).toString()),
-                y: 557,
-                size: 13,
-                font: newWAVLhelveticaBold
-            })
-
-            // Date (month mm)
-            await newWAVLfirstPage.drawText(parseInt(fixtures[i][11]).toString(), {
-                x: parseInt((613 - measureBold(fixtures[i][11], 13)).toString()),
-                y: 557,
-                size: 13,
-                font: newWAVLhelveticaBold
-            })
-
-            // Date (year yy)
-            await newWAVLfirstPage.drawText(fixtures[i][12].slice(2, 4), {
-                x: 625,
-                y: 557,
-                size: 13,
-                font: newWAVLhelveticaBold
-            })*/
-
-            // Division (short)
-            await newWAVLfirstPage.drawText(fixtures[i][9][1], {
-                x: parseInt((528 - measureBold(fixtures[i][9][1], 13)).toString()),
-                y: 786,
-                size: 13,
-                font: newWAVLhelveticaBold
-            })
-
-            // Duty team
-            await newWAVLfirstPage.drawText(fixtures[i][8], {
-                x: parseInt((320 - measureText(fixtures[i][8], 14)).toString()),
-                y: 786,
-                size: 14,
-                font: newWAVLhelveticaFont
-            })
-
-            // Club President
-            //let a_pres = __TEAMS__[fixtures[i][6][4]] giving Undefined for some reason
-            //let b_pres = __TEAMS__[fixtures[i][7][4]]
-            //console.log(a_pres);
-		console.log(fixtures[i][6].substring(fixtures[i][6].indexOf(' ') + 1));
-		console.log(fixtures[i][7].substring(fixtures[i][7].indexOf(' ') + 1));
-		console.log(__PRESIDENTS__);
-            let a_pres = __PRESIDENTS__[fixtures[i][6].substring(fixtures[i][6].indexOf(' ') + 1)];
-            let b_pres = __PRESIDENTS__[fixtures[i][7].substring(fixtures[i][7].indexOf(' ') + 1)];
-            await newWAVLfirstPage.drawText(a_pres, {
-                x: parseInt((325 - measureText(a_pres, 10)).toString()),
-                y: 463,
-                size: 10,
-                font: newWAVLhelveticaFont
-            })
-            await newWAVLfirstPage.drawText(b_pres, {
-                x: parseInt((520 - measureText(b_pres, 10)).toString()),
-                y: 463,
-                size: 10,
-                font: newWAVLhelveticaFont
-            })
-
-            // Team Names
-            if (fixtures[i][6].length > 18 || fixtures[i][7].length > 18) {
-                // Reduce text size if too long.
-                await newWAVLfirstPage.drawText(fixtures[i][6], {
-                    x: parseInt((260 - measureText(fixtures[i][6], 10)).toString()),
-                    y: 806,
-                    size: 10,
-                    font: newWAVLhelveticaBold
-                })
-                await newWAVLfirstPage.drawText(fixtures[i][7], {
-                    x: parseInt((480 - measureText(fixtures[i][7], 10)).toString()),
-                    y: 806,
-                    size: 10,
-                    font: newWAVLhelveticaBold
-                })
-            } else {
-                newWAVLpdfDoc.TextAlignment = 1;
-                await newWAVLfirstPage.drawText(fixtures[i][6], {
-                    x: parseInt((260 - measureText(fixtures[i][6], 14)).toString()),
-                    y: 806,
-                    size: 14,
-                    font: newWAVLhelveticaBold
-                })
-                await newWAVLfirstPage.drawText(fixtures[i][7], {
-                    x: parseInt((480 - measureText(fixtures[i][7], 14)).toString()),
-                    y: 806,
-                    size: 14,
-                    font: newWAVLhelveticaBold
-                })
-            }
-
-            var saved = await newWAVLpdfDoc.saveAsBase64();
         } else {
             // Junior League
             

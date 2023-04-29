@@ -110,6 +110,13 @@ const __CONFIG__ = {
             "bot": "Kingsway",
             "alias": ["Kingsway Indoor Stad", "Kingsway Indoor"]
         },
+        "Leschanault Leisure": {
+            "name": "Leschanault Leisure",
+            "top": "",
+            "mid": "Leschanault",
+            "bot": "Leisure",
+            "alias": ["Leschanault"]
+        },
         "Loftus": {
             "name": "Loftus",
             "top": "",
