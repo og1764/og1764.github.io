@@ -821,8 +821,7 @@ async function modifyPdf(fix, dates) {
             }
             var saved = await WAVLpdfDoc.saveAsBase64();
         } else if (fixtures[i][9][0][0] == "S") {
-            //if (fixtures[i][17].length > 18 || fixtures[i][18].length > 18){
-            if (fixtures[i][17].length > 50 || fixtures[i][18].length > 50){
+            if (fixtures[i][17].length > 18 || fixtures[i][18].length > 18){
                 // Team A Team List
                 await extraWAVLfirstPage.drawText(fixtures[i][6], {
                     x: 300,
