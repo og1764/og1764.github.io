@@ -824,7 +824,7 @@ async function modifyPdf(fix, dates) {
             if (fixtures[i][17].length > 18 || fixtures[i][18].length > 18){
                 // Team A Team List
                 await extraWAVLfirstPage.drawText(fixtures[i][6], {
-                    x: 300,
+                    x: 295,
                     y: 744, //739
                     size: 12,
                     font: extraWAVLhelveticaFont
@@ -958,7 +958,7 @@ async function modifyPdf(fix, dates) {
 
                 // Venue 0
                 await extraWAVLfirstPage.drawText(__venues__[fixtures[i][0]], {
-                    x: parseInt((265 - measureText(__venues__[fixtures[i][0]], 10)).toString()),
+                    x: parseInt((275 - measureText(__venues__[fixtures[i][0]], 10)).toString()),
                     y: 781,
                     size: 10,
                     font: extraWAVLhelveticaFont
@@ -967,7 +967,7 @@ async function modifyPdf(fix, dates) {
                 try {
                     // Court Number
                     await extraWAVLfirstPage.drawText(fixtures[i][5], {
-                        x: parseInt((385 - measureBold(fixtures[i][5], 13).toString()).toString()),
+                        x: parseInt((387.5 - measureBold(fixtures[i][5], 13).toString()).toString()),
                         y: 781,
                         size: 13,
                         font: extraWAVLhelveticaBold
@@ -1039,7 +1039,7 @@ async function modifyPdf(fix, dates) {
                 if (fixtures[i][6].length > 18 || fixtures[i][7].length > 18) {
                     // Reduce text size if too long.
                     await extraWAVLfirstPage.drawText(fixtures[i][6], {
-                        x: parseInt((260 - measureText(fixtures[i][6], 10)).toString()),
+                        x: parseInt((262 - measureText(fixtures[i][6], 10)).toString()),
                         y: 813.5,
                         size: 10,
                         font: extraWAVLhelveticaBold
@@ -1215,7 +1215,7 @@ async function modifyPdf(fix, dates) {
                 try {
                     // Court Number
                     await newWAVLfirstPage.drawText(fixtures[i][5], {
-                        x: parseInt((391 - measureBold(fixtures[i][5], 13).toString()).toString()),
+                        x: parseInt((387.5 - measureBold(fixtures[i][5], 13).toString()).toString()),
                         y: 767.5,
                         size: 13,
                         font: newWAVLhelveticaBold
