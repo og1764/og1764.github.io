@@ -851,7 +851,7 @@ async function modifyPdf(fix, dates) {
                     } else {
                         // first name, second column
                         await extraWAVLfirstPage.drawText(fixtures[i][17][k][0].toUpperCase(), {
-                            x: 347,
+                            x: 353,
                             y: 733.5-((12.8*(k-Math.ceil(fixtures[i][17].length / 2)))),
                             size: 6,
                             font: extraWAVLhelveticaFont
@@ -859,7 +859,7 @@ async function modifyPdf(fix, dates) {
 
                         // surname, second column
                         await extraWAVLfirstPage.drawText(fixtures[i][17][k][1].toUpperCase(), {
-                            x: 347,
+                            x: 353,
                             y: 733.5-((12.8*(k-Math.ceil(fixtures[i][17].length / 2))+6.0)),
                             size: 6,
                             font: extraWAVLhelveticaFont
@@ -873,16 +873,16 @@ async function modifyPdf(fix, dates) {
                     let line_y_a = 739-(12.8*Math.ceil(fixtures[i][17].length /2));
                     //console.log(line_y_a);
                     await extraWAVLfirstPage.drawLine({
-                        start: { x: 330, y: 738.6 },
-                        end: { x: 330, y: line_y_a },
+                        start: { x: 336, y: 738.6 },
+                        end: { x: 336, y: line_y_a },
                         thickness: 0.5,
                         color: rgb(0,0,0),
                         opacity: 1
                     })
                     
                     await extraWAVLfirstPage.drawLine({
-                        start: { x: 345, y: 738.6 },
-                        end: { x: 345, y: line_y_a },
+                        start: { x: 351, y: 738.6 },
+                        end: { x: 351, y: line_y_a },
                         thickness: 0.5,
                         color: rgb(0,0,0),
                         opacity: 1
@@ -1071,7 +1071,7 @@ async function modifyPdf(fix, dates) {
             } else {
                 // Team A Team List
                 await newWAVLfirstPage.drawText(fixtures[i][6], {
-                    x: 300,
+                    x: 295,
                     y: 743.5, //739
                     size: 12,
                     font: newWAVLhelveticaFont
@@ -1206,7 +1206,7 @@ async function modifyPdf(fix, dates) {
 
                 // Venue 0
                 await newWAVLfirstPage.drawText(__venues__[fixtures[i][0]], {
-                    x: parseInt((265 - measureText(__venues__[fixtures[i][0]], 10)).toString()),
+                    x: parseInt((275 - measureText(__venues__[fixtures[i][0]], 10)).toString()),
                     y: 767.5,
                     size: 10,
                     font: newWAVLhelveticaFont
@@ -1215,7 +1215,7 @@ async function modifyPdf(fix, dates) {
                 try {
                     // Court Number
                     await newWAVLfirstPage.drawText(fixtures[i][5], {
-                        x: parseInt((385 - measureBold(fixtures[i][5], 13).toString()).toString()),
+                        x: parseInt((391 - measureBold(fixtures[i][5], 13).toString()).toString()),
                         y: 767.5,
                         size: 13,
                         font: newWAVLhelveticaBold
@@ -1230,7 +1230,7 @@ async function modifyPdf(fix, dates) {
 
                         // Time (hh:mm)
                         await newWAVLfirstPage.drawText(time, {
-                            x: parseInt((457 - measureBold(time, 13)).toString()),
+                            x: parseInt((459 - measureBold(time, 13)).toString()),
                             y: 767.5,
                             size: 13,
                             font: newWAVLhelveticaBold
@@ -1245,7 +1245,7 @@ async function modifyPdf(fix, dates) {
                 var ddmmyy = fixtures[i][10].toString() + "/" + fixtures[i][11].toString() + "/" + fixtures[i][12].slice(2,4).toString()
 
                 await newWAVLfirstPage.drawText(ddmmyy, {
-                    x: parseInt((546 - measureBold(ddmmyy, 13)).toString()),
+                    x: parseInt((547 - measureBold(ddmmyy, 13)).toString()),
                     y: 767.5,
                     size: 13,
                     font: newWAVLhelveticaBold
@@ -1253,7 +1253,7 @@ async function modifyPdf(fix, dates) {
 
                 // Division (short)
                 await newWAVLfirstPage.drawText(fixtures[i][9][1], {
-                    x: parseInt((528 - measureBold(fixtures[i][9][1], 13)).toString()),
+                    x: parseInt((529 - measureBold(fixtures[i][9][1], 13)).toString()),
                     y: 784.5,
                     size: 13,
                     font: newWAVLhelveticaBold
@@ -1261,7 +1261,7 @@ async function modifyPdf(fix, dates) {
 
                 // Duty team
                 await newWAVLfirstPage.drawText(fixtures[i][8], {
-                    x: parseInt((320 - measureText(fixtures[i][8], 14)).toString()),
+                    x: parseInt((322 - measureText(fixtures[i][8], 14)).toString()),
                     y: 784.5,
                     size: 14,
                     font: newWAVLhelveticaFont
@@ -1287,7 +1287,7 @@ async function modifyPdf(fix, dates) {
                 if (fixtures[i][6].length > 18 || fixtures[i][7].length > 18) {
                     // Reduce text size if too long.
                     await newWAVLfirstPage.drawText(fixtures[i][6], {
-                        x: parseInt((260 - measureText(fixtures[i][6], 10)).toString()),
+                        x: parseInt((262 - measureText(fixtures[i][6], 10)).toString()),
                         y: 804.5,
                         size: 10,
                         font: newWAVLhelveticaBold
@@ -1301,7 +1301,7 @@ async function modifyPdf(fix, dates) {
                 } else {
                     newWAVLpdfDoc.TextAlignment = 1;
                     await newWAVLfirstPage.drawText(fixtures[i][6], {
-                        x: parseInt((260 - measureText(fixtures[i][6], 14)).toString()),
+                        x: parseInt((262 - measureText(fixtures[i][6], 14)).toString()),
                         y: 804.5,
                         size: 14,
                         font: newWAVLhelveticaBold
