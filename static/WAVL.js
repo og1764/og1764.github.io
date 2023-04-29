@@ -871,7 +871,7 @@ async function modifyPdf(fix, dates) {
                 // Team A, Second column numbers
                 if (fixtures[i][17].length > 6) {
                     let line_y_a = 739-(12.8*Math.ceil(fixtures[i][17].length /2));
-                    console.log(line_y_a);
+                    //console.log(line_y_a);
                     await extraWAVLfirstPage.drawLine({
                         start: { x: 330, y: 738.6 },
                         end: { x: 330, y: line_y_a },
@@ -937,7 +937,7 @@ async function modifyPdf(fix, dates) {
                 if (fixtures[i][18].length > 6) {
                     // Team B, second column numbers
                     let line_y_b = 739-(12.8*Math.ceil(fixtures[i][18].length /2));
-                    console.log(line_y_b);
+                    //console.log(line_y_b);
 
                     await extraWAVLfirstPage.drawLine({
                         start: { x: 515, y: 738.6 },
@@ -1020,12 +1020,6 @@ async function modifyPdf(fix, dates) {
                 })
 
                 // Club President
-                //let a_pres = __TEAMS__[fixtures[i][6][4]] giving Undefined for some reason
-                //let b_pres = __TEAMS__[fixtures[i][7][4]]
-                //console.log(a_pres);
-                console.log(fixtures[i][6].substring(fixtures[i][6].indexOf(' ') + 1));
-                console.log(fixtures[i][7].substring(fixtures[i][7].indexOf(' ') + 1));
-                console.log(__PRESIDENTS__);
                 let a_pres = __PRESIDENTS__[fixtures[i][6].substring(fixtures[i][6].indexOf(' ') + 1)];
                 let b_pres = __PRESIDENTS__[fixtures[i][7].substring(fixtures[i][7].indexOf(' ') + 1)];
                 await extraWAVLfirstPage.drawText(a_pres, {
@@ -1125,7 +1119,7 @@ async function modifyPdf(fix, dates) {
                 if (fixtures[i][17].length > 6) {
                     let line_y_a = 717.5-(15.75*Math.ceil(fixtures[i][17].length /2) - 5);
 
-                    console.log(line_y_a);
+                    //console.log(line_y_a);
                     await newWAVLfirstPage.drawLine({
                         start: { x: 336, y: 722 },
                         end: { x: 336, y: line_y_a },
@@ -1191,7 +1185,7 @@ async function modifyPdf(fix, dates) {
                 if (fixtures[i][18].length > 6) {
                     // Team B, second column numbers
                     let line_y_b = 717.5-(15.75*Math.ceil(fixtures[i][18].length /2) - 5);
-                    console.log(line_y_b);
+                    //console.log(line_y_b);
 
                     await newWAVLfirstPage.drawLine({
                         start: { x: 515, y: 722 },
@@ -1274,9 +1268,6 @@ async function modifyPdf(fix, dates) {
                 })
 
                 // Club President
-                console.log(fixtures[i][6].substring(fixtures[i][6].indexOf(' ') + 1));
-                console.log(fixtures[i][7].substring(fixtures[i][7].indexOf(' ') + 1));
-                console.log(__PRESIDENTS__);
                 let a_pres = __PRESIDENTS__[fixtures[i][6].substring(fixtures[i][6].indexOf(' ') + 1)];
                 let b_pres = __PRESIDENTS__[fixtures[i][7].substring(fixtures[i][7].indexOf(' ') + 1)];
                 await newWAVLfirstPage.drawText(a_pres, {
