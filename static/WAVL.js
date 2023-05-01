@@ -314,7 +314,7 @@ function pdf_init(venues, wavl, wavjl, dates) {
     // Get config data from selected teams, and add to an array
     var leagues = [];
     var fixtures = [];
-
+    console.log(wavjl);
     for (var i = 0; i < wavl.length; i++) {
         leagues.push([__CONFIG__.wavl[wavl[i]].long, __CONFIG__.wavl[wavl[i]].short, __CONFIG__.wavl[wavl[i]].id])
     }
@@ -1575,7 +1575,11 @@ function html_to_fixture(venues, leagues, date, all_html) {
                     let venue = cells.item(1).innerText;
                     let venue_split = venue.split(" Ct")
                     let zero_venue_split = venue_split[0].replaceAll(" Ct", "");
-
+                    if (Number.isInteger(parseInt(zero_venue_split.slice(-2).trim()))) {
+                        zero_venue_split = zero_venue_split.slice(0, -1).trim();
+                    }
+                    //console.log("*"+zero_venue_split+"*");
+                    //console.log(venue_usage);
                     if (venue_usage.includes(zero_venue_split)) {
                         let _court = "";
                         let _duty = " ";
@@ -1584,7 +1588,11 @@ function html_to_fixture(venues, leagues, date, all_html) {
                         let _division = [];
 
                         try {
-                            _court = cells.item(1).innerText.split("Ct")[1];
+                            if (Number.isInteger(parseInt(venue_split[0].replaceAll(" Ct", "")[0].slice(-2).trim()))) {
+                                _court = parseInt(venue_split[0].replaceAll(" Ct", "")[0].slice(-2).trim());
+                            } else {
+                                _court = cells.item(1).innerText.split("Ct")[1];
+                            }
                         } catch (e) {
                             _court = "";
                         }

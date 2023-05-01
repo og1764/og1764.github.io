@@ -94,7 +94,7 @@ const __CONFIG__ = {
             "top": "",
             "mid": "HBF",
             "bot": "Stadium",
-            "alias": ["HBF Stad. Claremont", "HBF", "HBF Stadium", "HBF Stad."]
+            "alias": ["HBF Stad. Claremont", "HBF", "HBF Stadium", "HBF Stad.", "HBF Sta. Claremont"]
         },
         "John Wollaston": {
             "name": "John Wollaston",
@@ -143,7 +143,7 @@ const __CONFIG__ = {
             "top": "",
             "mid": "",
             "bot": "MBC",
-            "alias": ["Mandurah Baptist College", "Mandurah Baptist Col"]
+            "alias": ["Mandurah Baptist College", "Mandurah Baptist Col", "Mandurah Baptist"]
         },
         "Melville LeisureFit": {
             "name": "Melville LeisureFit",
@@ -339,8 +339,8 @@ const __CONFIG__ = {
         },
         "7/8 Female South Pool 1": {
             "id": 149,
-            "long": "7/8 Female South",
-            "short": "7/8 F S"
+            "long": "7/8 Female South Pool 1",
+            "short": "7/8 F S 1"
         },
         "7/8 Female South Pool 2": {
             "id": 149,
@@ -389,8 +389,8 @@ const __CONFIG__ = {
         },
         "10 Male South": {
             "id": 141,
-            "long": "9/10 Male South Pool 2",
-            "short": "9/10 M S 2"
+            "long": "10 Male South",
+            "short": "10 M S"
         },
         "11/12 Female North": {
             "id": 144,
