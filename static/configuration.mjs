@@ -157,7 +157,7 @@ const __CONFIG__ = {
             "top": "Methodist",
             "mid": "Ladies",
             "bot": "College",
-            "alias": ["MLC", "Methodist L. Col"]
+            "alias": ["MLC", "Methodist L. Col", "Mthodist Ladies Co"]
         },
         "Murdoch Active": {
             "name": "Murdoch Active",
@@ -333,67 +333,82 @@ const __CONFIG__ = {
     },
     "jl": {
         "7/8 Female North": {
-            "id": 117,
+            "id": 148,
             "long": "7/8 Female North",
             "short": "7/8 F N"
         },
-        "7/8 Female South": {
-            "id": 118,
+        "7/8 Female South Pool 1": {
+            "id": 149,
             "long": "7/8 Female South",
             "short": "7/8 F S"
         },
+        "7/8 Female South Pool 2": {
+            "id": 149,
+            "long": "7/8 Female South Pool 2",
+            "short": "7/8 F S 2"
+        },
         "7/8 Male North": {
-            "id": 110,
+            "id": 146,
             "long": "7/8 Male North",
             "short": "7/8 M N"
         },
         "7/8 Male South": {
-            "id": 116,
+            "id": 147,
             "long": "7/8 Male South",
             "short": "7/8 M S"
         },
-        "9/10 Female Pool 1": {
-            "id": 122,
-            "long": "9/10 Female Pool 1",
-            "short": "9/10 F 1"
+        "9 Female": {
+            "id": 139,
+            "long": "9 Female",
+            "short": "9 F"
         },
-        "9/10 Female Pool 2": {
-            "id": 125,
-            "long": "9/10 Female Pool 2",
-            "short": "9/10 F 2"
+        "9 Male": {
+            "id": 138,
+            "long": "9 Male",
+            "short": "9 M"
         },
-        "9/10 Female Pool 3": {
-            "id": 124,
-            "long": "9/10 Female Pool 3",
-            "short": "9/10 F 3"
+        "10 Female North": {
+            "id": 151,
+            "long": "10 Female North",
+            "short": "10 F N"
         },
-        "9/10 Male North": {
-            "id": 121,
-            "long": "9/10 Male North",
-            "short": "9/10 M N"
+        "10 Female South Pool 1": {
+            "id": 152,
+            "long": "10 Female South Pool 1",
+            "short": "10 F S 1"
         },
-        "9/10 Male South Pool 1": {
-            "id": 119,
-            "long": "9/10 Male South Pool 1",
-            "short": "9/10 M S 1"
+        "10 Female South Pool 2": {
+            "id": 153,
+            "long": "10 Female South Pool 2",
+            "short": "10 F S 2"
         },
-        "9/10 Male South Pool 2": {
-            "id": 120,
+        "10 Male North": {
+            "id": 140,
+            "long": "10 Male North",
+            "short": "10 M N"
+        },
+        "10 Male South": {
+            "id": 141,
             "long": "9/10 Male South Pool 2",
             "short": "9/10 M S 2"
         },
-        "11/12 Female": {
-            "id": 128,
-            "long": "11/12 Female",
-            "short": "11/12 F"
+        "11/12 Female North": {
+            "id": 144,
+            "long": "11/12 Female North",
+            "short": "11/12 F N"
+        },
+        "11/12 Female South": {
+            "id": 145,
+            "long": "11/12 Female South",
+            "short": "11/12 F S"
         },
         "11/12 Male North": {
-            "id": 127,
+            "id": 142,
             "long": "11/12 Male North",
             "short": "11/12 M N"
         },
         "11/12 Male South": {
-            "id": 126,
+            "id": 143,
             "long": "11/12 Male South",
             "short": "11/12 M S"
         }
