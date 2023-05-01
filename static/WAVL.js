@@ -1321,7 +1321,7 @@ async function modifyPdf(fix, dates) {
             
             // Venue (full)
             await JLfirstPage.drawText(fixtures[i][4], {
-                x: parseInt((180 - measureText(fixtures[i][4], 13)).toString()),
+                x: parseInt((190 - measureText(fixtures[i][4], 13)).toString()),
                 y: 504,
                 size: 13,
                 font: JLhelveticaFont
@@ -1586,21 +1586,23 @@ function html_to_fixture(venues, leagues, date, all_html) {
                         let _time_hr = " ";
                         let _time_min = " ";
                         let _division = [];
-
+                        console.log(venue_split);
                         try {
-                            if (Number.isInteger(parseInt(venue_split[0].replaceAll(" Ct", "")[0].slice(-2).trim()))) {
-                                _court = parseInt(venue_split[0].replaceAll(" Ct", "")[0].slice(-2).trim());
+                            if (Number.isInteger(parseInt(venue_split[0].slice(-2).trim()))) {
+                                _court = parseInt(venue_split[0].slice(-2).trim()).toString();
+                                console.log(parseInt(venue_split[0].slice(-2).trim()));
                             } else {
-                                _court = cells.item(1).innerText.split("Ct")[1];
+                                _court = cells.item(1).innerText.split("Ct")[1].trim();
                             }
                         } catch (e) {
                             _court = "";
+                            console.log("Why");
                         }
 
                         if (_court == null) {
                             _court = "";
                         }
-
+                        console.log(_court);
                         const _team_a = cells.item(2).innerText;
                         const _team_b = cells.item(5).innerText;
 
