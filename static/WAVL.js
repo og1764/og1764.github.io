@@ -208,9 +208,9 @@ function WAVL_ONLINE() {
                         document.getElementById("Button4").disabled = false;
                         document.getElementById("csvUpload").disabled = false;
                         document.getElementById("csvUpload").value = "";
-                    })
-                })
-            })
+                    }).catch(error => catch_error(error))
+                }).catch(error => catch_error(error))
+            }).catch(error => catch_error(error))
         };
     } else {
         pdf_init(venues, wavl, wavjl, dates);
@@ -346,11 +346,11 @@ function pdf_init(venues, wavl, wavjl, dates) {
                         document.getElementById("Button4").disabled = false;
                         document.getElementById("csvUpload").disabled = false;
                         document.getElementById("csvUpload").value = "";
-                    })
-                })
-            })
-        })
-    })
+                    }).catch(error => catch_error(error))
+                }).catch(error => catch_error(error))
+            }).catch(error => catch_error(error))
+        }).catch(error => catch_error(error))
+    }).catch(error => catch_error(error))
 }
 
 /**
@@ -480,10 +480,10 @@ async function modifyPdf(fix, dates) {
     var total = new Array(fixtures.length);
 
     fixtures.sort(sorting);
-    var WAVLurl = "https://og1764.github.io/static/def.pdf";
-    var JLurl = "https://og1764.github.io/static/def_jl.pdf";
-    var newWAVLurl = "https://og1764.github.io/static/new_def.pdf";
-    var extraWAVLurl = "https://og1764.github.io/static/extra_def.pdf";
+    var WAVLurl = "https://volleyballwa.github.io/static/def.pdf";
+    var JLurl = "https://volleyballwa.github.io/static/def_jl.pdf";
+    var newWAVLurl = "https://volleyballwa.github.io/static/new_def.pdf";
+    var extraWAVLurl = "https://volleyballwa.github.io/static/extra_def.pdf";
     //var extraWAVLurl = "./static/extra_def.pdf"
 
     const WAVLexistingPdfBytes = await fetch(WAVLurl).then(res => res.arrayBuffer());
@@ -504,10 +504,10 @@ async function modifyPdf(fix, dates) {
 
     for (var i = 0; i < fixtures.length; i++) {
         // Load WAVL and Junior League scoresheets
-        var WAVLurl = "https://og1764.github.io/static/def.pdf";
-        var JLurl = "https://og1764.github.io/static/def_jl.pdf";
-        var newWAVLurl = "https://og1764.github.io/static/new_def.pdf";
-        var extraWAVLurl = "https://og1764.github.io/static/extra_def.pdf";
+        var WAVLurl = "https://volleyballwa.github.io/static/def.pdf";
+        var JLurl = "https://volleyballwa.github.io/static/def_jl.pdf";
+        var newWAVLurl = "https://volleyballwa.github.io/static/new_def.pdf";
+        var extraWAVLurl = "https://volleyballwa.github.io/static/extra_def.pdf";
 
         //var WAVLexistingPdfBytes = await fetch(WAVLurl).then(res => res.arrayBuffer());
 
@@ -540,7 +540,7 @@ async function modifyPdf(fix, dates) {
 
         // If WAVL Game (Divisions or State League)
         // use OLD scoresheet for divisions (for now)
-        if (fixtures[i][9][0][0] == "D" ) { // || fixtures[i][9][0][0] == "S") {
+        if ( false ) {  //fixtures[i][9][0][0] == "D" || fixtures[i][9][0][0] == "S") {
 
             // Team A Team List
             await WAVLfirstPage.drawText(fixtures[i][6], {
@@ -820,15 +820,45 @@ async function modifyPdf(fix, dates) {
                 })
             }
             var saved = await WAVLpdfDoc.saveAsBase64();
-        } else if (fixtures[i][9][0][0] == "S") {
+        } else if (fixtures[i][9][0][0] == "D" || fixtures[i][9][0][0] == "S") {
             if (fixtures[i][17].length > 18 || fixtures[i][18].length > 18){
-                // Team A Team List
-                await extraWAVLfirstPage.drawText(fixtures[i][6], {
-                    x: 295,
-                    y: 744, //739
-                    size: 12,
-                    font: extraWAVLhelveticaFont
-                })
+                
+
+                if (fixtures[i][6].length > 20 || fixtures[i][7].length > 20) {
+                    // Team A Team List
+                    await extraWAVLfirstPage.drawText(fixtures[i][6], {
+                        x: 295,
+                        y: 745, //739
+                        size: 9,
+                        font: extraWAVLhelveticaFont
+                    })
+
+                    // Team B Team List
+                    await extraWAVLfirstPage.drawText(fixtures[i][7], {
+                        x: 460,
+                        y: 745,
+                        size: 9,
+                        font: extraWAVLhelveticaFont
+                    })
+
+                } else {
+                    // Team A Team List
+                    await extraWAVLfirstPage.drawText(fixtures[i][6], {
+                        x: 295,
+                        y: 744, //739
+                        size: 12,
+                        font: extraWAVLhelveticaFont
+                    })
+
+                    // Team B Team List
+                    await extraWAVLfirstPage.drawText(fixtures[i][7], {
+                        x: 460,
+                        y: 744,
+                        size: 12,
+                        font: extraWAVLhelveticaFont
+                    })
+
+                }
 
                 // Team A Players
                 for (var k = 0; k < fixtures[i][17].length; k++) {
@@ -888,14 +918,6 @@ async function modifyPdf(fix, dates) {
                         opacity: 1
                     })
                 }
-
-                // Team B Team List
-                await extraWAVLfirstPage.drawText(fixtures[i][7], {
-                    x: 460,
-                    y: 744,
-                    size: 12,
-                    font: extraWAVLhelveticaFont
-                })
 
                 // Team B Players
                 for (var k = 0; k < fixtures[i][18].length; k++) {
@@ -1013,7 +1035,7 @@ async function modifyPdf(fix, dates) {
 
                 // Duty team
                 await extraWAVLfirstPage.drawText(fixtures[i][8], {
-                    x: parseInt((320 - measureText(fixtures[i][8], 14)).toString()),
+                    x: parseInt((332 - measureText(fixtures[i][8], 14)).toString()),
                     y: 797,
                     size: 14,
                     font: extraWAVLhelveticaFont
@@ -1022,6 +1044,15 @@ async function modifyPdf(fix, dates) {
                 // Club President
                 let a_pres = __PRESIDENTS__[fixtures[i][6].substring(fixtures[i][6].indexOf(' ') + 1)];
                 let b_pres = __PRESIDENTS__[fixtures[i][7].substring(fixtures[i][7].indexOf(' ') + 1)];
+
+                if (a_pres == __PRESIDENTS__["a"]){
+                    a_pres = " ";
+                }
+
+                if (b_pres == __PRESIDENTS__["a"]){
+                    b_pres = " ";
+                }
+
                 await extraWAVLfirstPage.drawText(a_pres, {
                     x: parseInt((325 - measureText(a_pres, 10)).toString()),
                     y: 462,
@@ -1036,7 +1067,7 @@ async function modifyPdf(fix, dates) {
                 })
 
                 // Team Names
-                if (fixtures[i][6].length > 18 || fixtures[i][7].length > 18) {
+                if (fixtures[i][6].length > 22 || fixtures[i][7].length > 22) {
                     // Reduce text size if too long.
                     await extraWAVLfirstPage.drawText(fixtures[i][6], {
                         x: parseInt((262 - measureText(fixtures[i][6], 10)).toString()),
@@ -1069,13 +1100,41 @@ async function modifyPdf(fix, dates) {
                 var saved = await extraWAVLpdfDoc.saveAsBase64();
                 
             } else {
-                // Team A Team List
-                await newWAVLfirstPage.drawText(fixtures[i][6], {
-                    x: 295,
-                    y: 743.5, //739
-                    size: 12,
-                    font: newWAVLhelveticaFont
-                })
+
+                if (fixtures[i][6].length > 22 || fixtures[i][7].length > 22) {
+                    // Team A Team List
+                    await newWAVLfirstPage.drawText(fixtures[i][6], {
+                        x: 295,
+                        y: 745, //739
+                        size: 9,
+                        font: newWAVLhelveticaFont
+                    })
+
+                    // Team B Team List
+                    await newWAVLfirstPage.drawText(fixtures[i][7], {
+                        x: 460,
+                        y: 745,
+                        size: 9,
+                        font: newWAVLhelveticaFont
+                    })
+
+                } else {
+                    // Team A Team List
+                    await newWAVLfirstPage.drawText(fixtures[i][6], {
+                        x: 295,
+                        y: 743.5, //739
+                        size: 12,
+                        font: newWAVLhelveticaFont
+                    })
+
+                    // Team B Team List
+                    await newWAVLfirstPage.drawText(fixtures[i][7], {
+                        x: 460,
+                        y: 743.5,
+                        size: 12,
+                        font: newWAVLhelveticaFont
+                    })
+                }
 
                 // Team A Players
                 for (var k = 0; k < fixtures[i][17].length; k++) {
@@ -1136,14 +1195,6 @@ async function modifyPdf(fix, dates) {
                         opacity: 1
                     })
                 }
-
-                // Team B Team List
-                await newWAVLfirstPage.drawText(fixtures[i][7], {
-                    x: 460,
-                    y: 743.5,
-                    size: 12,
-                    font: newWAVLhelveticaFont
-                })
 
                 // Team B Players
                 for (var k = 0; k < fixtures[i][18].length; k++) {
@@ -1261,7 +1312,7 @@ async function modifyPdf(fix, dates) {
 
                 // Duty team
                 await newWAVLfirstPage.drawText(fixtures[i][8], {
-                    x: parseInt((322 - measureText(fixtures[i][8], 14)).toString()),
+                    x: parseInt((332 - measureText(fixtures[i][8], 14)).toString()),
                     y: 784.5,
                     size: 14,
                     font: newWAVLhelveticaFont
@@ -1270,6 +1321,15 @@ async function modifyPdf(fix, dates) {
                 // Club President
                 let a_pres = __PRESIDENTS__[fixtures[i][6].substring(fixtures[i][6].indexOf(' ') + 1)];
                 let b_pres = __PRESIDENTS__[fixtures[i][7].substring(fixtures[i][7].indexOf(' ') + 1)];
+
+                if (a_pres == __PRESIDENTS__["a"]){
+                    a_pres = " ";
+                }
+
+                if (b_pres == __PRESIDENTS__["a"]){
+                    b_pres = " ";
+                }
+
                 await newWAVLfirstPage.drawText(a_pres, {
                     x: parseInt((325 - measureText(a_pres, 10)).toString()),
                     y: 462,
@@ -1284,7 +1344,7 @@ async function modifyPdf(fix, dates) {
                 })
 
                 // Team Names
-                if (fixtures[i][6].length > 18 || fixtures[i][7].length > 18) {
+                if (fixtures[i][6].length > 22 || fixtures[i][7].length > 22) {
                     // Reduce text size if too long.
                     await newWAVLfirstPage.drawText(fixtures[i][6], {
                         x: parseInt((262 - measureText(fixtures[i][6], 10)).toString()),
@@ -1532,10 +1592,12 @@ function add_aliases(venues) {
  */
 function html_to_fixture(venues, leagues, date, all_html) {
     console.log("html_to_fixture");
-    let fixtures_list = []
+    let fixtures_list = [];
+    let alerted = [];
     let temporary = add_aliases(venues);
     let alias_layer = temporary[1];
     let venue_usage = temporary[0];
+    let all_venues = add_aliases(Object.keys(__CONFIG__.venues));
     const NamesArr = leagues.flat();
     
     for (let x = 0; x < all_html.length; x++) {
@@ -1543,7 +1605,7 @@ function html_to_fixture(venues, leagues, date, all_html) {
         let htmlDoc = parser.parseFromString(all_html[x].request.responseText, 'text/html');
         let all_tables = htmlDoc.getElementsByTagName("table")
         let numFix = all_tables.length;
-
+        
         for (let y = 0; y < numFix; y = y + 3) {
             let meta = y + 1;
             let data = y + 2;
@@ -1586,11 +1648,9 @@ function html_to_fixture(venues, leagues, date, all_html) {
                         let _time_hr = " ";
                         let _time_min = " ";
                         let _division = [];
-                        console.log(venue_split);
                         try {
                             if (Number.isInteger(parseInt(venue_split[0].slice(-2).trim()))) {
                                 _court = parseInt(venue_split[0].slice(-2).trim()).toString();
-                                console.log(parseInt(venue_split[0].slice(-2).trim()));
                             } else {
                                 _court = cells.item(1).innerText.split("Ct")[1].trim();
                             }
@@ -1602,7 +1662,6 @@ function html_to_fixture(venues, leagues, date, all_html) {
                         if (_court == null) {
                             _court = "";
                         }
-                        console.log(_court);
                         const _team_a = cells.item(2).innerText;
                         const _team_b = cells.item(5).innerText;
 
@@ -1679,6 +1738,13 @@ function html_to_fixture(venues, leagues, date, all_html) {
                             console.log("UNUSED VENUE\n***")
                             console.log(zero_venue_split)
                             console.log("***")
+                        }
+                    }
+
+                    if (!(all_venues[0].includes(zero_venue_split))) {
+                        if (!(alerted.includes(zero_venue_split))) {
+                            window.alert("Venue " + zero_venue_split + " not configured. Contact Oliver Guazzelli on 0466 185 411 to resolve.")
+                            alerted.push(zero_venue_split);
                         }
                     }
                 }
@@ -1854,6 +1920,18 @@ function generate_Table() {
     var fin_row = table.insertRow(-1);
     var fin_cell = fin_row.insertCell(0);
     fin_cell.classList.add("cell99")
+}
+
+function catch_error(error){
+    console.log(error)
+    window.alert("The webpage has encountered the following error.\nPlease contact Oliver Guazzelli on 0466 185 411 to resolve.\n\n" + error.stack);
+    window.clearInterval(dots);
+    document.getElementById("Button4").value = "Generate Scoresheets";
+    document.getElementById("Button4").style.backgroundColor = "#8b0000";
+    document.getElementById("Button4").style.color = "#FFFFFF"
+    document.getElementById("Button4").disabled = false;
+    document.getElementById("csvUpload").disabled = false;
+    document.getElementById("csvUpload").value = "";
 }
 
 generate_Table()
