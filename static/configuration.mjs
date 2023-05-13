@@ -52,7 +52,7 @@ const __CONFIG__ = {
             "top": "Geographe",
             "mid": "Leisure",
             "bot": "Centre",
-            "alias": ["Geographe", "Geographe Leisure", "Geographe Lei. Centr", "Geographe Lei. Cntr", "Geographe L. Ctr"]
+            "alias": ["Geographe", "Geographe Leisure", "Geographe Lei. Centr", "Geographe Lei. Cntr", "Geographe L. Ctr", "Geographe Lei."]
         },
         "Gold Netball Centre": {
             "name": "Gold Netball Centre",
@@ -379,11 +379,11 @@ const __CONFIG__ = {
             "long": "10 Female South Pool 1",
             "short": "10 F S 1"
         },
-        "10 Female South Pool 2": {
+        /*"10 Female South Pool 2": {
             "id": 153,
             "long": "10 Female South Pool 2",
             "short": "10 F S 2"
-        },
+        },*/
         "10 Male North": {
             "id": 140,
             "long": "10 Male North",
@@ -443,7 +443,7 @@ const __PRESIDENTS__ = {
     "Reds Junior": "Logan Vanderweide",
     "Rossmoyne": "Matt Waddington",
     "Southern Cross": "Codi Versteeg / Remi Cousin",
-    "Southern Cross Masters": "Nicholas Crawford",
+    "Southern Cross Masters": "Toma Stanca",
     "UWA": "Kieren Underwood",
     "United": "Tani Bernados",
     "VIRSA": "Harpreet Dhillon"
