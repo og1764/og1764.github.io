@@ -288,9 +288,20 @@ function parsePlayerList(players_list, upd_fixtures) {
     for (i = 1; i < player_data.length; i++) {
         let name = player_data[i][0];
         let team_id = player_data[i][2].split(" ")[0];
-        // if name has (DP) or "*" or "^", do not add to dict.
+        // if name has (DP) do not add to dict.
         if (name.toLowerCase().includes("(dp)") || name.toLowerCase().includes("*") || name.toLowerCase().includes("^")){
             console.log(name);
+
+            if (name.toLowerCase().includes("*") || name.toLowerCase().includes("^")) {
+                name = name.replaceAll("*","");
+                name = name.replaceAll("^","");
+
+                if (!(Object.keys(dict).includes(team_id))) {
+                    dict[team_id] = [split_name(name.trim())]
+                } else {
+                    dict[team_id].push(split_name(name.trim()))
+                }
+            }
         } else {
             if (!(Object.keys(dict).includes(team_id))) {
                 dict[team_id] = [split_name(name.trim())]
