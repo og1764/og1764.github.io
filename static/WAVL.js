@@ -283,18 +283,25 @@ function parsePlayerList(players_list, upd_fixtures) {
     let player_data = players_list[0].data.split("\n").map(function (line) {
         return line.split(",");
     });
-
+    console.log(player_data)
     // Update Keys and Dict.
     for (i = 1; i < player_data.length; i++) {
+        
+        while (player_data[i][1].length > 3){
+            player_data[i] = [player_data[i][0]+","+player_data[i][1],player_data[i][2],player_data[i][3], player_data[i][4], player_data[i][5], player_data[i][6]]
+        }
+
         let name = player_data[i][0];
         let team_id = player_data[i][2].split(" ")[0];
         // if name has (DP) do not add to dict.
-        if (name.toLowerCase().includes("(dp)") || name.toLowerCase().includes("*") || name.toLowerCase().includes("^")){
+        if (name.toLowerCase().includes("(dp)") || name.toLowerCase().includes("*") || name.toLowerCase().includes("^") || name.toLowerCase().includes('"') || name.toLowerCase().includes("\\")){
             console.log(name);
 
-            if (name.toLowerCase().includes("*") || name.toLowerCase().includes("^")) {
+            if (name.toLowerCase().includes("*") || name.toLowerCase().includes("^") || (name.toLowerCase().includes('"'))) {
                 name = name.replaceAll("*","");
                 name = name.replaceAll("^","");
+                name = name.replaceAll('"',"");
+                name = name.replaceAll("\\","");
 
                 if (!(Object.keys(dict).includes(team_id))) {
                     dict[team_id] = [split_name(name.trim())]
