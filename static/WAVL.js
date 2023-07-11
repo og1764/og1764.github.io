@@ -285,6 +285,31 @@ function parsePlayerList(players_list, upd_fixtures) {
     });
     console.log(player_data)
     // Update Keys and Dict.
+    // probably should add an IF later than SL Finals and still in current year or some shit
+    SL_Only_Players = [];
+    for (i = 1; i < player_data.length; i++) {
+        let team_id = player_data[i][2].split(" ")[0];
+        if (["1","2","3",'4','5','6','7','8','9','101','102','103','104','105','106','107','108','109'].includes(team_id)){
+            while (player_data[i][1].length > 3){
+                player_data[i] = [player_data[i][0]+","+player_data[i][1],player_data[i][2],player_data[i][3], player_data[i][4], player_data[i][5], player_data[i][6]]
+            }
+            let name = player_data[i][0];
+            let games_played = player_data[i][5]
+            
+            name = name.replaceAll("*","");
+            name = name.replaceAll("^","");
+            name = name.replaceAll('"',"");
+            name = name.replaceAll("\\","");
+            name = name.replaceAll("(DP)","");
+            name = name.replaceAll("(dp)","");
+
+            if (games_played >= 5){
+                //SL_Only_Players.push([name, player_data[i][2].split(" ").slice(1).join(" ")])
+                SL_Only_Players.push(name)
+            }
+        }
+    }
+    
     for (i = 1; i < player_data.length; i++) {
         
         while (player_data[i][1].length > 3){
@@ -293,6 +318,7 @@ function parsePlayerList(players_list, upd_fixtures) {
 
         let name = player_data[i][0];
         let team_id = player_data[i][2].split(" ")[0];
+        let games_played = player_data[i][5]
         // if name has (DP) do not add to dict.
         if (name.toLowerCase().includes("(dp)") || name.toLowerCase().includes("*") || name.toLowerCase().includes("^") || name.toLowerCase().includes('"') || name.toLowerCase().includes("\\")){
             console.log(name);
@@ -304,17 +330,49 @@ function parsePlayerList(players_list, upd_fixtures) {
                 name = name.replaceAll("\\","");
 
                 if (!(Object.keys(dict).includes(team_id))) {
-                    dict[team_id] = [split_name(name.trim())]
+                    dict[team_id] = [[split_name(name.trim()), games_played]]
                 } else {
-                    dict[team_id].push(split_name(name.trim()))
+                    dict[team_id].push([split_name(name.trim()), games_played])
                 }
             }
-        } else {
-            if (!(Object.keys(dict).includes(team_id))) {
-                dict[team_id] = [split_name(name.trim())]
-            } else {
-                dict[team_id].push(split_name(name.trim()))
+
+            // If SLM / SLW / SLrM / SLrW, add (dp) for FINALS / AFTER SL Finals
+            if (["1","2","3",'4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','26','101','102','103','104','105','106','107','108','109','110','111','112','113','114','115','116','117','118','119','123','126'].includes(team_id) && name.toLowerCase().includes("(dp)") ){
+                name = name.replaceAll("(DP)","");
+                name = name.replaceAll("(dp)","");
+                if (!(Object.keys(dict).includes(team_id))) {
+                    dict[team_id] = [[split_name(name.trim()), games_played]]
+                } else {
+                    dict[team_id].push([split_name(name.trim()), games_played])
+                }
             }
+
+        } else {
+            if (["1","2","3",'4','5','6','7','8','9','101','102','103','104','105','106','107','108','109'].includes(team_id)){
+                // If SL
+                if (!(Object.keys(dict).includes(team_id))) {
+                    dict[team_id] = [[split_name(name.trim()), games_played]]
+                } else {
+                    dict[team_id].push([split_name(name.trim()), games_played])
+                }
+            } else {
+                // if NOT SL
+                //console.log(SL_Only_Players);
+                if (SL_Only_Players.includes(name)){
+                    console.log(player_data[i]);
+                } else {
+                    if (!(Object.keys(dict).includes(team_id))) {
+                        dict[team_id] = [[split_name(name.trim()), games_played]]
+                    } else {
+                        dict[team_id].push([split_name(name.trim()), games_played])
+                    }
+                }
+            }
+            /*if (!(Object.keys(dict).includes(team_id))) {
+                dict[team_id] = [[split_name(name.trim()), games_played]]
+            } else {
+                dict[team_id].push([split_name(name.trim()), games_played])
+            }*/
         }
     }
 
@@ -323,19 +381,27 @@ function parsePlayerList(players_list, upd_fixtures) {
         let fixture_division = upd_fixtures[i][9]
         let team_a = upd_fixtures[i][6].split(" ")[0];
         let team_b = upd_fixtures[i][7].split(" ")[0];
+        upd_fixtures[i][17] = [["",""]];
+        upd_fixtures[i][18] = [["",""]];
 
         if (SL_FINALS_DATES.includes(fixture_date) && (fixture_division[0] == "State League Men" || fixture_division[0] == "State League Women")){
-            console.log("lol");
-        } else {
-            if (Object.keys(dict).includes(team_a) && Object.keys(dict).includes(team_b)) {
-                upd_fixtures[i][17] = dict[team_a];
-                upd_fixtures[i][18] = dict[team_b];
-            } else {
-                upd_fixtures[i][17] = [["",""]];
-                upd_fixtures[i][18] = [["",""]];
-                if (Object.keys(dict).includes(team_a)) {upd_fixtures[i][17] = dict[team_a];}
-                if (Object.keys(dict).includes(team_b)) {upd_fixtures[i][18] = dict[team_b];}
+            if (Object.keys(dict).includes(team_a)) {
+                team_a_list = [];
+                for (j = 0; j < dict[team_a].length; j++) {
+                    if (dict[team_a][j][1] >= 5) {team_a_list.push(dict[team_a][j])}
+                }
+                upd_fixtures[i][17] = team_a_list;
             }
+            if (Object.keys(dict).includes(team_b)) {
+                team_b_list = [];
+                for (j = 0; j < dict[team_b].length; j++) {
+                    if (dict[team_b][j][1] >= 5) {team_b_list.push(dict[team_b][j])}
+                }
+                upd_fixtures[i][18] = team_b_list;
+            }
+        } else {
+            if (Object.keys(dict).includes(team_a)) {upd_fixtures[i][17] = dict[team_a];}
+            if (Object.keys(dict).includes(team_b)) {upd_fixtures[i][18] = dict[team_b];}
         }
     }
     return upd_fixtures;
@@ -932,10 +998,28 @@ async function modifyPdf(fix, dates) {
                 })
             }
             var saved = await WAVLpdfDoc.saveAsBase64();
-        } else if (fixtures[i][9][0][0] == "D" || fixtures[i][9][0][0] == "S") {
+        } else if (fixtures[i][9][0].includes("Division") || fixtures[i][9][0].includes("State")) {
             // If we need to use the scoresheet with more names
             if (fixtures[i][17].length > 18 || fixtures[i][18].length > 18){
-                
+                if ((SL_FINALS_DATES.includes(fixtures[i][12]+"-"+fixtures[i][11]+"-"+fixtures[i][10]) && (fixtures[i][9][0] == "State League Men" || fixtures[i][9][0] == "State League Women")) || FINALS_DATES.includes(fixtures[i][12]+"-"+fixtures[i][11]+"-"+fixtures[i][10])){
+                    // Rule out MVP Votes
+                    await extraWAVLfirstPage.drawLine({
+                        start: { x: 11, y: 316 },
+                        end: { x: 166, y: 388 },
+                        thickness: 3,
+                        color: rgb(0,0,0),
+                        opacity: 1
+                    })
+
+                    await extraWAVLfirstPage.drawLine({
+                        start: { x: 11, y: 388 },
+                        end: { x: 166, y: 316 },
+                        thickness: 3,
+                        color: rgb(0,0,0),
+                        opacity: 1
+                    })
+                }
+
                 if (fixtures[i][6].length > 24 || fixtures[i][7].length > 24) {
                     // Team A Team List
                     await extraWAVLfirstPage.drawText(fixtures[i][6], {
@@ -977,15 +1061,15 @@ async function modifyPdf(fix, dates) {
                     if (k < Math.ceil(fixtures[i][17].length / 2)) {
                         // first name, first column
                         //console.log(fixtures[i][17][k][0].toUpperCase() + ": " + measureText(fixtures[i][17][k][0].toUpperCase(),6))
-                        if (measureText(fixtures[i][17][k][0].toUpperCase(), 6) >= 32){
-                            await extraWAVLfirstPage.drawText(fixtures[i][17][k][0].toUpperCase(), {
+                        if (measureText(fixtures[i][17][k][0][0].toUpperCase(), 6) >= 32){
+                            await extraWAVLfirstPage.drawText(fixtures[i][17][k][0][0].toUpperCase(), {
                                 x: 276,
                                 y: 733.5-((12.8*k)),
                                 size: 5,
                                 font: extraWAVLhelveticaFont
                             })
                         } else {
-                            await extraWAVLfirstPage.drawText(fixtures[i][17][k][0].toUpperCase(), {
+                            await extraWAVLfirstPage.drawText(fixtures[i][17][k][0][0].toUpperCase(), {
                                 x: 276,
                                 y: 733.5-((12.8*k)),
                                 size: 6,
@@ -995,15 +1079,15 @@ async function modifyPdf(fix, dates) {
 
                         // surname, first column
                         //console.log(fixtures[i][17][k][1].toUpperCase() + ": " + measureText(fixtures[i][17][k][1].toUpperCase(),6))
-                        if (measureText(fixtures[i][17][k][1].toUpperCase(), 6) >= 32) {
-                            await extraWAVLfirstPage.drawText(fixtures[i][17][k][1].toUpperCase(), {
+                        if (measureText(fixtures[i][17][k][0][1].toUpperCase(), 6) >= 32) {
+                            await extraWAVLfirstPage.drawText(fixtures[i][17][k][0][1].toUpperCase(), {
                                 x: 276,
                                 y: 733.5-((12.8*k+6.0)),
                                 size: 5,
                                 font: extraWAVLhelveticaFont
                             })
                         } else {
-                            await extraWAVLfirstPage.drawText(fixtures[i][17][k][1].toUpperCase(), {
+                            await extraWAVLfirstPage.drawText(fixtures[i][17][k][0][1].toUpperCase(), {
                                 x: 276,
                                 y: 733.5-((12.8*k+6.0)),
                                 size: 6,
@@ -1013,15 +1097,15 @@ async function modifyPdf(fix, dates) {
                     } else {
                         // first name, second column
                         //console.log(fixtures[i][17][k][0].toUpperCase() + ": " + measureText(fixtures[i][17][k][0].toUpperCase(),6))
-                        if (measureText(fixtures[i][17][k][0].toUpperCase(), 6) >= 32){
-                            await extraWAVLfirstPage.drawText(fixtures[i][17][k][0].toUpperCase(), {
+                        if (measureText(fixtures[i][17][k][0][0].toUpperCase(), 6) >= 32){
+                            await extraWAVLfirstPage.drawText(fixtures[i][17][k][0][0].toUpperCase(), {
                                 x: 355,
                                 y: 733.5-((12.8*(k-Math.ceil(fixtures[i][17].length / 2)))),
                                 size: 5,
                                 font: extraWAVLhelveticaFont
                             })
                         } else {
-                            await extraWAVLfirstPage.drawText(fixtures[i][17][k][0].toUpperCase(), {
+                            await extraWAVLfirstPage.drawText(fixtures[i][17][k][0][0].toUpperCase(), {
                                 x: 355,
                                 y: 733.5-((12.8*(k-Math.ceil(fixtures[i][17].length / 2)))),
                                 size: 6,
@@ -1031,15 +1115,15 @@ async function modifyPdf(fix, dates) {
 
                         // surname, second column
                         //console.log(fixtures[i][17][k][1].toUpperCase() + ": " + measureText(fixtures[i][17][k][1].toUpperCase(),6))
-                        if (measureText(fixtures[i][17][k][1].toUpperCase(), 6) >= 32) {
-                            await extraWAVLfirstPage.drawText(fixtures[i][17][k][1].toUpperCase(), {
+                        if (measureText(fixtures[i][17][k][0][1].toUpperCase(), 6) >= 32) {
+                            await extraWAVLfirstPage.drawText(fixtures[i][17][k][0][1].toUpperCase(), {
                                 x: 355,
                                 y: 733.5-((12.8*(k-Math.ceil(fixtures[i][17].length / 2))+6.0)),
                                 size: 5,
                                 font: extraWAVLhelveticaFont
                             })
                         } else {
-                            await extraWAVLfirstPage.drawText(fixtures[i][17][k][1].toUpperCase(), {
+                            await extraWAVLfirstPage.drawText(fixtures[i][17][k][0][1].toUpperCase(), {
                                 x: 355,
                                 y: 733.5-((12.8*(k-Math.ceil(fixtures[i][17].length / 2))+6.0)),
                                 size: 6,
@@ -1076,15 +1160,15 @@ async function modifyPdf(fix, dates) {
                     if (k < Math.ceil(fixtures[i][18].length / 2)) {
                         // first name, first column
                         //console.log(fixtures[i][18][k][0].toUpperCase() + ": " + measureText(fixtures[i][18][k][0].toUpperCase(),6))
-                        if (measureText(fixtures[i][18][k][0].toUpperCase(), 6) >= 32) {
-                            await extraWAVLfirstPage.drawText(fixtures[i][18][k][0].toUpperCase(), {
+                        if (measureText(fixtures[i][18][k][0][0].toUpperCase(), 6) >= 32) {
+                            await extraWAVLfirstPage.drawText(fixtures[i][18][k][0][0].toUpperCase(), {
                                 x: 440.5,
                                 y: 733.5-((12.8*k)),
                                 size: 5,
                                 font: extraWAVLhelveticaFont
                             })
                         } else {
-                            await extraWAVLfirstPage.drawText(fixtures[i][18][k][0].toUpperCase(), {
+                            await extraWAVLfirstPage.drawText(fixtures[i][18][k][0][0].toUpperCase(), {
                                 x: 440.5,
                                 y: 733.5-((12.8*k)),
                                 size: 6,
@@ -1094,15 +1178,15 @@ async function modifyPdf(fix, dates) {
 
                         // surname, first column
                         //console.log(fixtures[i][18][k][1].toUpperCase() + ": " + measureText(fixtures[i][18][k][1].toUpperCase(),6))
-                        if (measureText(fixtures[i][18][k][1].toUpperCase(), 6) >= 32) {
-                            await extraWAVLfirstPage.drawText(fixtures[i][18][k][1].toUpperCase(), {
+                        if (measureText(fixtures[i][18][k][0][1].toUpperCase(), 6) >= 32) {
+                            await extraWAVLfirstPage.drawText(fixtures[i][18][k][0][1].toUpperCase(), {
                                 x: 440.5,
                                 y: 733.5-((12.8*k+6.0)),
                                 size: 5,
                                 font: extraWAVLhelveticaFont
                             })
                         } else {
-                            await extraWAVLfirstPage.drawText(fixtures[i][18][k][1].toUpperCase(), {
+                            await extraWAVLfirstPage.drawText(fixtures[i][18][k][0][1].toUpperCase(), {
                                 x: 440.5,
                                 y: 733.5-((12.8*k+6.0)),
                                 size: 6,
@@ -1112,15 +1196,15 @@ async function modifyPdf(fix, dates) {
                     } else {
                         // first name, second column
                         //console.log(fixtures[i][18][k][0].toUpperCase() + ": " + measureText(fixtures[i][18][k][0].toUpperCase(),6))
-                        if (measureText(fixtures[i][18][k][0].toUpperCase(), 6) >= 32) {
-                            await extraWAVLfirstPage.drawText(fixtures[i][18][k][0].toUpperCase(), {
+                        if (measureText(fixtures[i][18][k][0][0].toUpperCase(), 6) >= 32) {
+                            await extraWAVLfirstPage.drawText(fixtures[i][18][k][0][0].toUpperCase(), {
                                 x: 519.5,
                                 y: 733.5-((12.8*(k-Math.ceil(fixtures[i][18].length / 2)))),
                                 size: 5,
                                 font: extraWAVLhelveticaFont
                             })
                         } else {
-                            await extraWAVLfirstPage.drawText(fixtures[i][18][k][0].toUpperCase(), {
+                            await extraWAVLfirstPage.drawText(fixtures[i][18][k][0][0].toUpperCase(), {
                                 x: 519.5,
                                 y: 733.5-((12.8*(k-Math.ceil(fixtures[i][18].length / 2)))),
                                 size: 6,
@@ -1130,15 +1214,15 @@ async function modifyPdf(fix, dates) {
 
                         // surname, second column
                         //console.log(fixtures[i][18][k][1].toUpperCase() + ": " + measureText(fixtures[i][18][k][1].toUpperCase(),6))
-                        if (measureText(fixtures[i][18][k][1].toUpperCase(), 6) >= 32) {
-                            await extraWAVLfirstPage.drawText(fixtures[i][18][k][1].toUpperCase(), {
+                        if (measureText(fixtures[i][18][k][0][1].toUpperCase(), 6) >= 32) {
+                            await extraWAVLfirstPage.drawText(fixtures[i][18][k][0][1].toUpperCase(), {
                                 x: 519.5,
                                 y: 733.5-((12.8*(k-Math.ceil(fixtures[i][18].length / 2))+6.0)),
                                 size: 5,
                                 font: extraWAVLhelveticaFont
                             })
                         } else {
-                            await extraWAVLfirstPage.drawText(fixtures[i][18][k][1].toUpperCase(), {
+                            await extraWAVLfirstPage.drawText(fixtures[i][18][k][0][1].toUpperCase(), {
                                 x: 519.5,
                                 y: 733.5-((12.8*(k-Math.ceil(fixtures[i][18].length / 2))+6.0)),
                                 size: 6,
@@ -1292,7 +1376,24 @@ async function modifyPdf(fix, dates) {
                 var saved = await extraWAVLpdfDoc.saveAsBase64();
                 
             } else {
+                if ((SL_FINALS_DATES.includes(fixtures[i][12]+"-"+fixtures[i][11]+"-"+fixtures[i][10]) && (fixtures[i][9][0] == "State League Men" || fixtures[i][9][0] == "State League Women")) || FINALS_DATES.includes(fixtures[i][12]+"-"+fixtures[i][11]+"-"+fixtures[i][10])){
+                    // Rule out MVP Votes
+                    await newWAVLfirstPage.drawLine({
+                        start: { x: 11, y: 316 },
+                        end: { x: 166, y: 388 },
+                        thickness: 3,
+                        color: rgb(0,0,0),
+                        opacity: 1
+                    })
 
+                    await newWAVLfirstPage.drawLine({
+                        start: { x: 11, y: 388 },
+                        end: { x: 166, y: 316 },
+                        thickness: 3,
+                        color: rgb(0,0,0),
+                        opacity: 1
+                    })
+                }
                 if (fixtures[i][6].length > 24 || fixtures[i][7].length > 24) {
                     // Team A Team List
                     await newWAVLfirstPage.drawText(fixtures[i][6], {
@@ -1334,15 +1435,15 @@ async function modifyPdf(fix, dates) {
                         if (k < Math.ceil(fixtures[i][17].length / 2)) {
                             // first name, first column
                             //console.log(fixtures[i][17][k][0].toUpperCase() + ": " + measureText(fixtures[i][17][k][0].toUpperCase(),6))
-                            if (measureText(fixtures[i][17][k][0].toUpperCase(), 6) >= 32) {
-                                await newWAVLfirstPage.drawText(fixtures[i][17][k][0].toUpperCase(), {
+                            if (measureText(fixtures[i][17][k][0][0].toUpperCase(), 6) >= 32) {
+                                await newWAVLfirstPage.drawText(fixtures[i][17][k][0][0].toUpperCase(), {
                                     x: 276.25,
                                     y: 716-((15.75*k)),
                                     size: 5,
                                     font: newWAVLhelveticaFont
                                 })
                             } else {
-                                await newWAVLfirstPage.drawText(fixtures[i][17][k][0].toUpperCase(), {
+                                await newWAVLfirstPage.drawText(fixtures[i][17][k][0][0].toUpperCase(), {
                                     x: 276.25,
                                     y: 716-((15.75*k)),
                                     size: 6,
@@ -1352,15 +1453,15 @@ async function modifyPdf(fix, dates) {
 
                             // surname, first column
                             //console.log(fixtures[i][17][k][1].toUpperCase() + ": " + measureText(fixtures[i][17][k][1].toUpperCase(),6))
-                            if (measureText(fixtures[i][17][k][1].toUpperCase(), 6) >= 32) {
-                                await newWAVLfirstPage.drawText(fixtures[i][17][k][1].toUpperCase(), {
+                            if (measureText(fixtures[i][17][k][0][1].toUpperCase(), 6) >= 32) {
+                                await newWAVLfirstPage.drawText(fixtures[i][17][k][0][1].toUpperCase(), {
                                     x: 276.25,
                                     y: 716-((15.75*k+7.0)),
                                     size: 5,
                                     font: newWAVLhelveticaFont
                                 })
                             } else {
-                                await newWAVLfirstPage.drawText(fixtures[i][17][k][1].toUpperCase(), {
+                                await newWAVLfirstPage.drawText(fixtures[i][17][k][0][1].toUpperCase(), {
                                     x: 276.25,
                                     y: 716-((15.75*k+7.0)),
                                     size: 6,
@@ -1370,15 +1471,15 @@ async function modifyPdf(fix, dates) {
                         } else {
                             // first name, second column
                             //console.log(fixtures[i][17][k][0].toUpperCase() + ": " + measureText(fixtures[i][17][k][0].toUpperCase(),6))
-                            if (measureText(fixtures[i][17][k][0].toUpperCase(), 6) >= 32) {
-                                await newWAVLfirstPage.drawText(fixtures[i][17][k][0].toUpperCase(), {
+                            if (measureText(fixtures[i][17][k][0][0].toUpperCase(), 6) >= 32) {
+                                await newWAVLfirstPage.drawText(fixtures[i][17][k][0][0].toUpperCase(), {
                                     x: 355,
                                     y: 716-((15.75*(k-Math.ceil(fixtures[i][17].length / 2)))),
                                     size: 5,
                                     font: newWAVLhelveticaFont
                                 })
                             } else {
-                                await newWAVLfirstPage.drawText(fixtures[i][17][k][0].toUpperCase(), {
+                                await newWAVLfirstPage.drawText(fixtures[i][17][k][0][0].toUpperCase(), {
                                     x: 355,
                                     y: 716-((15.75*(k-Math.ceil(fixtures[i][17].length / 2)))),
                                     size: 6,
@@ -1388,15 +1489,15 @@ async function modifyPdf(fix, dates) {
 
                             // surname, second column
                             //console.log(fixtures[i][17][k][1].toUpperCase() + ": " + measureText(fixtures[i][17][k][1].toUpperCase(),6))
-                            if (measureText(fixtures[i][17][k][1].toUpperCase(), 6) >= 32){
-                                await newWAVLfirstPage.drawText(fixtures[i][17][k][1].toUpperCase(), {
+                            if (measureText(fixtures[i][17][k][0][1].toUpperCase(), 6) >= 32){
+                                await newWAVLfirstPage.drawText(fixtures[i][17][k][0][1].toUpperCase(), {
                                     x: 355,
                                     y: 716-((15.75*(k-Math.ceil(fixtures[i][17].length / 2))+7.0)),
                                     size: 5,
                                     font: newWAVLhelveticaFont
                                 })
                             } else {
-                                await newWAVLfirstPage.drawText(fixtures[i][17][k][1].toUpperCase(), {
+                                await newWAVLfirstPage.drawText(fixtures[i][17][k][0][1].toUpperCase(), {
                                     x: 355,
                                     y: 716-((15.75*(k-Math.ceil(fixtures[i][17].length / 2))+7.0)),
                                     size: 6,
@@ -1436,15 +1537,15 @@ async function modifyPdf(fix, dates) {
                         if (k < Math.ceil(fixtures[i][18].length / 2)) {
                             // first name, first column
                             //console.log(fixtures[i][18][k][0].toUpperCase() + ": " + measureText(fixtures[i][18][k][0].toUpperCase(),6))
-                            if (measureText(fixtures[i][18][k][0].toUpperCase(), 6) >= 32) {
-                                await newWAVLfirstPage.drawText(fixtures[i][18][k][0].toUpperCase(), {
+                            if (measureText(fixtures[i][18][k][0][0].toUpperCase(), 6) >= 32) {
+                                await newWAVLfirstPage.drawText(fixtures[i][18][k][0][0].toUpperCase(), {
                                     x: 439.5,
                                     y: 716-((15.75*k)),
                                     size: 5,
                                     font: newWAVLhelveticaFont
                                 })
                             } else {
-                                await newWAVLfirstPage.drawText(fixtures[i][18][k][0].toUpperCase(), {
+                                await newWAVLfirstPage.drawText(fixtures[i][18][k][0][0].toUpperCase(), {
                                     x: 439.5,
                                     y: 716-((15.75*k)),
                                     size: 6,
@@ -1455,14 +1556,14 @@ async function modifyPdf(fix, dates) {
                             // surname, first column
                             //console.log(fixtures[i][18][k][1].toUpperCase() + ": " + measureText(fixtures[i][18][k][1].toUpperCase(),6))
                             if (measureText(fixtures[i][18][k][1].toUpperCase(), 6) >= 32) {
-                                await newWAVLfirstPage.drawText(fixtures[i][18][k][1].toUpperCase(), {
+                                await newWAVLfirstPage.drawText(fixtures[i][18][k][0][1].toUpperCase(), {
                                     x: 439.5,
                                     y: 716-((15.75*k+7.0)),
                                     size: 5,
                                     font: newWAVLhelveticaFont
                                 })
                             } else {
-                                await newWAVLfirstPage.drawText(fixtures[i][18][k][1].toUpperCase(), {
+                                await newWAVLfirstPage.drawText(fixtures[i][18][k][0][1].toUpperCase(), {
                                     x: 439.5,
                                     y: 716-((15.75*k+7.0)),
                                     size: 6,
@@ -1472,15 +1573,15 @@ async function modifyPdf(fix, dates) {
                         } else {
                             // first name, second column
                             //console.log(fixtures[i][18][k][0].toUpperCase() + ": " + measureText(fixtures[i][18][k][0].toUpperCase(),6))
-                            if (measureText(fixtures[i][18][k][0].toUpperCase(), 6) >= 32) {
-                                await newWAVLfirstPage.drawText(fixtures[i][18][k][0].toUpperCase(), {
+                            if (measureText(fixtures[i][18][k][0][0].toUpperCase(), 6) >= 32) {
+                                await newWAVLfirstPage.drawText(fixtures[i][18][k][0][0].toUpperCase(), {
                                     x: 519,
                                     y: 716-((15.75*(k-Math.ceil(fixtures[i][18].length / 2)))),
                                     size: 5,
                                     font: newWAVLhelveticaFont
                                 })
                             } else {
-                                await newWAVLfirstPage.drawText(fixtures[i][18][k][0].toUpperCase(), {
+                                await newWAVLfirstPage.drawText(fixtures[i][18][k][0][0].toUpperCase(), {
                                     x: 519,
                                     y: 716-((15.75*(k-Math.ceil(fixtures[i][18].length / 2)))),
                                     size: 6,
@@ -1490,15 +1591,15 @@ async function modifyPdf(fix, dates) {
 
                             // surname, second column
                             //console.log(fixtures[i][18][k][1].toUpperCase() + ": " + measureText(fixtures[i][18][k][1].toUpperCase(),6))
-                            if (measureText(fixtures[i][18][k][1].toUpperCase(), 6) >= 32) {
-                                await newWAVLfirstPage.drawText(fixtures[i][18][k][1].toUpperCase(), {
+                            if (measureText(fixtures[i][18][k][0][1].toUpperCase(), 6) >= 32) {
+                                await newWAVLfirstPage.drawText(fixtures[i][18][k][0][1].toUpperCase(), {
                                     x: 519,
                                     y: 716-((15.75*(k-Math.ceil(fixtures[i][18].length / 2))+7.0)),
                                     size: 5,
                                     font: newWAVLhelveticaFont
                                 })
                             } else {
-                                await newWAVLfirstPage.drawText(fixtures[i][18][k][1].toUpperCase(), {
+                                await newWAVLfirstPage.drawText(fixtures[i][18][k][0][1].toUpperCase(), {
                                     x: 519,
                                     y: 716-((15.75*(k-Math.ceil(fixtures[i][18].length / 2))+7.0)),
                                     size: 6,
@@ -1970,7 +2071,11 @@ function html_to_fixture(venues, leagues, date, all_html) {
                                 _duty = "Previous Loser";
                             }
 
-                            if (match_division[0] == "D" || match_division[0] == "S") {
+                            if (SL_FINALS_DATES.includes(dt) && _duty.length < 4 && match_division.includes("State") && !(match_division.includes("Reserve"))) {
+                                _duty = "Previous Loser";
+                            }
+
+                            if (match_division.includes("Division") || match_division.includes("State")) {
                                 _division = [
                                     __CONFIG__.wavl[match_division].long,
                                     __CONFIG__.wavl[match_division].short,
