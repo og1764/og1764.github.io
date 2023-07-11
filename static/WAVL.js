@@ -312,16 +312,23 @@ function parsePlayerList(players_list, upd_fixtures) {
     }
 
     for (i = 0; i < upd_fixtures.length; i++) {
+        let fixture_date = upd_fixtures[i][12]+"-"+upd_fixtures[i][11]+"-"+upd_fixtures[i][10]
+        let fixture_division = upd_fixtures[i][9]
         let team_a = upd_fixtures[i][6].split(" ")[0];
         let team_b = upd_fixtures[i][7].split(" ")[0];
-        if (Object.keys(dict).includes(team_a) && Object.keys(dict).includes(team_b)) {
-            upd_fixtures[i][17] = dict[team_a];
-            upd_fixtures[i][18] = dict[team_b];
+
+        if (SL_FINALS_DATES.includes(fixture_date) && (fixture_division[0] == "State League Men" || fixture_division[0] == "State League Women")){
+            console.log("lol");
         } else {
-            upd_fixtures[i][17] = [["",""]];
-            upd_fixtures[i][18] = [["",""]];
-            if (Object.keys(dict).includes(team_a)) {upd_fixtures[i][17] = dict[team_a];}
-            if (Object.keys(dict).includes(team_b)) {upd_fixtures[i][18] = dict[team_b];}
+            if (Object.keys(dict).includes(team_a) && Object.keys(dict).includes(team_b)) {
+                upd_fixtures[i][17] = dict[team_a];
+                upd_fixtures[i][18] = dict[team_b];
+            } else {
+                upd_fixtures[i][17] = [["",""]];
+                upd_fixtures[i][18] = [["",""]];
+                if (Object.keys(dict).includes(team_a)) {upd_fixtures[i][17] = dict[team_a];}
+                if (Object.keys(dict).includes(team_b)) {upd_fixtures[i][18] = dict[team_b];}
+            }
         }
     }
     return upd_fixtures;
