@@ -1937,12 +1937,11 @@ async function modifyPdf(fix, dates) {
                 ]
             })
 
-            sheet.columns.forEach(column => {
+            /*sheet.columns.forEach(column => {
                 const lengths = column.values.map(v => v.toString().length);
                 const maxLength = Math.max(...lengths.filter(v => typeof v === 'number'));
-                console.log(maxLength)
-                column.width = maxLength;
-              });
+                column.width = Math.max(5, maxLength+1);
+              }); */
 
             workbook.xlsx.writeBuffer( {
                 base64: true
