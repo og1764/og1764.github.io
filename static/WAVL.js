@@ -1850,6 +1850,7 @@ async function modifyPdf(fix, dates) {
             ["Date", "Venue", "Time", "Div", "Court", "Team A", "Team B", "Duty Team", "Time", "Sets", "Referee 1st", "Qualifications", "Referee 2nd", "Qualifications", "Assessor"]
         ];
         fixtures.sort(time_sorting);
+        let prev_date = ""
         for (var i = 0; i < fixtures.length; i++) {
             // Don't include junior league games in spreadsheet
             if (fixtures[i][9][0][0] == "D" || fixtures[i][9][0][0] == "S"){
@@ -1857,6 +1858,12 @@ async function modifyPdf(fix, dates) {
                 let full_time = fixtures[i][13] + ":" + fixtures[i][14];
                 let crt = fixtures[i][5];
                 
+                if (date != prev_date) {
+                    prev_date = date
+                } else {
+                    date = "";
+                }
+
                 if (!(crt)) {
                     crt = "";
                 } else {
@@ -1867,6 +1874,76 @@ async function modifyPdf(fix, dates) {
                 csv.push([date, fixtures[i][4], full_time, fixtures[i][9][1], crt, fixtures[i][6], fixtures[i][7], fixtures[i][8], "", "", "", "", "", "", ""]);
             }
         }
+
+        //const ExcelJS = require('exceljs');
+        const workbook = new ExcelJS.Workbook();
+        workbook.creator = 'Me';
+        workbook.lastModifiedBy = 'Her';
+        workbook.created = new Date(1985, 8, 30);
+        workbook.modified = new Date();
+        workbook.lastPrinted = new Date(2016, 9, 27);
+
+        const sheet = workbook.addWorksheet('Referee Spreadsheet');
+
+        for (var i = 0; i < csv.length; i++) {
+            sheet.addRow(csv[i])
+        }
+
+        sheet.addConditionalFormatting({
+            ref: '$A$1:$O$199',
+            rules: [
+                {
+                    type: 'expression',
+                    formulae: ['AND(NOT($A2=$A1), LEN($A1)>1)'],
+                    style: {border: {top: {style: 'thin'}}}
+                }
+            ]
+        })
+
+        sheet.addConditionalFormatting({
+            ref: '$A$1:$O$199',
+            rules: [
+                {
+                    type: 'expression',
+                    formulae: ['AND(NOT($B2=$B1), LEN($B2)<1)'],
+                    style: {border: {bottom: {style: 'thin'}}}
+                }
+            ]
+        })
+
+        sheet.addConditionalFormatting({
+            ref: '$B$1:$O$199',
+            rules: [
+                {
+                    type: 'expression',
+                    formulae: ['NOT($B2=$B1)'],
+                    style: {border: {bottom: {style: 'dotted'}}}
+                }
+            ]
+        })
+
+        workbook.xlsx.writeBuffer( {
+            base64: true
+        })
+        .then( function (xls64) {
+            // build anchor tag and attach file (works in chrome)
+            var a = document.createElement("a");
+            var data = new Blob([xls64], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+
+            var url = URL.createObjectURL(data);
+            a.href = url;
+            a.download = "export.xlsx";
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(function() {
+                    document.body.removeChild(a);
+                    window.URL.revokeObjectURL(url);
+                },
+                0);
+        })
+        .catch(function(error) {
+            console.log(error.message);
+        });
 
         try {
             // Download CSV
