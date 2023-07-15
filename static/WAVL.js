@@ -1876,75 +1876,100 @@ async function modifyPdf(fix, dates) {
         }
 
         //const ExcelJS = require('exceljs');
+        var excel_url = "https://og1764.github.io/static/Ref_Template.xlsx";
+        const default_bytes = await fetch(excel_url).then(res => res.arrayBuffer());
         const workbook = new ExcelJS.Workbook();
-        workbook.creator = 'Me';
-        workbook.lastModifiedBy = 'Her';
-        workbook.created = new Date(1985, 8, 30);
-        workbook.modified = new Date();
-        workbook.lastPrinted = new Date(2016, 9, 27);
+        //const excelReader = new FileReader();
+        workbook.xlsx.load(default_bytes)
+            .then(function() {
+            const sheet = workbook.getWorksheet('Referee Spreadsheet');
 
-        const sheet = workbook.addWorksheet('Referee Spreadsheet');
-
-        for (var i = 0; i < csv.length; i++) {
-            sheet.addRow(csv[i])
-        }
-
-        sheet.addConditionalFormatting({
-            ref: '$A$1:$O$199',
-            rules: [
-                {
-                    type: 'expression',
-                    formulae: ['AND(NOT($A2=$A1), LEN($A1)>1)'],
-                    style: {border: {top: {style: 'thin'}}}
+            for (var i = 0; i < csv.length; i++) {
+                let row = sheet.getRow(i+1);
+                for (var j = 0; j < csv[i].length; j++){
+                    row.getCell(j+1).value = csv[i][j]
+                    row.commit()
                 }
-            ]
+                //sheet.insertRow(i,csv[i])
+            }
+
+            sheet.addConditionalFormatting({
+                ref: '$A$1:$O$199',
+                rules: [
+                    {
+                        type: 'expression',
+                        formulae: ['AND(NOT($A2=$A1), LEN($A1)>1)'],
+                        style: {border: {top: {style: 'thin'}}}
+                    }
+                ]
+            })
+
+            sheet.addConditionalFormatting({
+                ref: '$A$1:$O$199',
+                rules: [
+                    {
+                        type: 'expression',
+                        formulae: ['AND(NOT($B2=$B1), LEN($B2)<1)'],
+                        style: {border: {bottom: {style: 'thin'}}}
+                    }
+                ]
+            })
+
+            sheet.addConditionalFormatting({
+                ref: '$B$1:$O$199',
+                rules: [
+                    {
+                        type: 'expression',
+                        formulae: ['NOT($B2=$B1)'],
+                        style: {border: {bottom: {style: 'dotted'}}}
+                    }
+                ]
+            })
+
+            sheet.addConditionalFormatting({
+                ref: '$H$2:$H$199',
+                rules: [
+                    {
+                        type: 'expression',
+                        formulae: ['NOT($H2="Duty Team")'],
+                        style: {font: {'italic': true}}
+                    }
+                ]
+            })
+
+            sheet.columns.forEach(column => {
+                const lengths = column.values.map(v => v.toString().length);
+                const maxLength = Math.max(...lengths.filter(v => typeof v === 'number'));
+                console.log(maxLength)
+                column.width = maxLength;
+              });
+
+            workbook.xlsx.writeBuffer( {
+                base64: true
+            })
+            .then( function (xls64) {
+                // build anchor tag and attach file (works in chrome)
+                var a = document.createElement("a");
+                var data = new Blob([xls64], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+
+                var url = URL.createObjectURL(data);
+                a.href = url;
+                let filename = "Runsheet" + dates + ".xlsx";
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                setTimeout(function() {
+                        document.body.removeChild(a);
+                        window.URL.revokeObjectURL(url);
+                    },
+                    0);
+            })
+            .catch(function(error) {
+                console.log(error.message);
+            });
         })
 
-        sheet.addConditionalFormatting({
-            ref: '$A$1:$O$199',
-            rules: [
-                {
-                    type: 'expression',
-                    formulae: ['AND(NOT($B2=$B1), LEN($B2)<1)'],
-                    style: {border: {bottom: {style: 'thin'}}}
-                }
-            ]
-        })
-
-        sheet.addConditionalFormatting({
-            ref: '$B$1:$O$199',
-            rules: [
-                {
-                    type: 'expression',
-                    formulae: ['NOT($B2=$B1)'],
-                    style: {border: {bottom: {style: 'dotted'}}}
-                }
-            ]
-        })
-
-        workbook.xlsx.writeBuffer( {
-            base64: true
-        })
-        .then( function (xls64) {
-            // build anchor tag and attach file (works in chrome)
-            var a = document.createElement("a");
-            var data = new Blob([xls64], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
-
-            var url = URL.createObjectURL(data);
-            a.href = url;
-            a.download = "export.xlsx";
-            document.body.appendChild(a);
-            a.click();
-            setTimeout(function() {
-                    document.body.removeChild(a);
-                    window.URL.revokeObjectURL(url);
-                },
-                0);
-        })
-        .catch(function(error) {
-            console.log(error.message);
-        });
-
+        /*
         try {
             // Download CSV
             let csvContent = "data:text/csv;charset=utf-8," + csv.map(e => e.join(",")).join("\n");
@@ -1958,7 +1983,7 @@ async function modifyPdf(fix, dates) {
             link.click();
         } catch (e) {
             console.log(e)
-        }
+        }*/
     }
     return await total;
 }
