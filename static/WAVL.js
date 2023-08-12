@@ -1937,6 +1937,95 @@ async function modifyPdf(fix, dates) {
                 ]
             })
 
+	    sheet.addConditionalFormatting({
+                ref: '$E$2:$H$199',
+                rules: [
+                    {
+                        type: 'expression',
+                        formulae: ['NOT($H2="Court")'],
+                        style: {alignment: { vertical: 'middle', horizontal: 'center' }}
+                    }
+                ]
+            })
+
+	    // Maybe experiment with having these in the config file, and looping over them?
+	    sheet.addConditionalFormatting({
+                ref: '$B$2:$B$199',
+                rules: [
+                    {
+                        type: 'expression',
+                        formulae: ['OR($B2="Loftus")'],
+                        style: {fill: type: 'pattern', pattern:'solid', fgColor:{argb:'00B0F0'}}
+                    }
+                ]
+            })
+
+	    sheet.addConditionalFormatting({
+                ref: '$B$2:$B$199',
+                rules: [
+                    {
+                        type: 'expression',
+                        formulae: ['OR($B2="Cockburn")'],
+                        style: {fill: type: 'pattern', pattern:'solid', fgColor:{argb:'AFAFAF'}}
+                    }
+                ]
+            })
+
+	    sheet.addConditionalFormatting({
+                ref: '$B$2:$B$199',
+                rules: [
+                    {
+                        type: 'expression',
+                        formulae: ['OR($B2="Warwick")'],
+                        style: {fill: type: 'pattern', pattern:'solid', fgColor:{argb:'00B050'}}
+                    }
+                ]
+            })
+
+	    sheet.addConditionalFormatting({
+                ref: '$B$2:$B$199',
+                rules: [
+                    {
+                        type: 'expression',
+                        formulae: ['OR($B2="Kingsway", $B2="The Rise", $B2="Bendat")'],
+                        style: {fill: type: 'pattern', pattern:'solid', fgColor:{argb:'FFC000'}}
+                    }
+                ]
+            })
+
+	    sheet.addConditionalFormatting({
+                ref: '$B$2:$B$199',
+                rules: [
+                    {
+                        type: 'expression',
+                        formulae: ['OR($B2="Curtin Stadium")'],
+                        style: {fill: type: 'pattern', pattern:'solid', fgColor:{argb:'0CFFFF'}}
+                    }
+                ]
+            })
+
+	    sheet.addConditionalFormatting({
+                ref: '$B$2:$B$199',
+                rules: [
+                    {
+                        type: 'expression',
+                        formulae: ['OR($B2="Aquinas")'],
+                        style: {fill: type: 'pattern', pattern:'solid', fgColor:{argb:'FF18FF'}}
+                    }
+                ]
+            })
+
+	    sheet.addConditionalFormatting({
+                ref: '$B$2:$B$199',
+                rules: [
+                    {
+                        type: 'expression',
+                        formulae: ['OR($B2="Melville Leisure Centre")'],
+                        style: {fill: type: 'pattern', pattern:'solid', fgColor:{argb:'00FF00'}}
+                    }
+                ]
+            })
+
             /*sheet.columns.forEach(column => {
                 const lengths = column.values.map(v => v.toString().length);
                 const maxLength = Math.max(...lengths.filter(v => typeof v === 'number'));
