@@ -2320,6 +2320,8 @@ function html_to_fixture(venues, leagues, date, all_html) {
                                     console.log("BYE: " + zero_venue_split);
                                 } else {
                                     console.log("UNUSED VENUE\n***")
+				    console.log(venue)
+				    console.log(venue_split)
                                     console.log(zero_venue_split)
                                     console.log("***")
                                 }
