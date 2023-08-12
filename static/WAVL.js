@@ -1938,7 +1938,7 @@ async function modifyPdf(fix, dates) {
             })
 
 	    sheet.addConditionalFormatting({
-                ref: '$E$2:$H$199',
+                ref: '$E$2:$E$199',
                 rules: [
                     {
                         type: 'expression',
@@ -1955,7 +1955,7 @@ async function modifyPdf(fix, dates) {
                     {
                         type: 'expression',
                         formulae: ['OR($B2="Loftus")'],
-                        style: {fill: {type: 'pattern', pattern:'solid', fgColor:{argb:'00B0F0'}}}
+                        style: {fill: {type: 'pattern', pattern:'solid', fgColor:{argb:'00B0F0'}, bgColor:{argb:'00B0F0'}}}
                     }
                 ]
             })
@@ -1966,7 +1966,7 @@ async function modifyPdf(fix, dates) {
                     {
                         type: 'expression',
                         formulae: ['OR($B2="Cockburn")'],
-                        style: {fill: {type: 'pattern', pattern:'solid', fgColor:{argb:'AFAFAF'}}}
+                        style: {fill: {type: 'pattern', pattern:'solid', fgColor:{argb:'AFAFAF'}, bgColor:{argb:'AFAFAF'}}}
                     }
                 ]
             })
@@ -1977,7 +1977,7 @@ async function modifyPdf(fix, dates) {
                     {
                         type: 'expression',
                         formulae: ['OR($B2="Warwick")'],
-                        style: {fill: {type: 'pattern', pattern:'solid', fgColor:{argb:'00B050'}}}
+                        style: {fill: {type: 'pattern', pattern:'solid', fgColor:{argb:'00B050'}, bgColor:{argb:'00B050'}}}
                     }
                 ]
             })
@@ -1988,7 +1988,7 @@ async function modifyPdf(fix, dates) {
                     {
                         type: 'expression',
                         formulae: ['OR($B2="Kingsway", $B2="The Rise", $B2="Bendat")'],
-                        style: {fill: {type: 'pattern', pattern:'solid', fgColor:{argb:'FFC000'}}}
+                        style: {fill: {type: 'pattern', pattern:'solid', fgColor:{argb:'FFC000'}, bgColor:{argb:'FFC000'}}}
                     }
                 ]
             })
@@ -1999,7 +1999,7 @@ async function modifyPdf(fix, dates) {
                     {
                         type: 'expression',
                         formulae: ['OR($B2="Curtin Stadium")'],
-                        style: {fill: {type: 'pattern', pattern:'solid', fgColor:{argb:'0CFFFF'}}}
+                        style: {fill: {type: 'pattern', pattern:'solid', fgColor:{argb:'0CFFFF'}, bgColor:{argb:'0CFFFF'}}}
                     }
                 ]
             })
@@ -2010,7 +2010,7 @@ async function modifyPdf(fix, dates) {
                     {
                         type: 'expression',
                         formulae: ['OR($B2="Aquinas")'],
-                        style: {fill: {type: 'pattern', pattern:'solid', fgColor:{argb:'FF18FF'}}}
+                        style: {fill: {type: 'pattern', pattern:'solid', fgColor:{argb:'FF18FF'}, bgColor:{argb:'FF18FF'}}}
                     }
                 ]
             })
@@ -2021,7 +2021,7 @@ async function modifyPdf(fix, dates) {
                     {
                         type: 'expression',
                         formulae: ['OR($B2="Melville Leisure Centre")'],
-                        style: {fill: {type: 'pattern', pattern:'solid', fgColor:{argb:'00FF00'}}}
+                        style: {fill: {type: 'pattern', pattern:'solid', fgColor:{argb:'00FF00'}, bgColor:{argb:'00FF00'}}}
                     }
                 ]
             })
