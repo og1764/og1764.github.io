@@ -2020,7 +2020,7 @@ async function modifyPdf(fix, dates) {
                 rules: [
                     {
                         type: 'expression',
-                        formulae: ['OR($B2="Melville Leisure Centre")'],
+                        formulae: ['OR($B2="Melville Leisure Centre", $B2="Melville LeisureFit")'],
                         style: {fill: {type: 'pattern', pattern:'solid', fgColor:{argb:'00FF00'}, bgColor:{argb:'00FF00'}}}
                     }
                 ]
