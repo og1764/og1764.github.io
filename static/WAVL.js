@@ -707,7 +707,7 @@ async function modifyPdf(fix, dates) {
         var extraWAVLhelveticaBold = await extraWAVLpdfDoc.embedFont(PDFLib.StandardFonts.HelveticaBold);
         var extraWAVLpages = await extraWAVLpdfDoc.getPages();
         var extraWAVLfirstPage = await extraWAVLpages[0];
-        var extraWAVLbackpage = await extraWAVLpages[1];
+        var extraWAVLbackPage = await extraWAVLpages[1];
 
 
         //var JLexistingPdfBytes = await fetch(JLurl).then(resp => resp.arrayBuffer());
@@ -1263,7 +1263,7 @@ async function modifyPdf(fix, dates) {
                     size: 10,
                     font: extraWAVLhelveticaFont
                 })
-                await extraWAVLbackpage.drawText(__venues__[fixtures[i][0]], {
+                await extraWAVLbackPage.drawText(__venues__[fixtures[i][0]], {
                     x: parseInt((275 - measureText(__venues__[fixtures[i][0]], 10)).toString()),
                     y: 81,
                     size: 10,
@@ -1278,7 +1278,7 @@ async function modifyPdf(fix, dates) {
                         size: 13,
                         font: extraWAVLhelveticaBold
                     })
-                    await extraWAVLbackpage.drawText(fixtures[i][5], {
+                    await extraWAVLbackPage.drawText(fixtures[i][5], {
                         x: parseInt((388 - measureBold(fixtures[i][5], 13).toString()).toString()),
                         y: 81,
                         size: 13,
@@ -1299,7 +1299,7 @@ async function modifyPdf(fix, dates) {
                             size: 13,
                             font: extraWAVLhelveticaBold
                         })
-                        await extraWAVLbackpage.drawText(time, {
+                        await extraWAVLbackPage.drawText(time, {
                             x: parseInt((457 - measureBold(time, 13)).toString()),
                             y: 81,
                             size: 13,
@@ -1348,7 +1348,7 @@ async function modifyPdf(fix, dates) {
                     size: 14,
                     font: extraWAVLhelveticaFont
                 })
-                await extraWAVLbackpage.drawText(fixtures[i][8], {
+                await extraWAVLbackPage.drawText(fixtures[i][8], {
                     x: parseInt((332 - measureText(fixtures[i][8], 14)).toString()),
                     y: 97,
                     size: 14,
@@ -1395,13 +1395,13 @@ async function modifyPdf(fix, dates) {
                         size: 10,
                         font: extraWAVLhelveticaBold
                     })
-                    await extraWAVLbackpage.drawText(fixtures[i][6], {
+                    await extraWAVLbackPage.drawText(fixtures[i][6], {
                         x: parseInt((262 - measureText(fixtures[i][6], 10)).toString()),
                         y: 113.5,
                         size: 10,
                         font: extraWAVLhelveticaBold
                     })
-                    await extraWAVLbackpage.drawText(fixtures[i][7], {
+                    await extraWAVLbackPage.drawText(fixtures[i][7], {
                         x: parseInt((480 - measureText(fixtures[i][7], 10)).toString()),
                         y: 113.5,
                         size: 10,
@@ -1421,13 +1421,13 @@ async function modifyPdf(fix, dates) {
                         size: 14,
                         font: extraWAVLhelveticaBold
                     })
-                    await extraWAVLbackpage.drawText(fixtures[i][6], {
+                    await extraWAVLbackPage.drawText(fixtures[i][6], {
                         x: parseInt((260 - measureText(fixtures[i][6], 14)).toString()),
                         y: 113.5,
                         size: 14,
                         font: extraWAVLhelveticaBold
                     })
-                    await extraWAVLbackpage.drawText(fixtures[i][7], {
+                    await extraWAVLbackPage.drawText(fixtures[i][7], {
                         x: parseInt((480 - measureText(fixtures[i][7], 14)).toString()),
                         y: 113.5,
                         size: 14,
