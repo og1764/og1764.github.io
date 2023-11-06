@@ -700,12 +700,14 @@ async function modifyPdf(fix, dates) {
         var newWAVLhelveticaBold = await newWAVLpdfDoc.embedFont(PDFLib.StandardFonts.HelveticaBold);
         var newWAVLpages = await newWAVLpdfDoc.getPages();
         var newWAVLfirstPage = await newWAVLpages[0];
+        var newWAVLbackpage = await newWAVLpages[1];
 
         var extraWAVLpdfDoc = await PDFLib.PDFDocument.load(extraWAVLexistingPdfBytes);
         var extraWAVLhelveticaFont = await extraWAVLpdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
         var extraWAVLhelveticaBold = await extraWAVLpdfDoc.embedFont(PDFLib.StandardFonts.HelveticaBold);
         var extraWAVLpages = await extraWAVLpdfDoc.getPages();
         var extraWAVLfirstPage = await extraWAVLpages[0];
+        var extraWAVLbackpage = await extraWAVLpages[1];
 
 
         //var JLexistingPdfBytes = await fetch(JLurl).then(resp => resp.arrayBuffer());
@@ -1261,12 +1263,24 @@ async function modifyPdf(fix, dates) {
                     size: 10,
                     font: extraWAVLhelveticaFont
                 })
+                await extraWAVLbackpage.drawText(__venues__[fixtures[i][0]], {
+                    x: parseInt((275 - measureText(__venues__[fixtures[i][0]], 10)).toString()),
+                    y: 81,
+                    size: 10,
+                    font: extraWAVLhelveticaFont
+                })
 
                 try {
                     // Court Number
                     await extraWAVLfirstPage.drawText(fixtures[i][5], {
                         x: parseInt((388 - measureBold(fixtures[i][5], 13).toString()).toString()),
                         y: 781,
+                        size: 13,
+                        font: extraWAVLhelveticaBold
+                    })
+                    await extraWAVLbackpage.drawText(fixtures[i][5], {
+                        x: parseInt((388 - measureBold(fixtures[i][5], 13).toString()).toString()),
+                        y: 81,
                         size: 13,
                         font: extraWAVLhelveticaBold
                     })
@@ -1285,6 +1299,12 @@ async function modifyPdf(fix, dates) {
                             size: 13,
                             font: extraWAVLhelveticaBold
                         })
+                        await extraWAVLbackpage.drawText(time, {
+                            x: parseInt((457 - measureBold(time, 13)).toString()),
+                            y: 81,
+                            size: 13,
+                            font: extraWAVLhelveticaBold
+                        })
                     }
                 } catch (e) {
                     // catch - continue
@@ -1300,6 +1320,12 @@ async function modifyPdf(fix, dates) {
                     size: 13,
                     font: extraWAVLhelveticaBold
                 })
+                await extraWAVLbackPage.drawText(ddmmyy, {
+                    x: parseInt((546 - measureBold(ddmmyy, 13)).toString()),
+                    y: 81,
+                    size: 13,
+                    font: extraWAVLhelveticaBold
+                })
 
                 // Division (short)
                 await extraWAVLfirstPage.drawText(fixtures[i][9][1], {
@@ -1308,11 +1334,23 @@ async function modifyPdf(fix, dates) {
                     size: 13,
                     font: extraWAVLhelveticaBold
                 })
+                await extraWAVLbackPage.drawText(fixtures[i][9][1], {
+                    x: parseInt((528 - measureBold(fixtures[i][9][1], 13)).toString()),
+                    y: 97,
+                    size: 13,
+                    font: extraWAVLhelveticaBold
+                })
 
                 // Duty team
                 await extraWAVLfirstPage.drawText(fixtures[i][8], {
                     x: parseInt((332 - measureText(fixtures[i][8], 14)).toString()),
                     y: 797,
+                    size: 14,
+                    font: extraWAVLhelveticaFont
+                })
+                await extraWAVLbackpage.drawText(fixtures[i][8], {
+                    x: parseInt((332 - measureText(fixtures[i][8], 14)).toString()),
+                    y: 97,
                     size: 14,
                     font: extraWAVLhelveticaFont
                 })
@@ -1357,6 +1395,18 @@ async function modifyPdf(fix, dates) {
                         size: 10,
                         font: extraWAVLhelveticaBold
                     })
+                    await extraWAVLbackpage.drawText(fixtures[i][6], {
+                        x: parseInt((262 - measureText(fixtures[i][6], 10)).toString()),
+                        y: 113.5,
+                        size: 10,
+                        font: extraWAVLhelveticaBold
+                    })
+                    await extraWAVLbackpage.drawText(fixtures[i][7], {
+                        x: parseInt((480 - measureText(fixtures[i][7], 10)).toString()),
+                        y: 113.5,
+                        size: 10,
+                        font: extraWAVLhelveticaBold
+                    })
                 } else {
                     extraWAVLpdfDoc.TextAlignment = 1;
                     await extraWAVLfirstPage.drawText(fixtures[i][6], {
@@ -1368,6 +1418,18 @@ async function modifyPdf(fix, dates) {
                     await extraWAVLfirstPage.drawText(fixtures[i][7], {
                         x: parseInt((480 - measureText(fixtures[i][7], 14)).toString()),
                         y: 813.5,
+                        size: 14,
+                        font: extraWAVLhelveticaBold
+                    })
+                    await extraWAVLbackpage.drawText(fixtures[i][6], {
+                        x: parseInt((260 - measureText(fixtures[i][6], 14)).toString()),
+                        y: 113.5,
+                        size: 14,
+                        font: extraWAVLhelveticaBold
+                    })
+                    await extraWAVLbackpage.drawText(fixtures[i][7], {
+                        x: parseInt((480 - measureText(fixtures[i][7], 14)).toString()),
+                        y: 113.5,
                         size: 14,
                         font: extraWAVLhelveticaBold
                     })
@@ -1639,12 +1701,24 @@ async function modifyPdf(fix, dates) {
                     size: 10,
                     font: newWAVLhelveticaFont
                 })
+                await newWAVLbackpage.drawText(__venues__[fixtures[i][0]], {
+                    x: parseInt((275 - measureText(__venues__[fixtures[i][0]], 10)).toString()),
+                    y: 81,
+                    size: 10,
+                    font: newWAVLhelveticaFont
+                })
 
                 try {
                     // Court Number
                     await newWAVLfirstPage.drawText(fixtures[i][5], {
                         x: parseInt((388.5 - measureBold(fixtures[i][5], 13).toString()).toString()),
                         y: 767.5,
+                        size: 13,
+                        font: newWAVLhelveticaBold
+                    })
+                    await newWAVLbackpage.drawText(fixtures[i][5], {
+                        x: parseInt((388.5 - measureBold(fixtures[i][5], 13).toString()).toString()),
+                        y: 81,
                         size: 13,
                         font: newWAVLhelveticaBold
                     })
@@ -1663,6 +1737,12 @@ async function modifyPdf(fix, dates) {
                             size: 13,
                             font: newWAVLhelveticaBold
                         })
+                        await newWAVLbackpage.drawText(time, {
+                            x: parseInt((459 - measureBold(time, 13)).toString()),
+                            y: 81,
+                            size: 13,
+                            font: newWAVLhelveticaBold
+                        })
                     }
                 } catch (e) {
                     // catch - continue
@@ -1678,6 +1758,12 @@ async function modifyPdf(fix, dates) {
                     size: 13,
                     font: newWAVLhelveticaBold
                 })
+                await newWAVLbackpage.drawText(ddmmyy, {
+                    x: parseInt((547 - measureBold(ddmmyy, 13)).toString()),
+                    y: 81,
+                    size: 13,
+                    font: newWAVLhelveticaBold
+                })
 
                 // Division (short)
                 await newWAVLfirstPage.drawText(fixtures[i][9][1], {
@@ -1686,11 +1772,23 @@ async function modifyPdf(fix, dates) {
                     size: 13,
                     font: newWAVLhelveticaBold
                 })
+                await newWAVLbackpage.drawText(fixtures[i][9][1], {
+                    x: parseInt((529 - measureBold(fixtures[i][9][1], 13)).toString()),
+                    y: 97,
+                    size: 13,
+                    font: newWAVLhelveticaBold
+                })
 
                 // Duty team
                 await newWAVLfirstPage.drawText(fixtures[i][8], {
                     x: parseInt((332 - measureText(fixtures[i][8], 14)).toString()),
                     y: 784.5,
+                    size: 14,
+                    font: newWAVLhelveticaFont
+                })
+                await newWAVLbackpage.drawText(fixtures[i][8], {
+                    x: parseInt((332 - measureText(fixtures[i][8], 14)).toString()),
+                    y: 97,
                     size: 14,
                     font: newWAVLhelveticaFont
                 })
@@ -1735,6 +1833,18 @@ async function modifyPdf(fix, dates) {
                         size: 10,
                         font: newWAVLhelveticaBold
                     })
+                    await newWAVLbackpage.drawText(fixtures[i][6], {
+                        x: parseInt((262 - measureText(fixtures[i][6], 10)).toString()),
+                        y: 113.5,
+                        size: 10,
+                        font: newWAVLhelveticaBold
+                    })
+                    await newWAVLbackpage.drawText(fixtures[i][7], {
+                        x: parseInt((480 - measureText(fixtures[i][7], 10)).toString()),
+                        y: 113.5,
+                        size: 10,
+                        font: newWAVLhelveticaBold
+                    })
                 } else {
                     newWAVLpdfDoc.TextAlignment = 1;
                     await newWAVLfirstPage.drawText(fixtures[i][6], {
@@ -1746,6 +1856,18 @@ async function modifyPdf(fix, dates) {
                     await newWAVLfirstPage.drawText(fixtures[i][7], {
                         x: parseInt((480 - measureText(fixtures[i][7], 14)).toString()),
                         y: 804.5,
+                        size: 14,
+                        font: newWAVLhelveticaBold
+                    })
+                    await newWAVLbackpage.drawText(fixtures[i][6], {
+                        x: parseInt((262 - measureText(fixtures[i][6], 14)).toString()),
+                        y: 113.5,
+                        size: 14,
+                        font: newWAVLhelveticaBold
+                    })
+                    await newWAVLbackpage.drawText(fixtures[i][7], {
+                        x: parseInt((480 - measureText(fixtures[i][7], 14)).toString()),
+                        y: 113.5,
                         size: 14,
                         font: newWAVLhelveticaBold
                     })
