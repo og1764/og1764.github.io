@@ -1497,6 +1497,7 @@ async function modifyPdf(fix, dates) {
                         if (k < Math.ceil(fixtures[i][17].length / 2)) {
                             // first name, first column
                             //console.log(fixtures[i][17][k][0].toUpperCase() + ": " + measureText(fixtures[i][17][k][0].toUpperCase(),6))
+                            console.log(fixtures[i][17][k][0])
                             if (measureText(fixtures[i][17][k][0][0].toUpperCase(), 6) >= 32) {
                                 await newWAVLfirstPage.drawText(fixtures[i][17][k][0][0].toUpperCase(), {
                                     x: 276.25,
