@@ -1265,7 +1265,7 @@ async function modifyPdf(fix, dates) {
                 })
                 await extraWAVLbackPage.drawText(__venues__[fixtures[i][0]], {
                     x: parseInt((275 - measureText(__venues__[fixtures[i][0]], 10)).toString()),
-                    y: 81,
+                    y: 781,
                     size: 10,
                     font: extraWAVLhelveticaFont
                 })
@@ -1280,7 +1280,7 @@ async function modifyPdf(fix, dates) {
                     })
                     await extraWAVLbackPage.drawText(fixtures[i][5], {
                         x: parseInt((388 - measureBold(fixtures[i][5], 13).toString()).toString()),
-                        y: 81,
+                        y: 781,
                         size: 13,
                         font: extraWAVLhelveticaBold
                     })
@@ -1301,7 +1301,7 @@ async function modifyPdf(fix, dates) {
                         })
                         await extraWAVLbackPage.drawText(time, {
                             x: parseInt((457 - measureBold(time, 13)).toString()),
-                            y: 81,
+                            y: 781,
                             size: 13,
                             font: extraWAVLhelveticaBold
                         })
@@ -1322,7 +1322,7 @@ async function modifyPdf(fix, dates) {
                 })
                 await extraWAVLbackPage.drawText(ddmmyy, {
                     x: parseInt((546 - measureBold(ddmmyy, 13)).toString()),
-                    y: 81,
+                    y: 781,
                     size: 13,
                     font: extraWAVLhelveticaBold
                 })
@@ -1336,7 +1336,7 @@ async function modifyPdf(fix, dates) {
                 })
                 await extraWAVLbackPage.drawText(fixtures[i][9][1], {
                     x: parseInt((528 - measureBold(fixtures[i][9][1], 13)).toString()),
-                    y: 97,
+                    y: 797,
                     size: 13,
                     font: extraWAVLhelveticaBold
                 })
@@ -1350,7 +1350,7 @@ async function modifyPdf(fix, dates) {
                 })
                 await extraWAVLbackPage.drawText(fixtures[i][8], {
                     x: parseInt((332 - measureText(fixtures[i][8], 14)).toString()),
-                    y: 97,
+                    y: 797,
                     size: 14,
                     font: extraWAVLhelveticaFont
                 })
@@ -1397,13 +1397,13 @@ async function modifyPdf(fix, dates) {
                     })
                     await extraWAVLbackPage.drawText(fixtures[i][6], {
                         x: parseInt((262 - measureText(fixtures[i][6], 10)).toString()),
-                        y: 113.5,
+                        y: 813.5,
                         size: 10,
                         font: extraWAVLhelveticaBold
                     })
                     await extraWAVLbackPage.drawText(fixtures[i][7], {
                         x: parseInt((480 - measureText(fixtures[i][7], 10)).toString()),
-                        y: 113.5,
+                        y: 118133.5,
                         size: 10,
                         font: extraWAVLhelveticaBold
                     })
@@ -1423,13 +1423,13 @@ async function modifyPdf(fix, dates) {
                     })
                     await extraWAVLbackPage.drawText(fixtures[i][6], {
                         x: parseInt((260 - measureText(fixtures[i][6], 14)).toString()),
-                        y: 113.5,
+                        y: 813.5,
                         size: 14,
                         font: extraWAVLhelveticaBold
                     })
                     await extraWAVLbackPage.drawText(fixtures[i][7], {
                         x: parseInt((480 - measureText(fixtures[i][7], 14)).toString()),
-                        y: 113.5,
+                        y: 813.5,
                         size: 14,
                         font: extraWAVLhelveticaBold
                     })
@@ -1497,6 +1497,8 @@ async function modifyPdf(fix, dates) {
                         if (k < Math.ceil(fixtures[i][17].length / 2)) {
                             // first name, first column
                             //console.log(fixtures[i][17][k][0].toUpperCase() + ": " + measureText(fixtures[i][17][k][0].toUpperCase(),6))
+                            console.log(k)
+                            console.log(i)
                             console.log(fixtures[i][17][k][0])
                             if (measureText(fixtures[i][17][k][0][0].toUpperCase(), 6) >= 32) {
                                 await newWAVLfirstPage.drawText(fixtures[i][17][k][0][0].toUpperCase(), {
@@ -1704,7 +1706,7 @@ async function modifyPdf(fix, dates) {
                 })
                 await newWAVLbackpage.drawText(__venues__[fixtures[i][0]], {
                     x: parseInt((275 - measureText(__venues__[fixtures[i][0]], 10)).toString()),
-                    y: 81,
+                    y: 767.5,
                     size: 10,
                     font: newWAVLhelveticaFont
                 })
@@ -1719,7 +1721,7 @@ async function modifyPdf(fix, dates) {
                     })
                     await newWAVLbackpage.drawText(fixtures[i][5], {
                         x: parseInt((388.5 - measureBold(fixtures[i][5], 13).toString()).toString()),
-                        y: 81,
+                        y: 767.5,
                         size: 13,
                         font: newWAVLhelveticaBold
                     })
@@ -1740,7 +1742,7 @@ async function modifyPdf(fix, dates) {
                         })
                         await newWAVLbackpage.drawText(time, {
                             x: parseInt((459 - measureBold(time, 13)).toString()),
-                            y: 81,
+                            y: 767.5,
                             size: 13,
                             font: newWAVLhelveticaBold
                         })
@@ -1761,7 +1763,7 @@ async function modifyPdf(fix, dates) {
                 })
                 await newWAVLbackpage.drawText(ddmmyy, {
                     x: parseInt((547 - measureBold(ddmmyy, 13)).toString()),
-                    y: 81,
+                    y: 767.5,
                     size: 13,
                     font: newWAVLhelveticaBold
                 })
@@ -1775,7 +1777,7 @@ async function modifyPdf(fix, dates) {
                 })
                 await newWAVLbackpage.drawText(fixtures[i][9][1], {
                     x: parseInt((529 - measureBold(fixtures[i][9][1], 13)).toString()),
-                    y: 97,
+                    y: 784.5,
                     size: 13,
                     font: newWAVLhelveticaBold
                 })
@@ -1789,7 +1791,7 @@ async function modifyPdf(fix, dates) {
                 })
                 await newWAVLbackpage.drawText(fixtures[i][8], {
                     x: parseInt((332 - measureText(fixtures[i][8], 14)).toString()),
-                    y: 97,
+                    y: 784.5,
                     size: 14,
                     font: newWAVLhelveticaFont
                 })
@@ -1836,13 +1838,13 @@ async function modifyPdf(fix, dates) {
                     })
                     await newWAVLbackpage.drawText(fixtures[i][6], {
                         x: parseInt((262 - measureText(fixtures[i][6], 10)).toString()),
-                        y: 113.5,
+                        y: 804.5,
                         size: 10,
                         font: newWAVLhelveticaBold
                     })
                     await newWAVLbackpage.drawText(fixtures[i][7], {
                         x: parseInt((480 - measureText(fixtures[i][7], 10)).toString()),
-                        y: 113.5,
+                        y: 804.5,
                         size: 10,
                         font: newWAVLhelveticaBold
                     })
@@ -1862,13 +1864,13 @@ async function modifyPdf(fix, dates) {
                     })
                     await newWAVLbackpage.drawText(fixtures[i][6], {
                         x: parseInt((262 - measureText(fixtures[i][6], 14)).toString()),
-                        y: 113.5,
+                        y: 804.5,
                         size: 14,
                         font: newWAVLhelveticaBold
                     })
                     await newWAVLbackpage.drawText(fixtures[i][7], {
                         x: parseInt((480 - measureText(fixtures[i][7], 14)).toString()),
-                        y: 113.5,
+                        y: 804.5,
                         size: 14,
                         font: newWAVLhelveticaBold
                     })
