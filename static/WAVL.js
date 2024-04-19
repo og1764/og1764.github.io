@@ -523,11 +523,17 @@ function pdf_init(venues, wavl, wavjl, dates) {
  * @returns 
  */
 async function get_single_fixture(start_date, end_date) {
+    console.log(start_date);
+    console.log(end_date);
     axios;
-    const head = 'https://cors-anywhere-og-v5kf.onrender.com/vwa.bracketpal.com/dailyform/range?start_date=';
-    var url = head + start_date.toString() + "&end_date=" + end_date.toString();
-    console.log("get_single_fixture: " + url);
-    return await axios.get(url);
+    //const head = 'https://cors-anywhere-og-v5kf.onrender.com/vwa.bracketpal.com/dailyform/range?start_date=';
+    //var url = head + start_date.toString() + "&end_date=" + end_date.toString();
+    //console.log("get_single_fixture: " + url);
+    //return await axios.get(url);
+    const head = "https://cors-anywhere-og-v5kf.onrender.com/volleyball.exposureevents.com/220866/wavl/documents/schedule?layout=datetime"
+    console.log("get_single_fixture -" + head)
+    return await axios.get(head);
+
 }
 
 /**
@@ -599,10 +605,11 @@ function addTeamList(player_names_html, fixtures) {
  */
 async function individual_fixture(id, start_date) {
     axios;
-    const head = 'https://cors-anywhere-og-v5kf.onrender.com/vwa.bracketpal.com/dailyform/';
-    var url = head + id.toString() + "/" + start_date.toString();
-    console.log("get_single_fixture: " + url);
-    return await axios.get(url);
+    //const head = 'https://cors-anywhere-og-v5kf.onrender.com/vwa.bracketpal.com/dailyform/';
+    //var url = head + id.toString() + "/" + start_date.toString();
+    const head = "https://cors-anywhere-og-v5kf.onrender.com/volleyball.exposureevents.com/220866/wavl/documents/schedule?layout=datetime"
+    console.log("get_single_fixture: " + head);
+    return await axios.get(head);
 }
 
 /**
@@ -2291,10 +2298,55 @@ function html_to_fixture(venues, leagues, date, all_html) {
     let venue_usage = temporary[0];
     let all_venues = add_aliases(Object.keys(__CONFIG__.venues));
     const NamesArr = leagues.flat();
-
+    console.log(all_html);
     for (let x = 0; x < all_html.length; x++) {
         let parser = new DOMParser();
         let htmlDoc = parser.parseFromString(all_html[x].request.responseText, 'text/html');
+        
+        // ----------------------------------
+        
+        let all_tables2 = document.getElementsByClassName("division-schedule")
+        let numFix2 = all_tables2.length;
+        document.getElements
+
+        //console.log(all_tables)
+        console.log(numFix2)
+        let month_lookup = {
+            "January":"01",
+        "Febuary":"02",
+        "March":"03",
+        "April":"04",
+        "May":"05",
+        "June":"06",
+        "July":"07",
+        "August":"08",
+        "September":"09",
+        "October":"10",
+        "November":"11",
+        "December":"12"
+        }
+
+        for (let i = 0; i < numFix; i = i + 1) {
+            let date = all_tables2[i].getElementsByTagName("h3")//.textContent
+        console.log(date[0].innerText)
+        let actual_date = date[0].innerText
+        
+        let yyyy = actual_date.slice(-4)
+        let dd = actual_date.split(",")[1].slice(-2).replace(" ","0")
+        let raw_month = actual_date.split(",")[1].slice(0,-2).trim()
+        let month = month_lookup[raw_month]
+        console.log(yyyy)
+        console.log(dd)
+        console.log(month)
+        if (true) { // if date is correct
+        
+        
+        }
+        }
+
+                
+        // ----------------------------------
+        
         let all_tables = htmlDoc.getElementsByTagName("table")
         let numFix = all_tables.length;
 		
