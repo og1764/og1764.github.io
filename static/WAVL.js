@@ -264,10 +264,81 @@ function getDates(){
  */
 async function getPlayerList() {
     axios;
-    const head = 'https://cors-anywhere-og-v5kf.onrender.com/vwa.bracketpal.com/leaders/season/';
+    //const head = "https://cors-anywhere-og-v5kf.onrender.com/volleyball.exposureevents.com/220866/wavl/documents/players"
+    const head = "https://volleyball.exposureevents.com/220866/wavl/documents/players"
+    /*const head = 'https://cors-anywhere-og-v5kf.onrender.com/vwa.bracketpal.com/leaders/season/';
     var url = head + SEASON_ID + "?csv=1";
-    console.log("get_player_list: " + url);
-    return await axios.get(url);
+    console.log("get_player_list: " + url);*/
+    console.log("get_player_list: " + head)
+    return await axios.get(head);
+}
+
+function parsePlayerList(players_list, upd_fixtures) {
+    let parser = new DOMParser();
+    let htmlDoc = parser.parseFromString(players_list[0].request.responseText, 'text/html');
+
+    let all_tables = htmlDoc.getElementsByClassName("team")
+    let numFix = all_tables.length;
+
+    let all_team_lists = {}
+
+    for (let i = 0; i < numFix; i = i + 1) {
+        let division = all_tables[i].getElementsByTagName("h3")[0].textContent
+        let all_divs = all_tables[i].getElementsByClassName("roster")
+        for (let k = 0; k < all_divs.length; k++) {
+            let all_rows = all_divs[k].getElementsByTagName("tr")
+            for (let j = 1; j < all_rows.length; j = j + 1) {
+                let all_td = all_rows[j].getElementsByTagName("td")
+                console.log(all_td)
+                console.log(all_td[1])
+                let player_name = all_td[1].innerText
+                player_name = player_name.replace("\uFFFD","")
+                let team_name = all_td[2].innerText
+                if (!(Object.keys(all_team_lists).includes(team_name))) {
+                    all_team_lists[team_name] = [[split_name(player_name.trim()),5]]
+                } else {
+                    all_team_lists[team_name].push([split_name(player_name.trim()),5])
+                }
+            }
+        }
+    }
+
+    console.log(all_team_lists)
+
+    for (i = 0; i < upd_fixtures.length; i++) {
+        let fixture_date = upd_fixtures[i][12]+"-"+upd_fixtures[i][11]+"-"+upd_fixtures[i][10]
+        let fixture_division = upd_fixtures[i][9]
+        let team_a = upd_fixtures[i][6].toUpperCase()//.split(" ")[0];
+        let team_b = upd_fixtures[i][7].toUpperCase()//.split(" ")[0];
+        console.log(team_a)
+        console.log(team_b)
+        upd_fixtures[i][17] = [["",""]];
+        upd_fixtures[i][18] = [["",""]];
+
+        /*if (SL_FINALS_DATES.includes(fixture_date) && (fixture_division[0] == "State League Men" || fixture_division[0] == "State League Women")){
+            if (Object.keys(all_team_lists).includes(team_a)) {
+                team_a_list = [];
+                for (j = 0; j < all_team_lists[team_a].length; j++) {
+                    if (all_team_lists[team_a][j][1] >= 5) {team_a_list.push(all_team_lists[team_a][j])}
+                }
+                upd_fixtures[i][17] = team_a_list;
+            }
+            if (Object.keys(dict).includes(team_b)) {
+                team_b_list = [];
+                for (j = 0; j < dict[team_b].length; j++) {
+                    if (dict[team_b][j][1] >= 5) {team_b_list.push(dict[team_b][j])}
+                }
+                upd_fixtures[i][18] = team_b_list;
+            }
+        } else {
+            if (Object.keys(dict).includes(team_a)) {upd_fixtures[i][17] = dict[team_a];}
+            if (Object.keys(dict).includes(team_b)) {upd_fixtures[i][18] = dict[team_b];}
+        }*/
+        if (Object.keys(all_team_lists).includes(team_a)) {upd_fixtures[i][17] = all_team_lists[team_a];}
+        if (Object.keys(all_team_lists).includes(team_b)) {upd_fixtures[i][18] = all_team_lists[team_b];}
+    }
+    return upd_fixtures;
+
 }
 
 /**
@@ -276,7 +347,7 @@ async function getPlayerList() {
  * @param {Fixture} upd_fixtures 
  * @returns Updated Fixture with Team Lists
  */
-function parsePlayerList(players_list, upd_fixtures) {
+function parsePlayerList_old(players_list, upd_fixtures) {
     let dict = {};
 
     // Split the CSV into an Array
@@ -433,7 +504,7 @@ function pdf_init(venues, wavl, wavjl, dates) {
     Promise.all(fixtures).then(fix_val => {
         var team_list = []
 
-        var upd_fixtures = html_to_fixture(venues, leagues, dates[2], fix_val);
+        var upd_fixtures = html_to_fixture(venues, leagues, dates, fix_val);
         var player_List = getPlayerList();
         Promise.all([player_List]).then(players_list => {
             let finalised_fixtures = parsePlayerList(players_list, upd_fixtures);
@@ -487,7 +558,7 @@ function pdf_init(venues, wavl, wavjl, dates) {
             Promise.all(fixtures).then(fix_val => {
                 var team_list = []
 
-                var upd_fixtures = html_to_fixture(venues, leagues, dates[2], fix_val);
+                var upd_fixtures = html_to_fixture(venues, leagues, dates, fix_val);
                 var player_List = getPlayerList();
                 Promise.all([player_List]).then(players_list => {
                     let finalised_fixtures = parsePlayerList(players_list, upd_fixtures);
@@ -1499,13 +1570,16 @@ async function modifyPdf(fix, dates) {
                 }
 
                 // Team A Players
-                if (fixtures[i][17].length >= 1) {
+                if (fixtures[i][17].length >= 3) {
                     for (var k = 0; k < fixtures[i][17].length; k++) {
                         if (k < Math.ceil(fixtures[i][17].length / 2)) {
                             // first name, first column
                             //console.log(fixtures[i][17][k][0].toUpperCase() + ": " + measureText(fixtures[i][17][k][0].toUpperCase(),6))
                             console.log(k)
                             console.log(i)
+                            console.log(fixtures[i])
+                            console.log(fixtures[i][17])
+                            //console.log(fixutres[i][17][k])
                             console.log(fixtures[i][17][k][0])
                             if (measureText(fixtures[i][17][k][0][0].toUpperCase(), 6) >= 32) {
                                 await newWAVLfirstPage.drawText(fixtures[i][17][k][0][0].toUpperCase(), {
@@ -1604,7 +1678,7 @@ async function modifyPdf(fix, dates) {
                 }
 
                 // Team B Players
-                if (fixtures[i][18].length >= 1) {
+                if (fixtures[i][18].length >= 3) {
                     for (var k = 0; k < fixtures[i][18].length; k++) {
                         if (k < Math.ceil(fixtures[i][18].length / 2)) {
                             // first name, first column
@@ -1627,7 +1701,7 @@ async function modifyPdf(fix, dates) {
 
                             // surname, first column
                             //console.log(fixtures[i][18][k][1].toUpperCase() + ": " + measureText(fixtures[i][18][k][1].toUpperCase(),6))
-                            if (measureText(fixtures[i][18][k][1].toUpperCase(), 6) >= 32) {
+                            if (measureText(fixtures[i][18][k][0][1].toUpperCase(), 6) >= 32) {
                                 await newWAVLfirstPage.drawText(fixtures[i][18][k][0][1].toUpperCase(), {
                                     x: 439.5,
                                     y: 716-((15.75*k+7.0)),
@@ -2289,7 +2363,7 @@ function add_aliases(venues) {
  * @param {*} all_html 
  * @returns Fixture[]
  */
-function html_to_fixture(venues, leagues, date, all_html) {
+function html_to_fixture(venues, leagues, in_date, all_html) {
     console.log("html_to_fixture");
     let fixtures_list = [];
     let alerted = [];
@@ -2299,50 +2373,164 @@ function html_to_fixture(venues, leagues, date, all_html) {
     let all_venues = add_aliases(Object.keys(__CONFIG__.venues));
     const NamesArr = leagues.flat();
     console.log(all_html);
+    let start_date = in_date[0];
+    let end_date = in_date[1];
     for (let x = 0; x < all_html.length; x++) {
         let parser = new DOMParser();
         let htmlDoc = parser.parseFromString(all_html[x].request.responseText, 'text/html');
         
         // ----------------------------------
         
-        let all_tables2 = document.getElementsByClassName("division-schedule")
-        let numFix2 = all_tables2.length;
-        document.getElements
+        //let all_tables = document.getElementsByTagName("table")
+
+        // NOTE -- CHANGE document TO htmlDoc
+
+        let all_tables = htmlDoc.getElementsByClassName("division-schedule")
+        let numFix = all_tables.length;
+        //htmlDoc.getElements
 
         //console.log(all_tables)
-        console.log(numFix2)
+        console.log(numFix)
         let month_lookup = {
             "January":"01",
-        "Febuary":"02",
-        "March":"03",
-        "April":"04",
-        "May":"05",
-        "June":"06",
-        "July":"07",
-        "August":"08",
-        "September":"09",
-        "October":"10",
-        "November":"11",
-        "December":"12"
+            "Febuary":"02",
+            "March":"03",
+            "April":"04",
+            "May":"05",
+            "June":"06",
+            "July":"07",
+            "August":"08",
+            "September":"09",
+            "October":"10",
+            "November":"11",
+            "December":"12"
+        }
+
+        let venue_lookup = {}
+
+        let tmp = htmlDoc.getElementsByClassName("division-schedule-venue")[0]
+        let rows = tmp.getElementsByTagName("td")
+
+        for (let i = 0; i < rows.length; i = i + 1) {
+            let key = rows[i].innerText.split(" - ")[0].trim()
+            let value = rows[i].innerText.split(" - ")[1].trim()
+            venue_lookup[key] = value
         }
 
         for (let i = 0; i < numFix; i = i + 1) {
-            let date = all_tables2[i].getElementsByTagName("h3")//.textContent
-        console.log(date[0].innerText)
-        let actual_date = date[0].innerText
-        
-        let yyyy = actual_date.slice(-4)
-        let dd = actual_date.split(",")[1].slice(-2).replace(" ","0")
-        let raw_month = actual_date.split(",")[1].slice(0,-2).trim()
-        let month = month_lookup[raw_month]
-        console.log(yyyy)
-        console.log(dd)
-        console.log(month)
-        if (true) { // if date is correct
-        
-        
+            let date = all_tables[i].getElementsByTagName("h3")//.textContent
+            //console.log(date[0].innerText)
+            let actual_date = date[0].innerText
+            
+            let yyyy = actual_date.slice(-4)
+            let dd = actual_date.split(",")[1].slice(-2).replace(" ","0")
+            let raw_month = actual_date.split(",")[1].slice(0,-2).trim()
+            let month = month_lookup[raw_month]
+            //console.log(yyyy)
+            //console.log(dd)
+            //console.log(month)
+            let test_date = yyyy+"-"+month+"-"+dd;
+            console.log(test_date)
+
+            if (test_date >= start_date & test_date < end_date) { // if date is correct
+                let all_games = all_tables[i].getElementsByClassName("game")
+                for (let j = 0; j < all_games.length; j++){
+                    let current = all_games[j]
+                    let all_curr_game = current.getElementsByTagName("td")
+                    let time = all_curr_game[0].innerText.trim()
+                    let ven = all_curr_game[1].innerText.trim()
+                    let _court = all_curr_game[2].innerText.trim()
+                    let div = all_curr_game[3].innerText.split(" (")[0].trim()
+                    let _team_b = all_curr_game[4].innerText.trim()
+                    let _team_a = all_curr_game[5].innerText.trim()
+                    let _duty = all_curr_game[6].innerText.trim()
+                    let time_hr = time.split(":")[0].trim()
+                    let time_min = time.split(":")[1].split(" ")[0].trim()
+                    let time_am_pm = time.split(":")[1].split(" ")[1].trim()
+                    if (time_am_pm == "PM" & time_hr != "12") {
+                        time_hr = parseInt(time_hr) + 12
+                        time_hr = time_hr.toString().trim()
+                    }
+                    console.log(time)
+                    console.log(venue_lookup)
+                    console.log(ven)
+                    console.log(_court)
+                    console.log(div)
+                    console.log(_team_a)
+                    console.log(_team_b)
+                    console.log(_duty)
+                    console.log(time_hr)
+                    console.log(time_min)
+                    
+                    let _date_dd = dd.padStart(2, "0");
+                    let _date_mm = month.padStart(2, "0");
+                    let _date_yyyy = yyyy;
+                    
+                    
+                    let _time_hr = " ";
+                    let _time_min = " ";
+                    
+                    try {
+                        _time_hr = time_hr.padStart(2, "0");
+                        _time_min = time_min.padStart(2, "0");
+                    } catch (e) {
+                        console.log(e);
+                        _time_hr = " ";
+                        _time_min = " ";
+                    }
+                    
+                    let zero_venue_split = venue_lookup[ven]
+                    
+                    let venue_realname = alias_layer[zero_venue_split];
+
+                    const _venue_0 = __CONFIG__.venues[venue_realname].top;
+                    const _venue_1 = __CONFIG__.venues[venue_realname].mid;
+                    const _venue_2 = __CONFIG__.venues[venue_realname].bot;
+                    console.log(div)
+                    if (div.includes("Division") || div.includes("State")) {
+                        _division = [
+                            __CONFIG__.wavl[div].long,
+                            __CONFIG__.wavl[div].short,
+                            __CONFIG__.wavl[div].id
+                        ];
+                    } else {
+                        _division = [
+                            __CONFIG__.jl[div].long,
+                            __CONFIG__.jl[div].short,
+                            __CONFIG__.jl[div].id
+                        ];
+                    }
+
+                    let _venue_full = __CONFIG__.venues[venue_realname].name;
+                    let _sorting = _date_yyyy + " " + _date_mm + " " + _date_dd + " " + _venue_full + " " + _court + " " + _time_hr
+                    let _time_sorting = _date_yyyy + " " + _date_mm + " " + _date_dd + " " + _venue_full + " " + _time_hr + " " + _court;
+
+                    fixtures_list.push([zero_venue_split, _venue_0, _venue_1, _venue_2, _venue_full, _court,
+                                        _team_a, _team_b, _duty, _division, _date_dd, _date_mm, _date_yyyy, _time_hr, _time_min,
+                                        _sorting, _time_sorting, [],
+                                        []
+                                        ])
+                    }
+                    
+            }
         }
-        }
+
+/*
+ for (let y = 0; y < numFix; y = y + 3) {
+   let meta = y + 1;
+   let data = y + 2;
+
+   let meta_table = all_tables[0].getElementsByTagName("table")[0];
+   let data_table = all_tables[1];
+
+   if (numFix > 2) {
+     meta_table = all_tables[meta];
+     data_table = all_tables[data];
+   }
+
+   let dt = meta_table.rows.item(1).cells.item(0).innerText;
+   let match_division = meta_table.rows.item(1).cells.item(2).innerText;
+   }
 
                 
         // ----------------------------------
@@ -2407,7 +2595,7 @@ function html_to_fixture(venues, leagues, date, all_html) {
                                     _court = parseInt(venue_split[0].slice(-2).trim()).toString();
                                 } else {
                                     _court = cells.item(1).innerText.split("Ct")[1].trim();
-                                }*/
+                                }
                                 _court = cells.item(1).innerText.split(/^[^0-9]+/)[1].trim()
                             } catch (e) {
                                 _court = "";
@@ -2522,8 +2710,9 @@ function html_to_fixture(venues, leagues, date, all_html) {
             } catch (e) {
                 console.log(e)
             }
-        }
+        }*/
     }
+    console.log(fixtures_list);
     return fixtures_list
 }
 
