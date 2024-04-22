@@ -270,6 +270,12 @@ async function getPlayerList() {
     var url = head + SEASON_ID + "?csv=1";
     console.log("get_player_list: " + url);*/
     console.log("get_player_list: " + head)
+    /*var headers = {
+        "Referer": "https://volleyball.exposureevents.com/220866/wavl/documents",
+        "Sec-Fetch-Mode": "navigate",
+        "Host": "volleyball.exposureevents.com",
+        "Sec-Fetch-Dest": "document"
+    }*/
     return await axios.get(head);
 }
 
@@ -525,7 +531,21 @@ function pdf_init(venues, wavl, wavjl, dates) {
                     }).catch(error => catch_error(error))
                 }).catch(error => catch_error(error))
             }).catch(error => catch_error(error))
-        }).catch(error => catch_error(error))
+        }).catch((e) => {
+            console.log(e)
+            console.log(e.response.status)
+            if (e.response.status == 410) {
+                window.alert("Warning: Athletes Page not loaded.\nPlease go to https://volleyball.exposureevents.com/220866/wavl/documents and click the ATHLETES report, then try again.")
+                window.clearInterval(dots);
+                document.getElementById("Button4").value = "Generate Scoresheets";
+                document.getElementById("Button4").style.backgroundColor = "#3370B7";
+                document.getElementById("Button4").style.color = "#FFFFFF"
+                document.getElementById("Button4").disabled = false;
+                document.getElementById("csvUpload").disabled = false;
+                document.getElementById("csvUpload").value = "";
+                window.open("https://volleyball.exposureevents.com/220866/wavl/documents", '_blank').focus();
+            }
+        })
     }).catch((e) => {
         console.log(e)
         console.log(e.response.status)
@@ -581,6 +601,8 @@ function pdf_init(venues, wavl, wavjl, dates) {
                     }).catch(error => catch_error(error))
                 }).catch(error => catch_error(error))
             }).catch(error => catch_error(error))
+        } else if (e.response.status == 410) {
+            // If this error occurs, then you need to go to the athletes page to manually load it.
         } else {
             catch_error(error);
         }
