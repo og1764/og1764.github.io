@@ -191,6 +191,8 @@ function WAVL_ONLINE() {
 
     let dates = getDates()
     
+    let events = [__CONFIG__.events["2024 WAVL Season"], __CONFIG__.events["2024 WAVjL Season"], __CONFIG__.events["2024 VWA Schools Cup"]]
+
     // If a CSV file has been uploaded, do that.
     if (document.getElementById("csvUpload").value != "") {
         let uploaded_fixtures = [];
@@ -222,7 +224,7 @@ function WAVL_ONLINE() {
             }).catch(error => catch_error(error))
         };
     } else {
-        pdf_init(venues, wavl, wavjl, dates);
+        pdf_init(venues, wavl, wavjl, dates, events);
     }
     
 }
@@ -262,86 +264,93 @@ function getDates(){
  * Axios request to get csv of all players.
  * @returns CSV
  */
-async function getPlayerList() {
+async function getPlayerList(event) {
     axios;
+    const head = event.players_url
+    console.log("get_single_fixture -" + head)
+    return await axios.get(head);
+    
     //const head = "https://cors-anywhere-og-v5kf.onrender.com/volleyball.exposureevents.com/220866/wavl/documents/players"
-    const head = "https://volleyball.exposureevents.com/220866/wavl/documents/players"
+    ///const head = "https://volleyball.exposureevents.com/220866/wavl/documents/players"
     /*const head = 'https://cors-anywhere-og-v5kf.onrender.com/vwa.bracketpal.com/leaders/season/';
     var url = head + SEASON_ID + "?csv=1";
     console.log("get_player_list: " + url);*/
-    console.log("get_player_list: " + head)
+    ///console.log("get_player_list: " + head)
     /*var headers = {
         "Referer": "https://volleyball.exposureevents.com/220866/wavl/documents",
         "Sec-Fetch-Mode": "navigate",
         "Host": "volleyball.exposureevents.com",
         "Sec-Fetch-Dest": "document"
     }*/
-    return await axios.get(head);
+    ///return await axios.get(head);
+    
 }
 
 function parsePlayerList(players_list, upd_fixtures) {
-    let parser = new DOMParser();
-    let htmlDoc = parser.parseFromString(players_list[0].request.responseText, 'text/html');
+    for (let j = 0; j < players_list.length; j++) {
+        let parser = new DOMParser();
+        let htmlDoc = parser.parseFromString(players_list[j].request.responseText, 'text/html');
 
-    let all_tables = htmlDoc.getElementsByClassName("team")
-    let numFix = all_tables.length;
+        let all_tables = htmlDoc.getElementsByClassName("team")
+        let numFix = all_tables.length;
 
-    let all_team_lists = {}
+        let all_team_lists = {}
 
-    for (let i = 0; i < numFix; i = i + 1) {
-        let division = all_tables[i].getElementsByTagName("h3")[0].textContent
-        let all_divs = all_tables[i].getElementsByClassName("roster")
-        for (let k = 0; k < all_divs.length; k++) {
-            let all_rows = all_divs[k].getElementsByTagName("tr")
-            for (let j = 1; j < all_rows.length; j = j + 1) {
-                let all_td = all_rows[j].getElementsByTagName("td")
-                console.log(all_td)
-                console.log(all_td[1])
-                let player_name = all_td[1].innerText
-                player_name = player_name.replace("\uFFFD","")
-                let team_name = all_td[2].innerText
-                if (!(Object.keys(all_team_lists).includes(team_name))) {
-                    all_team_lists[team_name] = [[split_name(player_name.trim()),5]]
-                } else {
-                    all_team_lists[team_name].push([split_name(player_name.trim()),5])
+        for (let i = 0; i < numFix; i = i + 1) {
+            let division = all_tables[i].getElementsByTagName("h3")[0].textContent
+            let all_divs = all_tables[i].getElementsByClassName("roster")
+            for (let k = 0; k < all_divs.length; k++) {
+                let all_rows = all_divs[k].getElementsByTagName("tr")
+                for (let j = 1; j < all_rows.length; j = j + 1) {
+                    let all_td = all_rows[j].getElementsByTagName("td")
+                    console.log(all_td)
+                    console.log(all_td[1])
+                    let player_name = all_td[1].innerText
+                    player_name = player_name.replace("\uFFFD","")
+                    let team_name = all_td[2].innerText
+                    if (!(Object.keys(all_team_lists).includes(team_name))) {
+                        all_team_lists[team_name] = [[split_name(player_name.trim()),5]]
+                    } else {
+                        all_team_lists[team_name].push([split_name(player_name.trim()),5])
+                    }
                 }
             }
         }
-    }
 
-    console.log(all_team_lists)
+        console.log(all_team_lists)
 
-    for (i = 0; i < upd_fixtures.length; i++) {
-        let fixture_date = upd_fixtures[i][12]+"-"+upd_fixtures[i][11]+"-"+upd_fixtures[i][10]
-        let fixture_division = upd_fixtures[i][9]
-        let team_a = upd_fixtures[i][6].toUpperCase()//.split(" ")[0];
-        let team_b = upd_fixtures[i][7].toUpperCase()//.split(" ")[0];
-        console.log(team_a)
-        console.log(team_b)
-        upd_fixtures[i][17] = [["",""]];
-        upd_fixtures[i][18] = [["",""]];
+        for (i = 0; i < upd_fixtures.length; i++) {
+            let fixture_date = upd_fixtures[i][12]+"-"+upd_fixtures[i][11]+"-"+upd_fixtures[i][10]
+            let fixture_division = upd_fixtures[i][9]
+            let team_a = upd_fixtures[i][6].toUpperCase()//.split(" ")[0];
+            let team_b = upd_fixtures[i][7].toUpperCase()//.split(" ")[0];
+            console.log(team_a)
+            console.log(team_b)
+            upd_fixtures[i][17] = [["",""]];
+            upd_fixtures[i][18] = [["",""]];
 
-        /*if (SL_FINALS_DATES.includes(fixture_date) && (fixture_division[0] == "State League Men" || fixture_division[0] == "State League Women")){
-            if (Object.keys(all_team_lists).includes(team_a)) {
-                team_a_list = [];
-                for (j = 0; j < all_team_lists[team_a].length; j++) {
-                    if (all_team_lists[team_a][j][1] >= 5) {team_a_list.push(all_team_lists[team_a][j])}
+            /*if (SL_FINALS_DATES.includes(fixture_date) && (fixture_division[0] == "State League Men" || fixture_division[0] == "State League Women")){
+                if (Object.keys(all_team_lists).includes(team_a)) {
+                    team_a_list = [];
+                    for (j = 0; j < all_team_lists[team_a].length; j++) {
+                        if (all_team_lists[team_a][j][1] >= 5) {team_a_list.push(all_team_lists[team_a][j])}
+                    }
+                    upd_fixtures[i][17] = team_a_list;
                 }
-                upd_fixtures[i][17] = team_a_list;
-            }
-            if (Object.keys(dict).includes(team_b)) {
-                team_b_list = [];
-                for (j = 0; j < dict[team_b].length; j++) {
-                    if (dict[team_b][j][1] >= 5) {team_b_list.push(dict[team_b][j])}
+                if (Object.keys(dict).includes(team_b)) {
+                    team_b_list = [];
+                    for (j = 0; j < dict[team_b].length; j++) {
+                        if (dict[team_b][j][1] >= 5) {team_b_list.push(dict[team_b][j])}
+                    }
+                    upd_fixtures[i][18] = team_b_list;
                 }
-                upd_fixtures[i][18] = team_b_list;
-            }
-        } else {
-            if (Object.keys(dict).includes(team_a)) {upd_fixtures[i][17] = dict[team_a];}
-            if (Object.keys(dict).includes(team_b)) {upd_fixtures[i][18] = dict[team_b];}
-        }*/
-        if (Object.keys(all_team_lists).includes(team_a)) {upd_fixtures[i][17] = all_team_lists[team_a];}
-        if (Object.keys(all_team_lists).includes(team_b)) {upd_fixtures[i][18] = all_team_lists[team_b];}
+            } else {
+                if (Object.keys(dict).includes(team_a)) {upd_fixtures[i][17] = dict[team_a];}
+                if (Object.keys(dict).includes(team_b)) {upd_fixtures[i][18] = dict[team_b];}
+            }*/
+            if (Object.keys(all_team_lists).includes(team_a)) {upd_fixtures[i][17] = all_team_lists[team_a];}
+            if (Object.keys(all_team_lists).includes(team_b)) {upd_fixtures[i][18] = all_team_lists[team_b];}
+        }
     }
     return upd_fixtures;
 
@@ -491,7 +500,7 @@ function parsePlayerList_old(players_list, upd_fixtures) {
  * @param {String[]}    wavjl       Array of selected WAVjL divisions
  * @param {String[]}    dates       Array of yy-mm-dd strings indicating start, end, and selected dates.
  */
-function pdf_init(venues, wavl, wavjl, dates) {
+function pdf_init(venues, wavl, wavjl, dates, events_) {
     console.log("pdf_init");
     // Get config data from selected teams, and add to an array
     var leagues = [];
@@ -504,16 +513,28 @@ function pdf_init(venues, wavl, wavjl, dates) {
         leagues.push([__CONFIG__.jl[wavjl[i]].long, __CONFIG__.jl[wavjl[i]].short, __CONFIG__.jl[wavjl[i]].id])
     }
 
-    var indiv_wavl = get_single_fixture(dates[0], dates[1], "WAVL");
-    fixtures.push(indiv_wavl);
-    var indiv_wavjl = get_single_fixture(dates[0], dates[1], "WAVjL");
-    fixtures.push(indiv_wavjl);
-
+    for (var i = 0; i < events_.length; i++) {
+        console.log(events_)
+        console.log(__CONFIG__.events[events_[i].name])
+        var indiv_event = get_single_fixture(__CONFIG__.events[events_[i].name])
+        fixtures.push(indiv_event)
+    }
+    //var indiv_wavl = get_single_fixture(dates[0], dates[1], "WAVL");
+    //fixtures.push(indiv_wavl);
+    //var indiv_wavjl = get_single_fixture(dates[0], dates[1], "WAVjL");
+    //fixtures.push(indiv_wavjl);
+    console.log(0)
+    console.log(fixtures)
     Promise.all(fixtures).then(fix_val => {
         var team_list = []
+        var player_lists = []
         var upd_fixtures = html_to_fixture(venues, leagues, dates, fix_val);
-        var player_List = getPlayerList();
-        Promise.all([player_List]).then(players_list => {
+        for (var i = 0; i < events_.length; i++) {
+            var player_List = getPlayerList(__CONFIG__.events[events_[i].name]);
+            player_lists.push(player_List)
+        }
+        console.log(1)
+        Promise.all(player_lists).then(players_list => {
             let finalised_fixtures = parsePlayerList(players_list, upd_fixtures);
             modifyPdf(finalised_fixtures, dates[2]).then(value => {
                 Promise.all(value).then(value_3 => {
@@ -606,8 +627,12 @@ function pdf_init(venues, wavl, wavjl, dates) {
                 var team_list = []
 
                 var upd_fixtures = html_to_fixture(venues, leagues, dates, fix_val);
-                var player_List = getPlayerList();
-                Promise.all([player_List]).then(players_list => {
+                var player_lists = []
+                for (var i = 0; i < events_.length; i++) {
+                    var player_List = getPlayerList(__CONFIG__.events[events_[i]]);
+                    player_lists.push(player_List)
+                }
+                Promise.all(player_lists).then(players_list => {
                     let finalised_fixtures = parsePlayerList(players_list, upd_fixtures);
                     modifyPdf(finalised_fixtures, dates[2]).then(value => {
                         Promise.all(value).then(value_3 => {
@@ -630,7 +655,7 @@ function pdf_init(venues, wavl, wavjl, dates) {
             }).catch(error => catch_error(error))
         } else if (e.response.status == 410) {
             // If this error occurs, then you need to go to the athletes page to manually load it.
-            catch_error(error);
+            catch_error(e);
         } else {
             catch_error(error);
         }
@@ -643,14 +668,21 @@ function pdf_init(venues, wavl, wavjl, dates) {
  * @param {String} end_date     Second date in range
  * @returns 
  */
-async function get_single_fixture(start_date, end_date, league) {
-    console.log(start_date);
-    console.log(end_date);
+//async function get_single_fixture(start_date, end_date, league) {
+async function get_single_fixture(event) {
+    //console.log(start_date);
+    //console.log(end_date);
     axios;
     //const head = 'https://cors-anywhere-og-v5kf.onrender.com/vwa.bracketpal.com/dailyform/range?start_date=';
     //var url = head + start_date.toString() + "&end_date=" + end_date.toString();
     //console.log("get_single_fixture: " + url);
     //return await axios.get(url);
+    console.log(event)
+    const head = event.fixture_url
+    console.log(head)
+    console.log("get_single_fixture -" + head)
+    return await axios.get(head);
+    /*
     if (league == "WAVL") {
         const head = "https://cors-anywhere-og-v5kf.onrender.com/volleyball.exposureevents.com/220866/wavl/documents/schedule?layout=datetime"
         console.log("get_single_fixture -" + head)
@@ -660,6 +692,7 @@ async function get_single_fixture(start_date, end_date, league) {
         console.log("get_single_fixture -" + head)
         return await axios.get(head);
     }
+    */
     //console.log("get_single_fixture -" + head)
     //return await axios.get(head);
 

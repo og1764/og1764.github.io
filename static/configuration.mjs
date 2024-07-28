@@ -1,6 +1,6 @@
-const FINALS_DATES = ["2022-09-04", "2022-09-11", "2022-09-18", "2023-08-27", "2023-09-03", "2023-09-10"];
+const FINALS_DATES = ["2022-09-04", "2022-09-11", "2022-09-18", "2023-08-27", "2023-09-03", "2023-09-10", "2024-08-25", "2024-09-01", "2024-09-08"];
 
-const SL_FINALS_DATES = ["2023-07-14", "2023-07-16", "2023-07-22"]
+const SL_FINALS_DATES = ["2023-07-14", "2023-07-16", "2023-07-22", "2024-07-19", "2024-07-21", "2024-07-27"]
 // This is used to get a list of all players. eg: https://vwa.bracketpal.com/leaders/season/27
 const SEASON_ID = "27";
 
@@ -452,19 +452,30 @@ const __CONFIG__ = {
             "name": "2024 WAVL Season",
             "fixture_url": "https://cors-anywhere-og-v5kf.onrender.com/volleyball.exposureevents.com/220866/wavl/documents/schedule?layout=datetime",
             "players_url": "https://volleyball.exposureevents.com/220866/wavl/documents/players",
-            "printPlayers": "true"
+            "printPlayers": "true",
+            "scoresheet": {
+                "default": "12-sub"
+            }
         },
         "2024 WAVjL Season": {
             "name": "2024 WAVjL Season",
             "fixture_url": "https://cors-anywhere-og-v5kf.onrender.com/volleyball.exposureevents.com/220963/wavjl/documents/schedule?layout=datetime",
             "players_url": "https://volleyball.exposureevents.com/220963/wavjl/documents/players",
-            "printPlayers": "false"
+            "printPlayers": "false",
+            "scoresheet": {
+                "default": "junior"
+            }
         },
         "2024 VWA Schools Cup": {
             "name": "2024 VWA Schools Cup",
-            "fixture_url": "https://cors-anywhere-og-v5kf.onrender.com/volleyball.exposureevents.com/227017/wa-schools-cup/documents/schedule?layout=datetime",
+            //"fixture_url": "https://cors-anywhere-og-v5kf.onrender.com/volleyball.exposureevents.com/227017/wa-schools-cup/documents/schedule?layout=datetime",
+            "fixture_url": "https://volleyball.exposureevents.com/227017/wa-schools-cup/documents/schedule?layout=datetime",
             "players_url": "https://volleyball.exposureevents.com/227017/wa-schools-cup/documents/players",
-            "printPlayers": "true"
+            "printPlayers": "true",
+            "scoresheet": {
+                "honours": "12-sub",
+                "default": "junior"
+            }
         }
     }
 }
