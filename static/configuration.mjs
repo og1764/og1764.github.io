@@ -446,6 +446,26 @@ const __CONFIG__ = {
             "long": "11/12 Male South",
             "short": "11/12 M S"
         }
+    },
+    "events":{
+        "2024 WAVL Season": {
+            "name": "2024 WAVL Season",
+            "fixture_url": "https://cors-anywhere-og-v5kf.onrender.com/volleyball.exposureevents.com/220866/wavl/documents/schedule?layout=datetime",
+            "players_url": "https://volleyball.exposureevents.com/220866/wavl/documents/players",
+            "printPlayers": "true"
+        },
+        "2024 WAVjL Season": {
+            "name": "2024 WAVjL Season",
+            "fixture_url": "https://cors-anywhere-og-v5kf.onrender.com/volleyball.exposureevents.com/220963/wavjl/documents/schedule?layout=datetime",
+            "players_url": "https://volleyball.exposureevents.com/220963/wavjl/documents/players",
+            "printPlayers": "false"
+        },
+        "2024 VWA Schools Cup": {
+            "name": "2024 VWA Schools Cup",
+            "fixture_url": "https://cors-anywhere-og-v5kf.onrender.com/volleyball.exposureevents.com/227017/wa-schools-cup/documents/schedule?layout=datetime",
+            "players_url": "https://volleyball.exposureevents.com/227017/wa-schools-cup/documents/players",
+            "printPlayers": "true"
+        }
     }
 }
 

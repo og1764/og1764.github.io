@@ -504,12 +504,13 @@ function pdf_init(venues, wavl, wavjl, dates) {
         leagues.push([__CONFIG__.jl[wavjl[i]].long, __CONFIG__.jl[wavjl[i]].short, __CONFIG__.jl[wavjl[i]].id])
     }
 
-    var indiv = get_single_fixture(dates[0], dates[1]);
-    fixtures.push(indiv);
+    var indiv_wavl = get_single_fixture(dates[0], dates[1], "WAVL");
+    fixtures.push(indiv_wavl);
+    var indiv_wavjl = get_single_fixture(dates[0], dates[1], "WAVjL");
+    fixtures.push(indiv_wavjl);
 
     Promise.all(fixtures).then(fix_val => {
         var team_list = []
-
         var upd_fixtures = html_to_fixture(venues, leagues, dates, fix_val);
         var player_List = getPlayerList();
         Promise.all([player_List]).then(players_list => {
@@ -536,14 +537,40 @@ function pdf_init(venues, wavl, wavjl, dates) {
             console.log(e.response.status)
             if (e.response.status == 410) {
                 window.alert("Warning: Athletes Page not loaded.\nPlease go to https://volleyball.exposureevents.com/220866/wavl/documents and click the ATHLETES report, then try again.")
-                window.clearInterval(dots);
+                window.alert("Continuing without player names...")
+                
+                /*window.clearInterval(dots);
                 document.getElementById("Button4").value = "Generate Scoresheets";
                 document.getElementById("Button4").style.backgroundColor = "#3370B7";
                 document.getElementById("Button4").style.color = "#FFFFFF"
                 document.getElementById("Button4").disabled = false;
                 document.getElementById("csvUpload").disabled = false;
                 document.getElementById("csvUpload").value = "";
-                window.open("https://volleyball.exposureevents.com/220866/wavl/documents", '_blank').focus();
+                window.open("https://volleyball.exposureevents.com/220866/wavl/documents", '_blank').focus();*/
+
+                for (i = 0; i < upd_fixtures.length; i++) {
+                    upd_fixtures[i][17] = [["",""]];
+                    upd_fixtures[i][18] = [["",""]];
+                }
+
+                let finalised_fixtures = upd_fixtures;
+                
+                modifyPdf(finalised_fixtures, dates[2]).then(value => {
+                    Promise.all(value).then(value_3 => {
+                        mergePDFDocuments(value_3).then(value_2 => {
+                            let filename = "Scoresheets " + dates[2].toString() + ".pdf"
+                            download(value_2, filename, "application/pdf");
+                            window.clearInterval(dots);
+                            document.getElementById("Button4").value = "Generate Scoresheets";
+                            document.getElementById("Button4").style.backgroundColor = "#3370B7";
+                            document.getElementById("Button4").style.color = "#FFFFFF"
+                            document.getElementById("Button4").disabled = false;
+                            document.getElementById("csvUpload").disabled = false;
+                            document.getElementById("csvUpload").value = "";
+                        }).catch(error => catch_error(error))
+                    }).catch(error => catch_error(error))
+                }).catch(error => catch_error(error))
+                
             }
         })
     }).catch((e) => {
@@ -603,6 +630,7 @@ function pdf_init(venues, wavl, wavjl, dates) {
             }).catch(error => catch_error(error))
         } else if (e.response.status == 410) {
             // If this error occurs, then you need to go to the athletes page to manually load it.
+            catch_error(error);
         } else {
             catch_error(error);
         }
@@ -615,7 +643,7 @@ function pdf_init(venues, wavl, wavjl, dates) {
  * @param {String} end_date     Second date in range
  * @returns 
  */
-async function get_single_fixture(start_date, end_date) {
+async function get_single_fixture(start_date, end_date, league) {
     console.log(start_date);
     console.log(end_date);
     axios;
@@ -623,9 +651,17 @@ async function get_single_fixture(start_date, end_date) {
     //var url = head + start_date.toString() + "&end_date=" + end_date.toString();
     //console.log("get_single_fixture: " + url);
     //return await axios.get(url);
-    const head = "https://cors-anywhere-og-v5kf.onrender.com/volleyball.exposureevents.com/220866/wavl/documents/schedule?layout=datetime"
-    console.log("get_single_fixture -" + head)
-    return await axios.get(head);
+    if (league == "WAVL") {
+        const head = "https://cors-anywhere-og-v5kf.onrender.com/volleyball.exposureevents.com/220866/wavl/documents/schedule?layout=datetime"
+        console.log("get_single_fixture -" + head)
+        return await axios.get(head);
+    } else if (league == "WAVjL") {
+        const head = "https://cors-anywhere-og-v5kf.onrender.com/volleyball.exposureevents.com/220963/wavjl/documents/schedule?layout=datetime"
+        console.log("get_single_fixture -" + head)
+        return await axios.get(head);
+    }
+    //console.log("get_single_fixture -" + head)
+    //return await axios.get(head);
 
 }
 
@@ -1122,7 +1158,7 @@ async function modifyPdf(fix, dates) {
                     })
                 }
 
-                if (fixtures[i][6].length > 24 || fixtures[i][7].length > 24) {
+                if (fixtures[i][6].length > 22 || fixtures[i][7].length > 22) {
                     // Team A Team List
                     await extraWAVLfirstPage.drawText(fixtures[i][6], {
                         x: 285,
@@ -1556,7 +1592,7 @@ async function modifyPdf(fix, dates) {
                         opacity: 1
                     })
                 }
-                if (fixtures[i][6].length > 24 || fixtures[i][7].length > 24) {
+                if (fixtures[i][6].length > 22 || fixtures[i][7].length > 22) {
                     // Team A Team List
                     await newWAVLfirstPage.drawText(fixtures[i][6], {
                         x: 285,
@@ -2502,37 +2538,57 @@ function html_to_fixture(venues, leagues, in_date, all_html) {
                     }
                     
                     let zero_venue_split = venue_lookup[ven]
-                    
-                    let venue_realname = alias_layer[zero_venue_split];
+                    if (venue_usage.includes(zero_venue_split)) {
+                        console.log(venue_lookup)
+                        let venue_realname = alias_layer[zero_venue_split];
+                        console.log("*******************")
+                        console.log(venue_realname)
+                        console.log("*******************")
+                        try {
+                            console.log(venues)
+                            console.log(leagues)
+                            console.log(alias_layer)
+                            console.log(ven)
+                            console.log(zero_venue_split)
+                            console.log(venue_realname)
+                            const _venue_0 = __CONFIG__.venues[venue_realname].top;
+                            const _venue_1 = __CONFIG__.venues[venue_realname].mid;
+                            const _venue_2 = __CONFIG__.venues[venue_realname].bot;
+                            console.log(div)
+                            if (div.includes("Division") || div.includes("State")) {
+                                _division = [
+                                    __CONFIG__.wavl[div].long,
+                                    __CONFIG__.wavl[div].short,
+                                    __CONFIG__.wavl[div].id
+                                ];
+                            } else {
+                                div = div.replace("Year ", "")
+                                console.log(div);
+                                _division = [
+                                    __CONFIG__.jl[div].long,
+                                    __CONFIG__.jl[div].short,
+                                    __CONFIG__.jl[div].id
+                                ];
+                            }
 
-                    const _venue_0 = __CONFIG__.venues[venue_realname].top;
-                    const _venue_1 = __CONFIG__.venues[venue_realname].mid;
-                    const _venue_2 = __CONFIG__.venues[venue_realname].bot;
-                    console.log(div)
-                    if (div.includes("Division") || div.includes("State")) {
-                        _division = [
-                            __CONFIG__.wavl[div].long,
-                            __CONFIG__.wavl[div].short,
-                            __CONFIG__.wavl[div].id
-                        ];
-                    } else {
-                        _division = [
-                            __CONFIG__.jl[div].long,
-                            __CONFIG__.jl[div].short,
-                            __CONFIG__.jl[div].id
-                        ];
-                    }
+                            let _venue_full = __CONFIG__.venues[venue_realname].name;
+                            let _sorting = _date_yyyy + " " + _date_mm + " " + _date_dd + " " + _venue_full + " " + _court + " " + _time_hr
+                            let _time_sorting = _date_yyyy + " " + _date_mm + " " + _date_dd + " " + _venue_full + " " + _time_hr + " " + _court;
 
-                    let _venue_full = __CONFIG__.venues[venue_realname].name;
-                    let _sorting = _date_yyyy + " " + _date_mm + " " + _date_dd + " " + _venue_full + " " + _court + " " + _time_hr
-                    let _time_sorting = _date_yyyy + " " + _date_mm + " " + _date_dd + " " + _venue_full + " " + _time_hr + " " + _court;
-
-                    fixtures_list.push([zero_venue_split, _venue_0, _venue_1, _venue_2, _venue_full, _court,
-                                        _team_a, _team_b, _duty, _division, _date_dd, _date_mm, _date_yyyy, _time_hr, _time_min,
-                                        _sorting, _time_sorting, [],
-                                        []
-                                        ])
-                    }
+                            fixtures_list.push([zero_venue_split, _venue_0, _venue_1, _venue_2, _venue_full, _court,
+                                                _team_a, _team_b, _duty, _division, _date_dd, _date_mm, _date_yyyy, _time_hr, _time_min,
+                                                _sorting, _time_sorting, [],
+                                                []
+                                                ])
+                            } catch {
+                                window.alert("Missing Venue - " + zero_venue_split)
+                                console.log("Missing Venue - " + zero_venue_split)
+                            }
+                        } else {
+                            window.alert("Missing Venue - " + zero_venue_split)
+                            onsole.log("Missing Venue - " + zero_venue_split)
+                        }
+                    } 
                     
             }
         }
