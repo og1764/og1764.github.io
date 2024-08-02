@@ -297,7 +297,8 @@ function parsePlayerList(players_list, upd_fixtures) {
         } else {
             let faulty_url = players_list[i].reason.response.request.responseURL
             console.log(faulty_url)
-            window.alert("Unable to retreive player list from URL:\r\n" + faulty_url + "\r\nContinuing for this event without player names.")
+            let ev_name = getEventNameFromURL(faulty_url, "player")
+            window.alert("Unable to retreive player list for:\r\n  " + ev_name + "\r\nContinuing for this event without player names.")
             missed_urls.push(faulty_url)
         }
     }
@@ -2400,6 +2401,23 @@ function add_aliases(venues) {
     return [resultant, alias_layer];
 }
 
+
+function getEventNameFromURL(url, url_type) {
+    let all_event_keys = Object.keys(__CONFIG__.events)
+    for (let y = 0; y < all_event_keys.length; y++){
+        if (url_type == "fixture") {
+            if (__CONFIG__.events[all_event_keys[y]].fixture_url == url) {
+                return all_event_keys[y]
+            }
+        } else if (url_type == "player") {
+            if (__CONFIG__.events[all_event_keys[y]].players_url == url) {
+                return all_event_keys[y]
+            }
+        }
+        
+    }
+}
+
 /**
  * Parse HTML and return an array of Fixtures
  * @param {*} venues 
@@ -2420,7 +2438,8 @@ function html_to_fixture(venues, leagues, in_date, all_html_prom) {
         } else {
             let faulty_url = all_html_prom[i].reason.response.request.responseURL
             console.log(faulty_url)
-            window.alert("Unable to retreive fixtures from URL:\r\n" + faulty_url + "\r\nSkipping this event.")
+            let ev_name = getEventNameFromURL(faulty_url, "fixture")
+            window.alert("Unable to retreive fixtures for:\r\n  " + ev_name + "\r\nSkipping this event.")
             missed_urls.push(faulty_url)
         }
     }
@@ -2441,13 +2460,7 @@ function html_to_fixture(venues, leagues, in_date, all_html_prom) {
         let htmlDoc = parser.parseFromString(all_html[x].request.responseText, 'text/html');
         console.log(all_html[x])
         let htmlUrl = all_html[x].request.responseURL;
-        let event_Name = "";
-        let all_event_keys = Object.keys(__CONFIG__.events)
-        for (let y = 0; y < all_event_keys.length; y++){
-            if (__CONFIG__.events[all_event_keys[y]].fixture_url == htmlUrl) {
-                event_Name = all_event_keys[y]
-            }
-        }
+        let event_Name = getEventNameFromURL(htmlUrl, "fixture");
         // ----------------------------------
         
         //let all_tables = document.getElementsByTagName("table")
