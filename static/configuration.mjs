@@ -1,11 +1,21 @@
-const FINALS_DATES = ["2022-09-04", "2022-09-11", "2022-09-18", "2023-08-27", "2023-09-03", "2023-09-10", "2024-08-25", "2024-09-01", "2024-09-08"];
+const FINALS_DATES = ["2022-09-04", "2022-09-11", "2022-09-18", "2023-08-27", "2023-09-03", "2023-09-10"];
 
-const SL_FINALS_DATES = ["2023-07-14", "2023-07-16", "2023-07-22", "2024-07-19", "2024-07-21", "2024-07-27"]
+const SL_FINALS_DATES = ["2023-07-14", "2023-07-16", "2023-07-22"]
+
+const DO_NOT_PRINT = ["David Poulivaati"]
+
 // This is used to get a list of all players. eg: https://vwa.bracketpal.com/leaders/season/27
 const SEASON_ID = "27";
 
 const __CONFIG__ = {
     "venues": {
+        "Albany Leisure Centre": {
+            "name": "Albany Leisure Centre",
+            "top": "Albany",
+            "mid": "Leisure",
+            "bot": "Centre",
+            "alias": ["ALAC", "Albany Leisure Centre", "Albany Leisure & Aquatic Centre", "Albany Leisure and Aquatic Centre"]
+        },
         "Aquinas": {
             "name": "Aquinas",
             "top": "",
@@ -25,7 +35,7 @@ const __CONFIG__ = {
             "top": "",
             "mid": "",
             "bot": "Bendat",
-            "alias": []
+            "alias": ["Bendat Basketball Centre", "BEND"]
         },
         "Cockburn": {
             "name": "Cockburn",
@@ -62,6 +72,13 @@ const __CONFIG__ = {
             "bot": "Centre",
             "alias": ["Gold Netball"]
         },
+        "Guildford Grammar School": {
+            "name": "Guildford Grammar School",
+            "top": "",
+            "mid": "Guildford",
+            "bot": "Grammar",
+            "alias": ["GGS", "Guildford", "Guildford Grammar", "Guildford Grammar School"]
+        },
         "Greenwood College": {
             "name": "Greenwood College",
             "top": "",
@@ -97,6 +114,13 @@ const __CONFIG__ = {
             "bot": "Stadium",
             "alias": ["HBF Stad. Claremont", "HBF", "HBF Stadium", "HBF Stad.", "HBF Sta. Claremont", "HBF Stadium Claremont"]
         },
+        "HBF Arena Joondalup": {
+            "name": "HBF Arena Joondalup",
+            "top": "",
+            "mid": "HBF",
+            "bot": "Arena",
+            "alias": ["HBF Arena", "HBF Joondalup", "JOON"]
+        },
         "Herb Graham Leisure Centre": {
             "name": "Herb Graham Leisure Centre",
             "top": "Herb Graham",
@@ -109,7 +133,7 @@ const __CONFIG__ = {
             "top": "",
             "mid": "John",
             "bot": "Wollaston",
-            "alias": ["John Wollaston ACS C", "John Wollaston ACS"]
+            "alias": ["John Wollaston ACS C", "John Wollaston ACS", "JOHN"]
         },
         "Kingsway": {
             "name": "Kingsway",
@@ -118,12 +142,19 @@ const __CONFIG__ = {
             "bot": "Kingsway",
             "alias": ["Kingsway Indoor Stad", "Kingsway Indoor", "KING", "Kingsway Stadium"]
         },
-        "Leschanault Leisure": {
-            "name": "Leschanault Leisure",
+        "Kwinana Recquatic": {
+            "name": "Kwinana Recquatic",
+            "top": "",
+            "mid": "Kwinana",
+            "bot": "Recquatic",
+            "alias": ["Kwinana Recquatic", "Kwinana", "KWIN"]
+        },
+        "Leschenault Leisure Centre": {
+            "name": "Leschenault Leisure Centre",
             "top": "",
             "mid": "Leschanault",
             "bot": "Leisure",
-            "alias": ["Leschanault", "Leschanault Lei."]
+            "alias": ["Leschanault", "Leschanault Lei.", "LLC", "Leschenault Leisure"]
         },
         "Loftus": {
             "name": "Loftus",
@@ -138,6 +169,13 @@ const __CONFIG__ = {
             "mid": "",
             "bot": "Lords",
             "alias": []
+        },
+        "Lumen Christi": {
+            "name": "Lumen Christi",
+            "top": "Lumen",
+            "mid": "Christi",
+            "bot": "College",
+            "alias": ["Lumen Christi College", "Lumen Christi", "LUMEN", "Lumen"]
         },
         "Mandurah ARC": {
             "name": "Mandurah ARC",
@@ -209,6 +247,20 @@ const __CONFIG__ = {
             "bot": "River",
             "alias": ["Southern River College", "Southern River Colle", "Southern River Col.", "SRC"]
         },
+        "South West Sports Centre": {
+            "name": "South West Sports Centre",
+            "top": "",
+            "mid": "South West",
+            "bot": "Sports Centre",
+            "alias": ["SW Sports", "SWSC"]
+        },
+        "Swan Active Midland": {
+            "name": "Swan Active Midland",
+            "top": "Swan",
+            "mid": "Active",
+            "bot": "Midland",
+            "alias": ["Swan Active Midland", "Swan Active", "SAM", "Active Midland"]
+        },
         "St Mary's": {
             "name": "St Mary's",
             "top": "",
@@ -216,12 +268,19 @@ const __CONFIG__ = {
             "bot": "St Mary's",
             "alias": []
         },
+        "St James' Anglican School": {
+            "name": "St James' Anglican School",
+            "top": "St James'",
+            "mid": "Anglican",
+            "bot": "School",
+            "alias": ["SJAS", "St James", "St James' Anglican School"]
+        },
         "The Rise": {
             "name": "The Rise",
             "top": "",
             "mid": "",
             "bot": "The Rise",
-            "alias": []
+            "alias": ["RISE"]
         },
         "Trinity College": {
             "name": "Trinity College",
@@ -273,7 +332,7 @@ const __CONFIG__ = {
             "alias": []
         }
     },
-    "wavl": {
+    "wavl__": {
         "State League Women": { // Updated
             "id": 134,
             "long": "State League Women",
@@ -365,41 +424,71 @@ const __CONFIG__ = {
             "short": "Div 8 M"
         }
     },
-    "jl": {
-        "7/8 Female North": {
+    "jl__": {
+        "7 Female": {
             "id": 148,
-            "long": "7/8 Female North",
-            "short": "7/8 F N"
+            "long": "7 Female",
+            "short": "7 F"
         },
-        "7/8 Female South Pool 1": {
-            "id": 149,
-            "long": "7/8 Female South Pool 1",
-            "short": "7/8 F S 1"
-        },
-        "7/8 Female South Pool 2": {
-            "id": 150,
-            "long": "7/8 Female South Pool 2",
-            "short": "7/8 F S 2"
-        },
-        "7/8 Male North": {
+        "7 Male": {
             "id": 146,
-            "long": "7/8 Male North",
-            "short": "7/8 M N"
+            "long": "7 Male",
+            "short": "7 M"
         },
-        "7/8 Male South": {
+        "8 Female North": {
+            "id": 149,
+            "long": "8 Female North",
+            "short": "8 F N"
+        },
+        "8 Female South": {
+            "id": 150,
+            "long": "8 Female South",
+            "short": "8 F S"
+        },
+        "8 Female": {
+            "id": 181,
+            "long": "8 Female",
+            "short": "8 F"
+        },
+        "8 Male": {
             "id": 147,
-            "long": "7/8 Male South",
-            "short": "7/8 M S"
+            "long": "8 Male",
+            "short": "8 M"
+        },
+        "9 Female North": {
+            "id": 139,
+            "long": "9 Female North",
+            "short": "9 F N"
+        },
+        "9 Female South": {
+            "id": 1329,
+            "long": "9 Female South",
+            "short": "9 F S"
         },
         "9 Female": {
-            "id": 139,
+            "id": 1,
             "long": "9 Female",
             "short": "9 F"
         },
-        "9 Male": {
+        "9 Male South": {
             "id": 138,
+            "long": "9 Male South",
+            "short": "9 M S"
+        },
+        "9 Male": {
+            "id": 2,
             "long": "9 Male",
             "short": "9 M"
+        },
+        "9/10 Male North": {
+            "id": 140,
+            "long": "9/10 Male North",
+            "short": "9/10 M N"
+        },
+        "9/10 Male": {
+            "id": 3,
+            "long": "9/10 Male",
+            "short": "9/10 M"
         },
         "10 Female North": {
             "id": 151,
@@ -411,20 +500,26 @@ const __CONFIG__ = {
             "long": "10 Female South",
             "short": "10 F S"
         },
+        "10 Female": {
+            "id": 4,
+            "long": "10 Female",
+            "short": "10 F"
+        },
         /*"10 Female South Pool 2": {
             "id": 153,
             "long": "10 Female South Pool 2",
             "short": "10 F S 2"
         },*/
-        "10 Male North": {
-            "id": 140,
-            "long": "10 Male North",
-            "short": "10 M N"
-        },
+        
         "10 Male South": {
             "id": 141,
             "long": "10 Male South",
             "short": "10 M S"
+        },
+        "10 Male": {
+            "id": 5,
+            "long": "10 Male",
+            "short": "10 M"
         },
         "11/12 Female North": {
             "id": 144,
@@ -436,6 +531,11 @@ const __CONFIG__ = {
             "long": "11/12 Female South",
             "short": "11/12 F S"
         },
+        "11/12 Female": {
+            "id": 6,
+            "long": "11/12 Female",
+            "short": "11/12 F"
+        },
         "11/12 Male North": {
             "id": 142,
             "long": "11/12 Male North",
@@ -445,6 +545,11 @@ const __CONFIG__ = {
             "id": 143,
             "long": "11/12 Male South",
             "short": "11/12 M S"
+        },
+        "11/12 Male": {
+            "id": 7,
+            "long": "11/12 Male",
+            "short": "11/12 M"
         }
     },
     "events":{
